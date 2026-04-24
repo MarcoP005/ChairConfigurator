@@ -1,9 +1,8 @@
-import { AmbientLight, Mesh, MeshStandardMaterial, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
-import { GLTFLoader, OrbitControls } from 'three/examples/jsm/Addons.js';
-import GUI from 'three/examples/jsm/libs/lil-gui.module.min.js';
+import { AmbientLight, Mesh, MeshStandardMaterial } from 'three';
+import { GLTFLoader } from 'three/examples/jsm/Addons.js';
 import chair from "./chair_config.json";
-import SceneManager from './managers/SceneManager';
 import RenderManager from './managers/RenderManager';
+import SceneManager from './managers/SceneManager';
 
 // export interface PartConfig {
 //     partName: string,
@@ -41,7 +40,6 @@ export default class Chair {
 
         //gui.add will accept arrays of simple types only
 
-
         chair.components.legs.forEach(element => {
             this.legsNames.push(element.name);
         });
@@ -61,7 +59,6 @@ export default class Chair {
             back: this.backNames[0],
             arms: this.armsNames[0]
         };
-
 
         const gltfLoader: GLTFLoader = new GLTFLoader();
 

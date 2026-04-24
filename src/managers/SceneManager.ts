@@ -6,19 +6,18 @@ export default class SceneManager {
     private scene: Scene;
     private camera: PerspectiveCamera;
 
+    /**
+     * @param subject See {@link initCamera}
+     */
     constructor(container: HTMLElement, subject: Object3D | undefined) {
         this.scene = new Scene();
         this.camera = this.initCamera(subject);
         this.initOrbitControl(this.camera, container);
     }
 
-    public getScene(): Scene {
-        return this.scene;
-    }
+    public getScene = (): Scene => this.scene;
 
-    public getCamera(): PerspectiveCamera {
-        return this.camera;
-    }
+    public getCamera = (): PerspectiveCamera => this.camera;
 
     /**
      * @param subject The object the camera will be facing when first loaded. Else look at world origin.
@@ -30,10 +29,5 @@ export default class SceneManager {
         return camera;
     }
 
-    public initOrbitControl(camera: PerspectiveCamera, container: HTMLElement): OrbitControls {
-        const controls: OrbitControls = new OrbitControls(camera, container);
-        controls.enableDamping = true;
-        controls.dampingFactor = 1;
-        return controls;
-    }
+    public initOrbitControl = (camera: PerspectiveCamera, container: HTMLElement): OrbitControls => new OrbitControls(camera,container);
 }

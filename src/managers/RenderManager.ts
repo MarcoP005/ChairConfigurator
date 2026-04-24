@@ -1,7 +1,6 @@
 import { WebGLRenderer } from "three";
 import SceneManager from "./SceneManager";
 
-
 export default class RenderManager {
 
     private sceneManager: SceneManager;
@@ -10,9 +9,10 @@ export default class RenderManager {
     constructor(container: HTMLElement, sceneManager: SceneManager) {
         this.sceneManager = sceneManager;
         this.renderer = this.createRenderer(container);
-
-        this.startRender();
+        this.clock();
     }
+
+    public getRenderer = (): WebGLRenderer => this.renderer;
 
     private createRenderer(container: HTMLElement): WebGLRenderer {
         const renderer: WebGLRenderer = new WebGLRenderer({ antialias: true });
@@ -21,14 +21,9 @@ export default class RenderManager {
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         return renderer;
     }
-    private startRender(): void {
-        this.render();
-    }
 
-    private render(): void {
-        console.log("render");
+    private clock(): void {
         this.renderer.render(this.sceneManager.getScene(), this.sceneManager.getCamera());
-        window.requestAnimationFrame(() => this.render());
+        window.requestAnimationFrame(() => this.clock());
     }
-
 }
