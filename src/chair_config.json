@@ -1,0 +1,99 @@
+{
+  "src": "/chair.glb",
+  "components": {
+    "legs": [
+      {
+        "name": "legs_01",
+        "mesh": [
+          "Pole001",
+          "Wheel001",
+          "Wheel002",
+          "Wheel003",
+          "Wheel004",
+          "Wheel005"
+        ]
+      },
+      {
+        "name": "legs_02",
+        "mesh": [
+          "Pole002"
+        ]
+      },
+      {
+        "name": "legs_03",
+        "mesh": [
+          "Pole003"
+        ]
+      }
+    ],
+    "seat": [
+      {
+        "name": "seat_01",
+        "mesh": [
+          "Seat001"
+        ]
+      },
+      {
+        "name": "seat_02",
+        "mesh": [
+          "Seat002"
+        ]
+      }
+    ],
+    "back": [
+      {
+        "name": "back_01",
+        "mesh": [
+          "Back001"
+        ]
+      },
+      {
+        "name": "back_02",
+        "mesh": [
+          "Back002"
+        ]
+      }
+    ],
+    "arms": [
+      {
+        "name": "arms_01",
+        "mesh": [
+          "ArmRests",
+          "Arms001"
+        ]
+      },
+      {
+        "name": "arms_02",
+        "mesh": [
+          "ArmRests",
+          "Arms002"
+        ]
+      },
+      {
+        "name": "arms_03",
+        "mesh": [
+          "ArmRests",
+          "Arms003"
+        ]
+      }
+    ]
+  },
+  "materials": {
+    "inner_materials": [
+      {
+        "src": "/path_to_mat_fabric"
+      },
+      {
+        "src": "/path_to_mat_leather"
+      }
+    ],
+    "outer_materials": [
+      {
+        "src": "/path_to_mat_metal"
+      },
+      {
+        "src": "/path_to_mat_plastic"
+      }
+    ]
+  }
+}
