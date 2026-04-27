@@ -1,5 +1,3 @@
-import { AmbientLight, Mesh, MeshStandardMaterial } from 'three';
-import { GLTFLoader } from 'three/examples/jsm/Addons.js';
 import chair from "./chair_config.json";
 import RenderManager from './managers/RenderManager';
 import SceneManager from './managers/SceneManager';
@@ -59,26 +57,6 @@ export default class Chair {
             back: this.backNames[0],
             arms: this.armsNames[0]
         };
-
-        const gltfLoader: GLTFLoader = new GLTFLoader();
-
-        gltfLoader.load(
-            "assets/viewer3d-static/chair.glb",
-            (data) => {
-                data.scene.children.forEach(element => {
-                    if (element instanceof Mesh) {
-                        element.material = new MeshStandardMaterial();
-                        if (element.name.localeCompare(this.selected.legs)) {
-                            // element.visible = false;
-                        }
-                    }
-                });
-                sceneManager.getScene().add(data.scene);
-            }
-        );
-
-        const ambientLight: AmbientLight = new AmbientLight();
-        sceneManager.getScene().add(ambientLight);
     }
 
     public getSelected(): ChairConfig {

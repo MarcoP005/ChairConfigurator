@@ -1,20 +1,11 @@
-import { WebGLRenderer } from "three";
-import SceneManager from "./SceneManager";
+import { Camera, Scene, WebGLRenderer } from "three";
 
+/**
+ * General class to manage renderer-related functionalities.
+ */
 export default class RenderManager {
 
-    private sceneManager: SceneManager;
-    private renderer: WebGLRenderer;
-
-    constructor(container: HTMLElement, sceneManager: SceneManager) {
-        this.sceneManager = sceneManager;
-        this.renderer = this.createRenderer(container);
-        this.clock();
-    }
-
-    public getRenderer = (): WebGLRenderer => this.renderer;
-
-    private createRenderer(container: HTMLElement): WebGLRenderer {
+    public initRenderer(container: HTMLElement): WebGLRenderer {
         const renderer: WebGLRenderer = new WebGLRenderer({ antialias: true });
         container.appendChild(renderer.domElement);
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -22,8 +13,8 @@ export default class RenderManager {
         return renderer;
     }
 
-    private clock(): void {
-        this.renderer.render(this.sceneManager.getScene(), this.sceneManager.getCamera());
-        window.requestAnimationFrame(() => this.clock());
+    public loopRender(renderer: WebGLRenderer, scene: Scene, camera: Camera): void {
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(() => this.loopRender(renderer, scene, camera));
     }
 }

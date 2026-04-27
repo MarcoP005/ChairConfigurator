@@ -1,23 +1,10 @@
-import { Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
-import { OrbitControls } from "three/examples/jsm/Addons.js";
+import { Mesh, MeshStandardMaterial, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { GLTFLoader } from "three/examples/jsm/Addons.js";
 
+/**
+ * General class to manage basic scene components and access scene-related functions.
+ */
 export default class SceneManager {
-
-    private scene: Scene;
-    private camera: PerspectiveCamera;
-
-    /**
-     * @param subject See {@link initCamera}
-     */
-    constructor(container: HTMLElement, subject: Object3D | undefined) {
-        this.scene = new Scene();
-        this.camera = this.initCamera(subject);
-        this.initOrbitControl(this.camera, container);
-    }
-
-    public getScene = (): Scene => this.scene;
-
-    public getCamera = (): PerspectiveCamera => this.camera;
 
     /**
      * @param subject The object the camera will be facing when first loaded. Else look at world origin.
@@ -29,5 +16,18 @@ export default class SceneManager {
         return camera;
     }
 
-    public initOrbitControl = (camera: PerspectiveCamera, container: HTMLElement): OrbitControls => new OrbitControls(camera,container);
+    public loadModel(src: string, scene: Scene): void {
+        const gltfLoader: GLTFLoader = new GLTFLoader();
+
+        gltfLoader.load(
+            src,
+            (data) => {
+                data.scene.children.forEach(element => {
+                    if (element instanceof Mesh)
+                        element.material = new MeshStandardMaterial(); //temporary
+                });
+                scene.add(data.scene);
+            }
+        );
+    }
 }
