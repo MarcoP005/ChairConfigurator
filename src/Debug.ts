@@ -10,6 +10,8 @@ export default class Debug {
             selectedBack: "",
             selectedArms: ""
         };
+
+
     private gui: GUI = new GUI();
 
     private legs: string[] = [];
@@ -38,6 +40,6 @@ export default class Debug {
         this.gui.add(Debug.selectedComp, "selectedLegs", this.legs).name("Legs");
         this.gui.add(Debug.selectedComp, "selectedSeat", this.seat).name("Seat");
         this.gui.add(Debug.selectedComp, "selectedBack", this.back).name("Back");
-        this.gui.add(Debug.selectedComp, "selectedArms", this.arms).name("Arns");
+        this.gui.add(Debug.selectedComp, "selectedArms", this.arms).name("Arms");
     }
 }

@@ -103,7 +103,7 @@ module.exports = {
                 }
             }
         ],
-        "@typescript-eslint/member-ordering": "warn",
+        "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/naming-convention": [
             "error",
             {
