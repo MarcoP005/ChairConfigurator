@@ -2,6 +2,8 @@ import { Camera, Color, DirectionalLight, DirectionalLightHelper, Mesh, MeshStan
 import { GLTF, GLTFLoader, OrbitControls } from "three/examples/jsm/Addons.js";
 import ChairJSON from "../chair_config.json";
 import { Component } from "../Component";
+import Chair from "../Chair";
+import Part from "../Part";
 
 export type Version = {
     name: string,
@@ -21,6 +23,8 @@ export default class SceneManager {
         new MeshStandardMaterial({ color: 0xffff00 }),
         new MeshStandardMaterial({ color: 0xff00ff })
     ];
+
+    private chair: Chair | undefined;
 
     public constructor() {
         this.scene = new Scene();
@@ -162,5 +166,47 @@ export default class SceneManager {
         const chairGLTF: GLTF = await this.gltfLoader.loadAsync(`assets/viewer3d-static/${ChairJSON.src}`);
         this.chairModel = chairGLTF.scene;
         this.scene.add(this.chairModel);
+
+
+        this.initChairData(this.chairModel);
+    }
+
+    private initChairDataTemp(): void {
+
+        // this.chair = {
+        //     legs: [],
+        //     seat: [],
+        //     back: [],
+        //     arms: []
+        // };
+
+        // this.initPart("legs");
+
+        // ChairJSON.components.legs.forEach(leg => {
+        //     // console.log(leg);
+        //     const legMeshes: Mesh[] = [];
+        //     leg.meshes.forEach(element => {
+        //         // console.log(element);
+        //         const legMesh: Object3D | undefined = this.chairModel?.children.find((c) => c.name === element);
+        //         if (legMesh && legMesh instanceof Mesh) {
+        //             // console.log(legMesh);
+        //             legMeshes.push(legMesh);
+        //         }
+        //     });
+        //     // console.log(legParts);
+        //     const part: Part = {
+        //         name: leg.name,
+        //         meshes: legMeshes
+        //     };
+        //     this.chair?.legs.push(part);
+        // });
+        // console.log(this.chair);
+    }
+
+    private initChairData(chairModel: Object3D): void {
+        const legs01: Part = new Part(chairModel, ChairJSON.components.legs[0] as unknown as { name: string, mesh: string[]});
+        const legs02: Part = new Part(chairModel, ChairJSON.components.legs[1] as unknown as { name: string, mesh: string[]});
+        const legs03: Part = new Part(chairModel, ChairJSON.components.legs[2] as unknown as { name: string, mesh: string[]});
+        // this.chair = new Chair();
     }
 }
