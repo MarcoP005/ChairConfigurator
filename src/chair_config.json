@@ -76,6 +76,10 @@
           "Arms003"
         ]
       }
+    ],
+    "base": [
+      "BaseSeat",
+      "BaseBack"
     ]
   },
   "materials": {
