@@ -1,7 +1,6 @@
 import GUI from 'three/examples/jsm/libs/lil-gui.module.min.js';
 import ChairJSON from "./chair_config.json";
 import SceneManager from './managers/SceneManager';
-import { Component } from './Component';
 import { MeshStandardMaterial } from 'three';
 
 export default class Debug {
@@ -15,9 +14,6 @@ export default class Debug {
             selectedBack: "",
             selectedArms: ""
         };
-    public static selectedMat: { matIndex: number } = {
-        matIndex: 0
-    };
 
     private gui: GUI = new GUI();
 
@@ -45,10 +41,9 @@ export default class Debug {
         Debug.selectedComp.selectedBack = this.back[0];
         Debug.selectedComp.selectedArms = this.arms[0];
 
-        this.gui.add(Debug.selectedComp, "selectedLegs", this.legs).name("Legs").onChange(() => this.sceneManager.selectPart(Debug.selectedComp.selectedLegs, Component.legs));
+        this.gui.add(Debug.selectedComp, "selectedLegs", this.legs).name("Legs");
         this.gui.add(Debug.selectedComp, "selectedSeat", this.seat).name("Seat");
         this.gui.add(Debug.selectedComp, "selectedBack", this.back).name("Back");
         this.gui.add(Debug.selectedComp, "selectedArms", this.arms).name("Arms");
-        this.gui.add(Debug.selectedMat, "matIndex", 0, this.sceneManager.myMaterials.length-1, 1).onChange(() => this.sceneManager.selectMaterial(Debug.selectedMat.matIndex, Component.legs));
     }
 }

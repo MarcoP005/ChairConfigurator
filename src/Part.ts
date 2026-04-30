@@ -1,34 +1,31 @@
 import { Mesh, Object3D } from "three";
 
 export default class Part {
-
-    private chairModel: Object3D;
     private name: string;
     private meshes: Mesh[] = [];
 
-    public constructor(chairModel: Object3D, data: { name: string, mesh: string[] }) {
-        this.chairModel = chairModel;
-        this.name = data.name;
+    public constructor(chairModel: Object3D, part: { name: string, mesh: string[] }) {
+        this.name = part.name;
 
-        // console.log(data);
-
-        data.mesh.forEach(element => {
-            // console.log(element);
-            const child: Object3D | undefined = this.chairModel.children.find((c) => c.name === element);
-            if (child && child instanceof Mesh) {
-                // console.log(child);
-                this.meshes.push(child);
-            }
+        part.mesh.forEach(element => {
+            const correspondingMesh: Object3D | undefined = chairModel.children.find((c) => c.name === element);
+            if (correspondingMesh && correspondingMesh instanceof Mesh)
+                this.meshes.push(correspondingMesh);
         });
-        console.log(this.meshes);
     }
 
     public getName(): string {
         return this.name;
     }
+    public getMeshes(): Mesh[] {
+        return this.meshes;
+    }
 
-    // public getMeshes(): Mesh[] {
-    //     return this.meshes;
-    // }
+    public setVisible(visible: boolean): void {
+        // TODO: ciclare meshes e settare la visibilità scritta sopra
+        this.meshes.forEach(mesh => {
+            mesh.visible = visible;
+        });
+    }
 
 }
