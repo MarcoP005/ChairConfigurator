@@ -1,26 +1,22 @@
 {
   "src": "chair.glb",
   "components": {
-    "legs": [
+    "leg": [
       {
-        "name": "legs_01",
+        "name": "leg_01",
         "mesh": [
           "Pole001",
-          "Wheel001",
-          "Wheel002",
-          "Wheel003",
-          "Wheel004",
-          "Wheel005"
+          "Wheels"
         ]
       },
       {
-        "name": "legs_02",
+        "name": "leg_02",
         "mesh": [
           "Pole002"
         ]
       },
       {
-        "name": "legs_03",
+        "name": "leg_03",
         "mesh": [
           "Pole003"
         ]
@@ -54,32 +50,28 @@
         ]
       }
     ],
-    "arms": [
+    "arm": [
       {
-        "name": "arms_01",
+        "name": "arm_01",
         "mesh": [
           "ArmRests",
           "Arms001"
         ]
       },
       {
-        "name": "arms_02",
+        "name": "arm_02",
         "mesh": [
           "ArmRests",
           "Arms002"
         ]
       },
       {
-        "name": "arms_03",
+        "name": "arm_03",
         "mesh": [
           "ArmRests",
           "Arms003"
         ]
       }
-    ],
-    "base": [
-      "BaseSeat",
-      "BaseBack"
     ]
   },
   "materials": {

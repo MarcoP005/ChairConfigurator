@@ -11,11 +11,6 @@ export default class SceneManager {
     private chairModel: Object3D | undefined;
     private gltfLoader: GLTFLoader;
     private myChair: Chair | undefined; //undefined while model is loading
-    public myMaterials: MeshStandardMaterial[] = [
-        new MeshStandardMaterial({ color: 0x00ffff }),
-        new MeshStandardMaterial({ color: 0xffff00 }),
-        new MeshStandardMaterial({ color: 0xff00ff })
-    ];
 
     public constructor() {
         this.scene = new Scene();
@@ -33,10 +28,6 @@ export default class SceneManager {
         const dirLightHelper: DirectionalLightHelper = new DirectionalLightHelper(directionalLight);
         const dirLight2Helper: DirectionalLightHelper = new DirectionalLightHelper(directionalLight2);
         this.scene.add(directionalLight, dirLightHelper, directionalLight2, dirLight2Helper);
-    }
-
-    public setMyChair(myChair: Chair): void {
-        this.myChair = myChair;
     }
 
     public getMyChair(): Chair | undefined {
@@ -65,17 +56,17 @@ export default class SceneManager {
         return camera;
     }
 
-    public async loadModelAsync(): Promise<void> {
+    public async loadChairModel(): Promise<void> {
         const chairGLTF: GLTF = await this.gltfLoader.loadAsync(`assets/viewer3d-static/${ChairJSON.src}`);
         this.chairModel = chairGLTF.scene;
         this.scene.add(this.chairModel);
-        this.modelToChair(this.chairModel);
+        this.myChair = this.modelToChair(this.chairModel);
     }
 
-    public modelToChair(chairModel: Object3D): Chair {
-        const legs01: Part = new Part(chairModel, ChairJSON.components.legs[0] as unknown as { name: string, mesh: string[] });
-        const legs02: Part = new Part(chairModel, ChairJSON.components.legs[1] as unknown as { name: string, mesh: string[] });
-        const legs03: Part = new Part(chairModel, ChairJSON.components.legs[2] as unknown as { name: string, mesh: string[] });
+    private modelToChair(chairModel: Object3D): Chair {
+        const legs01: Part = new Part(chairModel, ChairJSON.components.leg[0] as unknown as { name: string, mesh: string[] });
+        const legs02: Part = new Part(chairModel, ChairJSON.components.leg[1] as unknown as { name: string, mesh: string[] });
+        const legs03: Part = new Part(chairModel, ChairJSON.components.leg[2] as unknown as { name: string, mesh: string[] });
 
         const seat01: Part = new Part(chairModel, ChairJSON.components.seat[0] as unknown as { name: string, mesh: string[] });
         const seat02: Part = new Part(chairModel, ChairJSON.components.seat[1] as unknown as { name: string, mesh: string[] });
@@ -83,15 +74,19 @@ export default class SceneManager {
         const back01: Part = new Part(chairModel, ChairJSON.components.back[0] as unknown as { name: string, mesh: string[] });
         const back02: Part = new Part(chairModel, ChairJSON.components.back[1] as unknown as { name: string, mesh: string[] });
 
-        const arms01: Part = new Part(chairModel, ChairJSON.components.arms[0] as unknown as { name: string, mesh: string[] });
-        const arms02: Part = new Part(chairModel, ChairJSON.components.arms[1] as unknown as { name: string, mesh: string[] });
-        const arms03: Part = new Part(chairModel, ChairJSON.components.arms[2] as unknown as { name: string, mesh: string[] });
+        const arms01: Part = new Part(chairModel, ChairJSON.components.arm[0] as unknown as { name: string, mesh: string[] });
+        const arms02: Part = new Part(chairModel, ChairJSON.components.arm[1] as unknown as { name: string, mesh: string[] });
+        const arms03: Part = new Part(chairModel, ChairJSON.components.arm[2] as unknown as { name: string, mesh: string[] });
 
         const legs: Part[] = [legs01, legs02, legs03];
         const seats: Part[] = [seat01, seat02];
         const backs: Part[] = [back01, back02];
         const arms: Part[] = [arms01, arms02, arms03];
 
-        return new Chair(legs, seats, backs, arms);
+        const base: Part[] = [];
+        base.push(new Part(chairModel, { name: "BaseSeat", mesh: ["BaseSeat"] }));
+        base.push(new Part(chairModel, { name: "BaseBack", mesh: ["BaseBack"] }));
+
+        return new Chair(legs, seats, backs, arms, base);
     }
 }

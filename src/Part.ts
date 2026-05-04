@@ -17,12 +17,12 @@ export default class Part {
     public getName(): string {
         return this.name;
     }
+
     public getMeshes(): Mesh[] {
         return this.meshes;
     }
 
     public setVisible(visible: boolean): void {
-        // TODO: ciclare meshes e settare la visibilità scritta sopra
         this.meshes.forEach(mesh => {
             mesh.visible = visible;
         });
