@@ -1,7 +1,7 @@
-import { Camera, Color, DirectionalLight, DirectionalLightHelper, Mesh, MeshStandardMaterial, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { AmbientLight, Camera, Color, DirectionalLight, DirectionalLightHelper, Object3D, PerspectiveCamera, Scene } from "three";
 import { GLTF, GLTFLoader, OrbitControls } from "three/examples/jsm/Addons.js";
-import ChairJSON from "../chair_config.json";
 import Chair from "../Chair";
+import ChairJSON from "../chair_config.json";
 import Part from "../Part";
 
 export default class SceneManager {

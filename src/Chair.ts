@@ -1,4 +1,4 @@
-import { Mesh, MeshStandardMaterial } from "three";
+import { Material, Mesh, MeshStandardMaterial } from "three";
 import Part from "./Part";
 
 export enum ChairPart {
@@ -23,39 +23,42 @@ export default class Chair {
     private outerMeshes: Mesh[] = [];
     private innerMeshes: Mesh[] = [];
 
-    public myOuterMats: MeshStandardMaterial[] = [
+    public outerMats: Material[] = [
         new MeshStandardMaterial({ color: 0x00ffff, metalness: 1, roughness: 0.4 }),
         new MeshStandardMaterial({ color: 0xffff00, metalness: 1, roughness: 0.4 }),
         new MeshStandardMaterial({ color: 0xff00ff, metalness: 1, roughness: 0.4 })
     ];
-    public myInnerMats: MeshStandardMaterial[] = [
+    public innerMats: Material[] = [
         new MeshStandardMaterial({ color: 0xff0000 }),
         new MeshStandardMaterial({ color: 0x0000ff }),
         new MeshStandardMaterial({ color: 0x00ff00 })
     ];
 
-    public constructor(leg: Part[], seat: Part[], back: Part[], arm: Part[], base: Part[]) {
-        this.legs = leg;
-        this.seats = seat;
-        this.backs = back;
-        this.arms = arm;
+    // public currentInnerMat: Material = this.innerMats[0];
+    // private currentOuterMat: Material = this.outerMats[0];
+    public currentInnerMatIndex: number = 0; //lilgui non accetta Material
+    public currentOuterMatIndex: number = 0;
+
+    public constructor(legs: Part[], seats: Part[], backs: Part[], arms: Part[], base: Part[]) {
+        this.legs = legs;
+        this.seats = seats;
+        this.backs = backs;
+        this.arms = arms;
         this.base = base;
 
-        this.currentLegPart = leg[0];
-        this.currentSeatPart = seat[0];
-        this.currentBackPart = back[0];
-        this.currentArmPart = arm[0];
-
+        this.currentLegPart = legs[0];
+        this.currentSeatPart = seats[0];
+        this.currentBackPart = backs[0];
+        this.currentArmPart = arms[0];
+        console.log(arms[0]);
 
         this.onlyCurrentVisible();
 
-        this.setPart(this.currentLegPart.getName(), ChairPart.leg);
-        this.setPart(this.currentSeatPart.getName(), ChairPart.seat);
-        this.setPart(this.currentBackPart.getName(), ChairPart.back);
-        this.setPart(this.currentArmPart.getName(), ChairPart.arm);
+        this.setPart(this.currentArmPart.getName(), ChairPart.arm); //??
 
         this.defineInnerOuter();
-        this.setMaterial(0);
+        this.setInnerMat(0);
+        this.setOuterMat(0);
     }
 
     public onlyCurrentVisible(): void {
@@ -94,7 +97,6 @@ export default class Chair {
     }
 
     public setPart(partName: string, chairPart: ChairPart): void {
-
         let newCur: Part | undefined;
         switch (chairPart) {
             case ChairPart.leg:
@@ -128,12 +130,19 @@ export default class Chair {
         }
     }
 
-    public setMaterial(index: number): void {
-        this.innerMeshes.forEach(mesh => {
-            mesh.material = this.myInnerMats[index];
-        });
-        this.outerMeshes.forEach(mesh => {
-            mesh.material = this.myOuterMats[index];
+    public setOuterMat(index: number): void {
+        this.setMaterial(this.outerMats, index, this.outerMeshes);
+        this.currentOuterMatIndex = index;
+    }
+
+    public setInnerMat(index: number): void {
+        this.setMaterial(this.innerMats, index, this.innerMeshes);
+        this.currentInnerMatIndex = index;
+    }
+
+    public setMaterial(materials: Material[], index: number, meshes: Mesh[]): void {
+        meshes.forEach(mesh => {
+            mesh.material = materials[index];
         });
     }
 
