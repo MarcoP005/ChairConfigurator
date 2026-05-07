@@ -1,8 +1,10 @@
-import { AmbientLight, Camera, Color, DirectionalLight, DirectionalLightHelper, Object3D, PerspectiveCamera, Scene } from "three";
+import { Camera, Color, DirectionalLight, DirectionalLightHelper, Object3D, PerspectiveCamera, Scene } from "three";
 import { GLTF, GLTFLoader, OrbitControls } from "three/examples/jsm/Addons.js";
 import Chair from "../Chair";
 import ChairJSON from "../chair_config.json";
 import Part from "../Part";
+import { chairConfig } from "../ChairConfig";
+import { Components } from "../Interfaces";
 
 export default class SceneManager {
 
@@ -52,7 +54,7 @@ export default class SceneManager {
 
     public initCamera(): PerspectiveCamera {
         const camera: PerspectiveCamera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
-        camera.position.z = 2;
+        camera.position.z = 2.2;
         return camera;
     }
 
@@ -64,28 +66,26 @@ export default class SceneManager {
     }
 
     private modelToChair(chairModel: Object3D): Chair {
-        const legs01: Part = new Part(chairModel, ChairJSON.components.leg[0] as unknown as { name: string, mesh: string[] });
-        const legs02: Part = new Part(chairModel, ChairJSON.components.leg[1] as unknown as { name: string, mesh: string[] });
-        const legs03: Part = new Part(chairModel, ChairJSON.components.leg[2] as unknown as { name: string, mesh: string[] });
+        const leg01: Part = new Part(chairModel, chairConfig.components.leg[0]);
+        const leg02: Part = new Part(chairModel, chairConfig.components.leg[1]);
+        const leg03: Part = new Part(chairModel, chairConfig.components.leg[2]);
 
-        const seat01: Part = new Part(chairModel, ChairJSON.components.seat[0] as unknown as { name: string, mesh: string[] });
-        const seat02: Part = new Part(chairModel, ChairJSON.components.seat[1] as unknown as { name: string, mesh: string[] });
+        const seat01: Part = new Part(chairModel, chairConfig.components.seat[0]);
+        const seat02: Part = new Part(chairModel, chairConfig.components.seat[1]);
 
-        const back01: Part = new Part(chairModel, ChairJSON.components.back[0] as unknown as { name: string, mesh: string[] });
-        const back02: Part = new Part(chairModel, ChairJSON.components.back[1] as unknown as { name: string, mesh: string[] });
+        const back01: Part = new Part(chairModel, chairConfig.components.back[0]);
+        const back02: Part = new Part(chairModel, chairConfig.components.back[1]);
 
-        const arms01: Part = new Part(chairModel, ChairJSON.components.arm[0] as unknown as { name: string, mesh: string[] });
-        const arms02: Part = new Part(chairModel, ChairJSON.components.arm[1] as unknown as { name: string, mesh: string[] });
-        const arms03: Part = new Part(chairModel, ChairJSON.components.arm[2] as unknown as { name: string, mesh: string[] });
+        const arm01: Part = new Part(chairModel, chairConfig.components.arm[0]);
+        const arm02: Part = new Part(chairModel, chairConfig.components.arm[1]);
+        const arm03: Part = new Part(chairModel, chairConfig.components.arm[2]);
 
-        const legs: Part[] = [legs01, legs02, legs03];
+        const base: Part = new Part(chairModel, chairConfig.others[0]);
+
+        const legs: Part[] = [leg01, leg02, leg03];
         const seats: Part[] = [seat01, seat02];
         const backs: Part[] = [back01, back02];
-        const arms: Part[] = [arms01, arms02, arms03];
-
-        const base: Part[] = [];
-        base.push(new Part(chairModel, { name: "BaseSeat", mesh: ["BaseSeat"] }));
-        base.push(new Part(chairModel, { name: "BaseBack", mesh: ["BaseBack"] }));
+        const arms: Part[] = [arm01, arm02, arm03];
 
         return new Chair(legs, seats, backs, arms, base);
     }

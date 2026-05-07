@@ -4,10 +4,10 @@ export default class Part {
     private name: string;
     private meshes: Mesh[] = [];
 
-    public constructor(chairModel: Object3D, part: { name: string, mesh: string[] }) {
+    public constructor(chairModel: Object3D, part: { name: string, meshes: string[] }) {
         this.name = part.name;
 
-        part.mesh.forEach(element => {
+        part.meshes.forEach(element => {
             const correspondingMesh: Object3D | undefined = chairModel.children.find((c) => c.name === element);
             if (correspondingMesh && correspondingMesh instanceof Mesh)
                 this.meshes.push(correspondingMesh);

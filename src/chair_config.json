@@ -1,6 +1,6 @@
 {
   "src": "chair.glb",
-  "components": {
+  "configurables": {
     "leg": [
       {
         "name": "leg_01",
@@ -74,22 +74,5 @@
       }
     ]
   },
-  "materials": {
-    "inner_materials": [
-      {
-        "src": "/path_to_mat_fabric"
-      },
-      {
-        "src": "/path_to_mat_leather"
-      }
-    ],
-    "outer_materials": [
-      {
-        "src": "/path_to_mat_metal"
-      },
-      {
-        "src": "/path_to_mat_plastic"
-      }
-    ]
-  }
+  "statics":["BaseBack", "BaseSeat"]
 }

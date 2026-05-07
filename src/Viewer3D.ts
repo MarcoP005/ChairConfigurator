@@ -1,3 +1,4 @@
+import { Component } from "./Chair";
 import Debug from "./Debug";
 import RenderManager from "./managers/RenderManager";
 import SceneManager from "./managers/SceneManager";
@@ -7,7 +8,8 @@ export class Viewer3D {
   private renderManager: RenderManager;
   private debug: Debug | undefined;
 
-  public constructor(options: { containerID: string }) {    const container: HTMLElement = document.getElementById(options.containerID)!;
+  public constructor(options: { containerID: string }) {
+    const container: HTMLElement = document.getElementById(options.containerID)!;
 
     this.sceneManager = new SceneManager();
     this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), container);
@@ -16,7 +18,7 @@ export class Viewer3D {
   }
 
   //debug
-  public test(): void {
+  public test(partName: string): void {
     //
   }
 }
