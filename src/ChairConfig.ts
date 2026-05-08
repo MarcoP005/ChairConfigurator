@@ -3,7 +3,7 @@ import { ChairConfig } from "./Interfaces";
 export const chairConfig: ChairConfig = {
     modelFile: "chair.glb",
     components: {
-        leg: [
+        legs: [
             {
                 name: "leg_01",
                 meshes: [
@@ -26,7 +26,7 @@ export const chairConfig: ChairConfig = {
                 ]
             }
         ],
-        seat: [
+        seats: [
             {
                 name: "seat_01",
                 meshes: [
@@ -40,7 +40,7 @@ export const chairConfig: ChairConfig = {
                 ]
             }
         ],
-        back: [
+        backs: [
             {
                 name: "back_01",
                 meshes: [
@@ -54,7 +54,7 @@ export const chairConfig: ChairConfig = {
                 ]
             }
         ],
-        arm: [
+        arms: [
             {
                 name: "arm_01",
                 meshes: [
@@ -86,5 +86,13 @@ export const chairConfig: ChairConfig = {
                 "BaseBack"
             ]
         }
-    ]
+    ],
+    materialsFiles: {
+        inner: [
+            "fabric-Woodstock-Bianco-Cotone_T_WL213.glb"
+        ],
+        outer: [
+            "Metallo_peltro.glb"
+        ]
+    }
 };

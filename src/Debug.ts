@@ -29,7 +29,8 @@ export default class Debug {
         matFolder.add(debugObj, "innerMatIndex", {
             Red: 0,
             Blue: 1,
-            Green: 2
+            Green: 2,
+            Fabric: 3
         })
             .onChange(() => chair.setInnerMat(debugObj.innerMatIndex))
             .name("Inner");
@@ -37,7 +38,8 @@ export default class Debug {
         matFolder.add(debugObj, "outerMatIndex", {
             Blue: 0,
             Yellow: 1,
-            Purple: 2
+            Purple: 2,
+            Metal: 3
         })
             .onChange(() => chair.setOuterMat(debugObj.outerMatIndex))
             .name("Outer");

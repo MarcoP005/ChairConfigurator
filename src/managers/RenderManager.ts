@@ -1,4 +1,5 @@
 import { Camera, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
 import Stats from "three/examples/jsm/libs/stats.module.js";
 
 export default class RenderManager {
@@ -6,17 +7,18 @@ export default class RenderManager {
     private renderer: WebGLRenderer;
     private scene: Scene;
     private camera: Camera;
-
     private stats: Stats = new Stats(); //debug
+    private orbitControls: OrbitControls;
 
-    public constructor(scene: Scene, camera: Camera, container: HTMLElement) {
+    public constructor(scene: Scene, camera: Camera, container: HTMLElement, controls: OrbitControls) {
         document.body.appendChild(this.stats.dom); //debug
 
         this.renderer = this.initRenderer(container);
         this.camera = camera;
         this.scene = scene;
+        this.orbitControls = controls;
         window.addEventListener('resize', () => this.onWindowResize());
-        this.loopRender(this.scene, camera);
+        this.loopRender(this.scene, this.camera, this.orbitControls);
     }
 
     private onWindowResize() {
@@ -35,11 +37,12 @@ export default class RenderManager {
         return renderer;
     }
 
-    public loopRender(scene: Scene, camera: Camera): void {
+    public loopRender(scene: Scene, camera: Camera, controls: OrbitControls): void {
         this.stats.begin(); //debug
 
+        controls.update();
         this.renderer.render(scene, camera);
-        window.requestAnimationFrame(() => this.loopRender(scene, this.camera));
+        window.requestAnimationFrame(() => this.loopRender(scene, camera, controls));
 
         this.stats.end(); //debug
     }

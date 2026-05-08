@@ -1,5 +1,6 @@
 import { Material, Mesh, MeshStandardMaterial } from "three";
 import Part from "./Part";
+import { GLTFLoader } from "three/examples/jsm/Addons.js";
 
 export enum Component {
     leg,
@@ -22,6 +23,8 @@ export default class Chair {
 
     private outerMeshes: Mesh[] = [];
     private innerMeshes: Mesh[] = [];
+
+    private gltfLoader: GLTFLoader = new GLTFLoader();
 
     public outerMats: Material[] = [
         new MeshStandardMaterial({ color: 0x00ffff, metalness: 1, roughness: 0.4 }),
@@ -50,7 +53,6 @@ export default class Chair {
         return this.currentArmPart;
     }
 
-
     public constructor(legs: Part[], seats: Part[], backs: Part[], arms: Part[], base: Part) {
         this.legs = legs;
         this.seats = seats;
@@ -66,6 +68,7 @@ export default class Chair {
         this.onlyCurrentVisible();
 
         this.defineInnerOuter();
+
         this.setInnerMat(0);
         this.setOuterMat(0);
     }
@@ -169,6 +172,5 @@ export default class Chair {
         this.base.getMeshes().forEach(mesh => {
             this.outerMeshes.push(mesh);
         });
-        console.log(this.outerMeshes, this.innerMeshes);
     }
 }
