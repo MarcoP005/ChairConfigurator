@@ -18,6 +18,6 @@ export class Viewer3D {
 
   //debug
   public test(): void {
-    //
+    console.log("test");
   }
 }
