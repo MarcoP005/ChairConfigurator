@@ -7,18 +7,20 @@ export default class RenderManager {
     private renderer: WebGLRenderer;
     private scene: Scene;
     private camera: Camera;
-    private stats: Stats = new Stats(); //debug
     private orbitControls: OrbitControls;
 
-    public constructor(scene: Scene, camera: Camera, container: HTMLElement, controls: OrbitControls) {
-        document.body.appendChild(this.stats.dom); //debug
+    // private stats: Stats = new Stats(); //debug
 
+    public constructor(scene: Scene, camera: Camera, container: HTMLElement, controls: OrbitControls) {
         this.renderer = this.initRenderer(container);
         this.camera = camera;
         this.scene = scene;
         this.orbitControls = controls;
+
         window.addEventListener('resize', () => this.onWindowResize());
-        this.loopRender(this.scene, this.camera, this.orbitControls);
+        this.loopRender();
+
+        // document.body.appendChild(this.stats.dom); //debug
     }
 
     private onWindowResize() {
@@ -37,14 +39,14 @@ export default class RenderManager {
         return renderer;
     }
 
-    public loopRender(scene: Scene, camera: Camera, controls: OrbitControls): void {
-        this.stats.begin(); //debug
+    public loopRender(): void {
+        // this.stats.begin(); //debug
 
-        controls.update();
-        this.renderer.render(scene, camera);
-        window.requestAnimationFrame(() => this.loopRender(scene, camera, controls));
+        this.orbitControls.update();
+        this.renderer.render(this.scene, this.camera);
+        window.requestAnimationFrame(() => this.loopRender());
 
-        this.stats.end(); //debug
+        // this.stats.end(); //debug
     }
 
 }

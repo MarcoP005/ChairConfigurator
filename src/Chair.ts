@@ -93,37 +93,28 @@ export default class Chair {
     }
 
     public setPart(partName: string, chairPart: Component): void {
-        let newCur: Part | undefined;
         switch (chairPart) {
             case Component.leg:
-                newCur = this.legs.find((check) => check.getName() === partName);
-                if (!newCur) return;
-                this.currentLegPart.setVisible(false);
-                newCur.setVisible(true);
-                this.currentLegPart = newCur;
+                this.setPartVisibility(this.legs, this.currentLegPart, partName);
                 break;
             case Component.seat:
-                newCur = this.seats.find((check) => check.getName() === partName);
-                if (!newCur) return;
-                this.currentSeatPart.setVisible(false);
-                newCur.setVisible(true);
-                this.currentSeatPart = newCur;
+                this.setPartVisibility(this.seats, this.currentSeatPart, partName);
                 break;
             case Component.back:
-                newCur = this.backs.find((check) => check.getName() === partName);
-                if (!newCur) return;
-                this.currentBackPart.setVisible(false);
-                newCur.setVisible(true);
-                this.currentBackPart = newCur;
+                this.setPartVisibility(this.backs, this.currentBackPart, partName);
                 break;
             case Component.arm:
-                newCur = this.arms.find((check) => check.getName() === partName);
-                if (!newCur) return;
-                this.currentArmPart.setVisible(false);
-                newCur.setVisible(true);
-                this.currentArmPart = newCur;
+                this.setPartVisibility(this.arms, this.currentArmPart, partName);
                 break;
         }
+    }
+
+    private setPartVisibility(parts: Part[], currentPart: Part, partName: string): void {
+        const newCur: Part | undefined = parts.find((check) => check.getName() === partName);
+        if (!newCur) return;
+        currentPart.setVisible(false);
+        newCur.setVisible(true);
+        currentPart = newCur;
     }
 
     public setOuterMat(index: number): void {

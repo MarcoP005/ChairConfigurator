@@ -1,7 +1,7 @@
 import GUI from "three/examples/jsm/libs/lil-gui.module.min.js";
 import Chair, { Component } from "./Chair";
 
-export default class Debug {
+export default class DebugGUI {
     private chair: Chair;
     private gui: GUI = new GUI();
     public constructor(chair: Chair) {

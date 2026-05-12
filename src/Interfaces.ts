@@ -1,5 +1,5 @@
 export interface ChairConfig {
-    modelFile: string;
+    modelFile: string; //es "chair.glb"
     components: Components;
     others: Part[];
     materialsFiles: MaterialsFiles;
@@ -18,6 +18,10 @@ export interface Part {
 }
 
 export interface MaterialsFiles {
-    inner: string[],
+    inner: string[], //es "Metal.glb"
     outer: string[]
+}
+
+export interface Mesh {
+
 }

@@ -1,4 +1,4 @@
-import { Camera, Color, DirectionalLight, Material, Mesh, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { Camera, Color, DirectionalLight, Material, Mesh, MeshStandardMaterial, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { GLTF, GLTFLoader, OrbitControls } from "three/examples/jsm/Addons.js";
 import Chair from "../Chair";
 import { chairConfig } from "../ChairConfig";
@@ -8,11 +8,11 @@ export default class SceneManager {
 
     private scene: Scene;
     private camera: Camera;
-    private chairModel: Object3D | undefined;
-    private gltfLoader: GLTFLoader;
-    private myChair: Chair | undefined; //undefined while model is loading
     private controls: OrbitControls;
 
+    private gltfLoader: GLTFLoader;
+    private chairModel: Object3D | undefined;
+    private myChair: Chair | undefined; //undefined while model is loading
 
     public constructor(container: HTMLElement) {
         this.scene = new Scene();
@@ -20,18 +20,19 @@ export default class SceneManager {
         this.camera = this.initCamera();
         this.controls = this.initOrbitControl(container);
         this.addLights();
+
         this.gltfLoader = new GLTFLoader();
     }
 
     public addLights(): void {
-        const directionalLight: DirectionalLight = new DirectionalLight();
-        directionalLight.position.set(2, 2, 2);
-        const directionalLight2: DirectionalLight = new DirectionalLight();
-        directionalLight2.position.set(-2, -2, -2);
-        this.scene.add(directionalLight, directionalLight2);
+        const dl: DirectionalLight = new DirectionalLight();
+        dl.position.setScalar(2);
+        const dl2: DirectionalLight = new DirectionalLight();
+        dl2.position.setScalar(-2);
+        this.scene.add(dl, dl2);
     }
 
-    public getControls(): OrbitControls{
+    public getControls(): OrbitControls {
         return this.controls;
     }
 
@@ -46,11 +47,11 @@ export default class SceneManager {
     public initOrbitControl(domElement: HTMLElement): OrbitControls {
         const controls: OrbitControls = new OrbitControls(this.camera, domElement);
         controls.autoRotate = true;
-        controls.dampingFactor = 1.3;
         controls.enableDamping = true;
+        controls.target = new Vector3(0, 0.75, 0);
+        controls.dampingFactor = 1.3;
         controls.maxDistance = 6;
         controls.minDistance = 1;
-        controls.target = new Vector3(0,0.15,0);
         controls.maxPolarAngle = 1.9;
         return controls;
     }
@@ -65,21 +66,22 @@ export default class SceneManager {
 
     public initCamera(): PerspectiveCamera {
         const camera: PerspectiveCamera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
-        camera.position.z = 2.2;
+        camera.position.set(0, 1, 2.2);
         return camera;
     }
 
-    public async loadChairModel(): Promise<void> {
-        const chairGLTF: GLTF = await this.gltfLoader.loadAsync(`assets/viewer3d-static/${chairConfig.modelFile}`);
+    public async loadModel(file: string): Promise<void> {
+        const chairGLTF: GLTF = await this.gltfLoader.loadAsync(`assets/viewer3d-static/${file}`);
+        this.scene.add(chairGLTF.scene);
+        this.myChair = this.modelToChair(chairGLTF.scene);
         this.chairModel = chairGLTF.scene;
-        this.scene.add(this.chairModel);
-        this.myChair = this.modelToChair(this.chairModel);
         this.loadChairMaterials();
     }
 
     public async loadChairMaterials(): Promise<void> {
         for (const file of chairConfig.materialsFiles.inner) {
             const gltf: GLTF = await this.gltfLoader.loadAsync(`assets/viewer3d-static/materials/${file}`);
+            console.log((gltf.scene.children[0] as Mesh).material);
             this.myChair?.innerMats.push((gltf.scene.children[0] as Mesh).material as Material);
         }
         for (const file of chairConfig.materialsFiles.outer) {
@@ -88,6 +90,9 @@ export default class SceneManager {
         }
     }
 
+    /**
+     * Map 3d model to Chair type
+     */
     private modelToChair(chairModel: Object3D): Chair {
         const leg01: Part = new Part(chairModel, chairConfig.components.legs[0]);
         const leg02: Part = new Part(chairModel, chairConfig.components.legs[1]);
