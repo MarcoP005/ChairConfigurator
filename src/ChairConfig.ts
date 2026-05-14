@@ -4,13 +4,16 @@ import { IChairConfig, IFiles } from "./Interfaces";
 export const files: IFiles = {
     chairModel: "chair.glb",
     softMaterials: [
-
+        "fabric-Woodstock-Bianco-Cotone_T_WL213.glb",
+        "leather-Unique-antracite_T_UE195.glb"
     ],
     hardMaterials: [
-
+        "Metallo_peltro.glb",
+        "wood-Chestnut-Sunrise_N_CS_Y.glb"
     ],
     otherMaterials: [
-
+        "stone-PietraLavica-Antracite.glb",
+        "marble-LepantoRed-Opaco-MAL_MLR.glb"
     ]
 };
 

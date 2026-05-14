@@ -15,6 +15,6 @@ export class Viewer3D {
 
   //debug
   public test(s: string): void {
-    this.sceneManager.getMyChair()?.setPart(Component.arm, s);
+    this.sceneManager.getChair()?.setPart(Component.arm, s);
   }
 }

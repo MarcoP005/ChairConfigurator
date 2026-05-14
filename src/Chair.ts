@@ -1,6 +1,5 @@
-import { GLTFLoader } from "three/examples/jsm/Addons.js";
-import Part from "./Part";
 import { Component } from "./Enums";
+import Part from "./Part";
 
 export default class Chair {
     private legs: Part[];
@@ -16,36 +15,20 @@ export default class Chair {
     private curBack: Part;
     private curArm: Part;
 
-    public getCurLeg(): Part {
-        return this.curLeg;
-    }
-
-    public getCurSeat(): Part {
-        return this.curSeat;
-    }
-
-    public getCurBack(): Part {
-        return this.curBack;
-    }
-
-    public getCurArm(): Part {
-        return this.curArm;
-    }
-
     public constructor(legs: Part[], seats: Part[], backs: Part[], arms: Part[], base: Part) {
         this.curLeg = legs[0];
         this.curSeat = seats[0];
         this.curBack = backs[0];
         this.curArm = arms[0];
 
-        this.allParts.push(...legs, ...seats, ...backs, ...arms);
-        this.onlyCurrentVisible();
-
         this.legs = legs;
         this.seats = seats;
         this.backs = backs;
         this.arms = arms;
         this.base = base;
+
+        this.allParts.push(...legs, ...seats, ...backs, ...arms, base);
+        this.onlyCurrentVisible();
     }
 
     private onlyCurrentVisible(): void {
@@ -54,6 +37,7 @@ export default class Chair {
         this.curSeat.setVisible(true);
         this.curBack.setVisible(true);
         this.curArm.setVisible(true);
+        this.base.setVisible(true);
     }
 
     public setPart(chairPart: Component, newPart: string): void {
@@ -89,4 +73,22 @@ export default class Chair {
                 break;
         }
     }
+
+    public getCurLeg(): Part { return this.curLeg; }
+
+    public getCurSeat(): Part { return this.curSeat; }
+
+    public getCurBack(): Part { return this.curBack; }
+
+    public getCurArm(): Part { return this.curArm; }
+
+    public getLegs(): Part[] { return this.legs; }
+
+    public getSeats(): Part[] { return this.seats; }
+
+    public getBacks(): Part[] { return this.backs; }
+
+    public getArms(): Part[] { return this.arms; }
+
+    public getAllParts(): Part[] { return this.allParts; }
 }

@@ -378,3 +378,4 @@ crashlytics-build.properties
 
 # Static files
 /[Dd]ist/
+assets/viewer3d-static/materials
