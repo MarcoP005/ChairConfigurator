@@ -1,7 +1,7 @@
-import { Camera, Color, DirectionalLight, Material, Mesh, MeshStandardMaterial, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { Camera, Color, DirectionalLight, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { GLTF, GLTFLoader, OrbitControls } from "three/examples/jsm/Addons.js";
 import Chair from "../Chair";
-import { chairConfig } from "../ChairConfig";
+import { chairConfig, files } from "../ChairConfig";
 import Part from "../Part";
 
 export default class SceneManager {
@@ -22,6 +22,10 @@ export default class SceneManager {
         this.addLights();
 
         this.gltfLoader = new GLTFLoader();
+        this.loadModel(files.chairModel)
+            .then((model) => {
+                this.myChair = this.modelToChair(model);
+            });
     }
 
     public addLights(): void {
@@ -70,30 +74,17 @@ export default class SceneManager {
         return camera;
     }
 
-    public async loadModel(file: string): Promise<void> {
+    public async loadModel(file: string): Promise<Object3D> {
         const chairGLTF: GLTF = await this.gltfLoader.loadAsync(`assets/viewer3d-static/${file}`);
         this.scene.add(chairGLTF.scene);
-        this.myChair = this.modelToChair(chairGLTF.scene);
-        this.chairModel = chairGLTF.scene;
-        this.loadChairMaterials();
-    }
-
-    public async loadChairMaterials(): Promise<void> {
-        for (const file of chairConfig.materialsFiles.inner) {
-            const gltf: GLTF = await this.gltfLoader.loadAsync(`assets/viewer3d-static/materials/${file}`);
-            console.log((gltf.scene.children[0] as Mesh).material);
-            this.myChair?.innerMats.push((gltf.scene.children[0] as Mesh).material as Material);
-        }
-        for (const file of chairConfig.materialsFiles.outer) {
-            const gltf: GLTF = await this.gltfLoader.loadAsync(`assets/viewer3d-static/materials/${file}`);
-            this.myChair?.outerMats.push((gltf.scene.children[0] as Mesh).material as Material);
-        }
+        return chairGLTF.scene;
     }
 
     /**
-     * Map 3d model to Chair type
+     * Map 3d model to Chair and Part type
      */
     private modelToChair(chairModel: Object3D): Chair {
+
         const leg01: Part = new Part(chairModel, chairConfig.components.legs[0]);
         const leg02: Part = new Part(chairModel, chairConfig.components.legs[1]);
         const leg03: Part = new Part(chairModel, chairConfig.components.legs[2]);

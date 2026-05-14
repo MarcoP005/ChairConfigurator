@@ -1,27 +1,31 @@
-export interface ChairConfig {
-    modelFile: string; //es "chair.glb"
-    components: Components;
-    others: Part[];
-    materialsFiles: MaterialsFiles;
+import { MaterialType } from "./Enums";
+
+export interface IChairConfig {
+    components: IComponents;
+    others: IPart[];
 }
 
-export interface Components {
-    legs: Part[];
-    seats: Part[];
-    backs: Part[];
-    arms: Part[];
+export interface IComponents {
+    legs: IPart[];
+    seats: IPart[];
+    backs: IPart[];
+    arms: IPart[];
 }
 
-export interface Part {
+export interface IPart {
     name: string;
-    meshes: string[];
+    meshes: IMesh[];
 }
 
-export interface MaterialsFiles {
-    inner: string[], //es "Metal.glb"
-    outer: string[]
+export interface IMesh {
+    name: string;
+    materials: MaterialType
+    occlusionMap: string;
 }
 
-export interface Mesh {
-
+export interface IFiles {
+    chairModel: string;
+    softMaterials: string[];
+    hardMaterials: string[];
+    otherMaterials: string[];
 }

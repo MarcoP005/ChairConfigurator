@@ -1,17 +1,17 @@
 import { Mesh, Object3D } from "three";
+import { IPart } from "./Interfaces";
 
 export default class Part {
     private name: string;
-    private meshes: Mesh[] = [];
+    private readonly meshes: Mesh[] = [];
 
-    public constructor(chairModel: Object3D, part: { name: string, meshes: string[] }) {
+    public constructor(chairModel: Object3D, part: IPart) {
         this.name = part.name;
-
-        part.meshes.forEach(element => {
-            const correspondingMesh: Object3D | undefined = chairModel.children.find((c) => c.name === element);
-            if (correspondingMesh && correspondingMesh instanceof Mesh)
-                this.meshes.push(correspondingMesh);
-        });
+        for (const partMesh of part.meshes){
+            const correspondingMesh: Mesh | undefined = chairModel.children.find((modelMesh) => modelMesh.name === partMesh.name) as Mesh | undefined;
+            if (!correspondingMesh) continue;
+            this.meshes.push(correspondingMesh);
+        }
     }
 
     public getName(): string {

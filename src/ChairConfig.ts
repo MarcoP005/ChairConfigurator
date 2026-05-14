@@ -1,28 +1,55 @@
-import { ChairConfig } from "./Interfaces";
+import { MaterialType } from "./Enums";
+import { IChairConfig, IFiles } from "./Interfaces";
 
-export const chairConfig: ChairConfig = {
-    modelFile: "chair.glb",
+export const files: IFiles = {
+    chairModel: "chair.glb",
+    softMaterials: [
+
+    ],
+    hardMaterials: [
+
+    ],
+    otherMaterials: [
+
+    ]
+};
+
+export const chairConfig: IChairConfig = {
     components: {
         legs: [
             {
                 name: "leg_01",
                 meshes: [
-                    "Pole",
-                    "Rays",
-                    "Wheels"
+                    {
+                        name: "Rays",
+                        materials: MaterialType.Hard,
+                        occlusionMap: "SelfOcclusion_Rays.png"
+                    },
+                    {
+                        name: "Wheels",
+                        materials: MaterialType.Other,
+                        occlusionMap: "SelfOcclusion_Wheels.png"
+                    }
                 ]
             },
             {
                 name: "leg_02",
                 meshes: [
-                    "Pole",
-                    "Tulip"
+                    {
+                        name: "Tulip",
+                        materials: MaterialType.Hard,
+                        occlusionMap: "SelfOcclusion_Tulip.png"
+                    }
                 ]
             },
             {
                 name: "leg_03",
                 meshes: [
-                    "Cantilever"
+                    {
+                        name: "Cantilever",
+                        materials: MaterialType.Hard,
+                        occlusionMap: "SelfOcclusion_Cantilever.png"
+                    }
                 ]
             }
         ],
@@ -30,13 +57,21 @@ export const chairConfig: ChairConfig = {
             {
                 name: "seat_01",
                 meshes: [
-                    "SquareSeat"
+                    {
+                        name: "SquareSeat",
+                        materials: MaterialType.Soft,
+                        occlusionMap: "SelfOcclusion_SquareSeat.png"
+                    }
                 ]
             },
             {
                 name: "seat_02",
                 meshes: [
-                    "RoundSeat"
+                    {
+                        name: "RoundSeat",
+                        materials: MaterialType.Soft,
+                        occlusionMap: "SelfOcclusion_RoundSeat.png"
+                    }
                 ]
             }
         ],
@@ -44,13 +79,21 @@ export const chairConfig: ChairConfig = {
             {
                 name: "back_01",
                 meshes: [
-                    "SquareBack"
+                    {
+                        name: "SquareBack",
+                        materials: MaterialType.Soft,
+                        occlusionMap: "SelfOcclusion_SquareBack.png"
+                    }
                 ]
             },
             {
                 name: "back_02",
                 meshes: [
-                    "RoundBack"
+                    {
+                        name: "RoundBack",
+                        materials: MaterialType.Soft,
+                        occlusionMap: "SelfOcclusion_RoundBack.png"
+                    }
                 ]
             }
         ],
@@ -58,22 +101,46 @@ export const chairConfig: ChairConfig = {
             {
                 name: "arm_01",
                 meshes: [
-                    "ArmRests",
-                    "Curve"
+                    {
+                        name: "Curve",
+                        materials: MaterialType.Hard,
+                        occlusionMap: "SelfOcclusion_Curve.png"
+                    },
+                    {
+                        name: "CurveArmRests",
+                        materials: MaterialType.Soft,
+                        occlusionMap: "SelfOcclusion_Curve.png"
+                    }
                 ]
             },
             {
                 name: "arm_02",
                 meshes: [
-                    "ArmRests",
-                    "Straight"
+                    {
+                        name: "Straight",
+                        materials: MaterialType.Hard,
+                        occlusionMap: "SelfOcclusion_Straight.png"
+                    },
+                    {
+                        name: "StraightArmRests",
+                        materials: MaterialType.Soft,
+                        occlusionMap: "SelfOcclusion_Straight.png"
+                    }
                 ]
             },
             {
                 name: "arm_03",
                 meshes: [
-                    "ArmRests",
-                    "Lateral"
+                    {
+                        name: "Lateral",
+                        materials: MaterialType.Hard,
+                        occlusionMap: "SelfOcclusion_Lateral.png"
+                    },
+                    {
+                        name: "LateralArmRests",
+                        materials: MaterialType.Soft,
+                        occlusionMap: "SelfOcclusion_Lateral.png"
+                    }
                 ]
             }
         ]
@@ -82,17 +149,17 @@ export const chairConfig: ChairConfig = {
         {
             name: "base",
             meshes: [
-                "BaseSeat",
-                "BaseBack"
+                {
+                    name: "BaseSeat",
+                    materials: MaterialType.Other,
+                    occlusionMap: "SelfOcclusion_BaseSeat.png"
+                },
+                {
+                    name: "BaseBack",
+                    materials: MaterialType.Other,
+                    occlusionMap: "SelfOcclusion_BaseBack.png"
+                }
             ]
         }
-    ],
-    materialsFiles: {
-        inner: [
-            "fabric-Woodstock-Bianco-Cotone_T_WL213.glb"
-        ],
-        outer: [
-            "Metallo_peltro.glb"
-        ]
-    }
+    ]
 };
