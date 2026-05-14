@@ -148,7 +148,7 @@ export const chairConfig: IChairConfig = {
             }
         ]
     },
-    others: [
+    fixed: [
         {
             name: "base",
             meshes: [

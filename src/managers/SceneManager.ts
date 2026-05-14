@@ -73,14 +73,15 @@ export default class SceneManager {
         const arm02: Part = new Part(chairModel, chairConfig.components.arms[1]);
         const arm03: Part = new Part(chairModel, chairConfig.components.arms[2]);
 
-        const base: Part = new Part(chairModel, chairConfig.others[0]);
+        const base: Part = new Part(chairModel, chairConfig.fixed[0]);
 
         const legs: Part[] = [leg01, leg02, leg03];
         const seats: Part[] = [seat01, seat02];
         const backs: Part[] = [back01, back02];
         const arms: Part[] = [arm01, arm02, arm03];
+        const fixed: Part[] = [base];
 
-        return new Chair(legs, seats, backs, arms, base);
+        return new Chair(legs, seats, backs, arms, fixed);
     }
 
     public getScene(): Scene { return this.scene; }
@@ -90,4 +91,6 @@ export default class SceneManager {
     public getControls(): OrbitControls { return this.controls; }
 
     public getChair(): Chair | undefined { return this.chair; }
+
+    public getMatPicker(): MatPicker | undefined { return this.matPicker; }
 }

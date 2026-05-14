@@ -17,10 +17,6 @@ export default class MatPicker {
     private hardMeshes: Mesh[] = [];
     private otherMeshes: Mesh[] = [];
 
-    private curSoft: number = 0;
-    private curHard: number = 0;
-    private curOther: number = 0;
-
     public constructor(chair: Chair) {
         this.chair = chair;
         this.mapMaterials();
@@ -29,6 +25,7 @@ export default class MatPicker {
         this.mapParts(chair.getSeats(), chairConfig.components.seats);
         this.mapParts(chair.getBacks(), chairConfig.components.backs);
         this.mapParts(chair.getArms(), chairConfig.components.arms);
+        this.mapParts(chair.getFixed(), chairConfig.fixed);
 
         console.log("SoftMeshes", this.softMeshes);
         console.log("HardMeshes", this.hardMeshes);
@@ -50,10 +47,6 @@ export default class MatPicker {
         }
     }
 
-    public setMaterial(matType: MaterialType, index: number): void {
-        //
-    }
-
     private mapParts(parts: Part[], iParts: IPart[]) {
         iParts.forEach(ipart => {
             const p: Part | undefined = parts.find((part) => part.getName() === ipart.name);
@@ -72,6 +65,26 @@ export default class MatPicker {
                 else if (imesh.materials === MaterialType.Other)
                     this.otherMeshes.push(m);
             }
+        });
+    }
+
+    public setMaterial(matType: MaterialType, matIndex: number): void {
+        switch (matType) {
+            case MaterialType.Soft:
+                this.changeMat(this.softMeshes, this.softMats, matIndex);
+                break;
+            case MaterialType.Hard:
+                this.changeMat(this.hardMeshes, this.hardMats, matIndex);
+                break;
+            case MaterialType.Other:
+                this.changeMat(this.otherMeshes, this.otherMats, matIndex);
+                break;
+        }
+    }
+
+    private changeMat(meshesToChange: Mesh[], mats: MeshPhysicalMaterial[], index: number) {
+        meshesToChange.forEach(mesh => {
+            mesh.material = mats[index];
         });
     }
 }

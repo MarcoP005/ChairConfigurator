@@ -6,7 +6,7 @@ export default class Chair {
     private seats: Part[];
     private backs: Part[];
     private arms: Part[];
-    private base: Part;
+    private fixed: Part[];
 
     private allParts: Part[] = [];
 
@@ -15,7 +15,7 @@ export default class Chair {
     private curBack: Part;
     private curArm: Part;
 
-    public constructor(legs: Part[], seats: Part[], backs: Part[], arms: Part[], base: Part) {
+    public constructor(legs: Part[], seats: Part[], backs: Part[], arms: Part[], fixed: Part[]) {
         this.curLeg = legs[0];
         this.curSeat = seats[0];
         this.curBack = backs[0];
@@ -25,19 +25,21 @@ export default class Chair {
         this.seats = seats;
         this.backs = backs;
         this.arms = arms;
-        this.base = base;
+        this.fixed = fixed;
 
-        this.allParts.push(...legs, ...seats, ...backs, ...arms, base);
+        this.allParts.push(...legs, ...seats, ...backs, ...arms, ...fixed);
         this.onlyCurrentVisible();
     }
 
     private onlyCurrentVisible(): void {
         this.allParts.forEach(part => part.setVisible(false));
+
         this.curLeg.setVisible(true);
         this.curSeat.setVisible(true);
         this.curBack.setVisible(true);
         this.curArm.setVisible(true);
-        this.base.setVisible(true);
+
+        this.fixed.forEach(part => { part.setVisible(true); });
     }
 
     public setPart(chairPart: Component, newPart: string): void {
@@ -90,5 +92,6 @@ export default class Chair {
 
     public getArms(): Part[] { return this.arms; }
 
-    public getAllParts(): Part[] { return this.allParts; }
+    public getFixed(): Part[] { return this.fixed; }
+
 }

@@ -2,7 +2,7 @@ import { MaterialType } from "./Enums";
 
 export interface IChairConfig {
     components: IComponents;
-    others: IPart[];
+    fixed: IPart[];
 }
 
 export interface IComponents {
