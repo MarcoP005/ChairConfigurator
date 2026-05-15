@@ -19,8 +19,7 @@ export interface IPart {
 
 export interface IMesh {
     name: string;
-    materials: MaterialType
-    occlusionMap: string;
+    materials: MaterialType;
 }
 
 export interface IFiles {

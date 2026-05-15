@@ -1,6 +1,5 @@
 import { Camera, PerspectiveCamera, Scene, SRGBColorSpace, WebGLRenderer } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
-import Stats from "three/examples/jsm/libs/stats.module.js";
 
 export default class RenderManager {
 
@@ -8,8 +7,6 @@ export default class RenderManager {
     private scene: Scene;
     private camera: Camera;
     private orbitControls: OrbitControls;
-
-    // private stats: Stats = new Stats(); //debug
 
     public constructor(scene: Scene, camera: Camera, container: HTMLElement, controls: OrbitControls) {
         this.renderer = this.initRenderer(container);
@@ -19,8 +16,6 @@ export default class RenderManager {
 
         window.addEventListener('resize', () => this.onWindowResize());
         this.loopRender();
-
-        // document.body.appendChild(this.stats.dom); //debug
     }
 
     private onWindowResize() {
@@ -41,13 +36,9 @@ export default class RenderManager {
     }
 
     public loopRender(): void {
-        // this.stats.begin(); //debug
-
         this.orbitControls.update();
         this.renderer.render(this.scene, this.camera);
         window.requestAnimationFrame(() => this.loopRender());
-
-        // this.stats.end(); //debug
     }
 
 }

@@ -1,4 +1,4 @@
-import { AmbientLight, Camera, Color, DirectionalLight, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { Camera, Color, DirectionalLight, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import Chair from "../Chair";
 import { chairConfig, files } from "../ChairConfig";
@@ -33,18 +33,12 @@ export default class SceneManager {
     //temporary
     private addLights(): void {
         const d1: DirectionalLight = new DirectionalLight();
-        d1.position.set(0,2,0);
-        const d2: DirectionalLight = new DirectionalLight();
-        d2.position.set(0,-2,0);
+        d1.position.set(0, 2, 0);
         const d3: DirectionalLight = new DirectionalLight();
-        d3.position.set(2,0,0);
-        const d4: DirectionalLight = new DirectionalLight();
-        d4.position.set(-2,0,0);
+        d3.position.set(2, 0, 0);
         const d5: DirectionalLight = new DirectionalLight();
-        d5.position.set(0,0,2);
-        const d6: DirectionalLight = new DirectionalLight();
-        d6.position.set(0,0,-2);
-        this.scene.add(d1,d2,d3,d4,d5,d6);
+        d5.position.set(0, 0, 2);
+        this.scene.add(d1, d3, d5);
     }
 
     private initOrbitControl(domElement: HTMLElement): OrbitControls {
@@ -59,7 +53,7 @@ export default class SceneManager {
         return controls;
     }
 
-    public initCamera(): PerspectiveCamera {
+    private initCamera(): PerspectiveCamera {
         const camera: PerspectiveCamera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
         camera.far = 4;
         camera.near = 0.001;
@@ -68,7 +62,6 @@ export default class SceneManager {
     }
 
     private mapModelToChair(chairModel: Object3D): Chair {
-
         const leg01: Part = new Part(chairModel, chairConfig.components.legs[0]);
         const leg02: Part = new Part(chairModel, chairConfig.components.legs[1]);
         const leg03: Part = new Part(chairModel, chairConfig.components.legs[2]);

@@ -9,8 +9,7 @@ export const files: IFiles = {
         "cloth.glb"
     ],
     hardMaterials: [
-        "metal.glb",
-        "plaster.glb"
+        "metal.glb"
     ],
     otherMaterials: [
         "metal.glb"
@@ -25,13 +24,11 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Rays",
-                        materials: MaterialType.Hard,
-                        occlusionMap: "SelfOcclusion_Rays.png" //removable
+                        materials: MaterialType.Hard
                     },
                     {
                         name: "Wheels",
-                        materials: MaterialType.Other,
-                        occlusionMap: "SelfOcclusion_Wheels.png"
+                        materials: MaterialType.Other
                     }
                 ]
             },
@@ -40,8 +37,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Tulip",
-                        materials: MaterialType.Hard,
-                        occlusionMap: "SelfOcclusion_Tulip.png"
+                        materials: MaterialType.Hard
                     }
                 ]
             },
@@ -50,8 +46,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Cantilever",
-                        materials: MaterialType.Hard,
-                        occlusionMap: "SelfOcclusion_Cantilever.png"
+                        materials: MaterialType.Hard
                     }
                 ]
             }
@@ -62,8 +57,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "SquareSeat",
-                        materials: MaterialType.Soft,
-                        occlusionMap: "SelfOcclusion_SquareSeat.png"
+                        materials: MaterialType.Soft
                     }
                 ]
             },
@@ -72,8 +66,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "RoundSeat",
-                        materials: MaterialType.Soft,
-                        occlusionMap: "SelfOcclusion_RoundSeat.png"
+                        materials: MaterialType.Soft
                     }
                 ]
             }
@@ -84,8 +77,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "SquareBack",
-                        materials: MaterialType.Soft,
-                        occlusionMap: "SelfOcclusion_SquareBack.png"
+                        materials: MaterialType.Soft
                     }
                 ]
             },
@@ -94,8 +86,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "RoundBack",
-                        materials: MaterialType.Soft,
-                        occlusionMap: "SelfOcclusion_RoundBack.png"
+                        materials: MaterialType.Soft
                     }
                 ]
             }
@@ -106,13 +97,11 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Curve",
-                        materials: MaterialType.Hard,
-                        occlusionMap: "SelfOcclusion_Curve.png"
+                        materials: MaterialType.Hard
                     },
                     {
                         name: "CurveArmRests",
-                        materials: MaterialType.Soft,
-                        occlusionMap: "SelfOcclusion_Curve.png"
+                        materials: MaterialType.Soft
                     }
                 ]
             },
@@ -121,13 +110,11 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Straight",
-                        materials: MaterialType.Hard,
-                        occlusionMap: "SelfOcclusion_Straight.png"
+                        materials: MaterialType.Hard
                     },
                     {
                         name: "StraightArmRests",
-                        materials: MaterialType.Soft,
-                        occlusionMap: "SelfOcclusion_Straight.png"
+                        materials: MaterialType.Soft
                     }
                 ]
             },
@@ -136,13 +123,11 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Lateral",
-                        materials: MaterialType.Hard,
-                        occlusionMap: "SelfOcclusion_Lateral.png"
+                        materials: MaterialType.Hard
                     },
                     {
                         name: "LateralArmRests",
-                        materials: MaterialType.Soft,
-                        occlusionMap: "SelfOcclusion_Lateral.png"
+                        materials: MaterialType.Soft
                     }
                 ]
             }
@@ -154,13 +139,11 @@ export const chairConfig: IChairConfig = {
             meshes: [
                 {
                     name: "BaseSeat",
-                    materials: MaterialType.Other,
-                    occlusionMap: "SelfOcclusion_BaseSeat.png"
+                    materials: MaterialType.Other
                 },
                 {
                     name: "BaseBack",
-                    materials: MaterialType.Other,
-                    occlusionMap: "SelfOcclusion_BaseBack.png"
+                    materials: MaterialType.Other
                 }
             ]
         }
