@@ -2,9 +2,9 @@ import { Mesh, MeshPhysicalMaterial } from "three";
 import Chair from "./Chair";
 import { chairConfig, files } from "./ChairConfig";
 import { MaterialType } from "./Enums";
-import Utility from "./Utility";
 import { IMesh, IPart } from "./Interfaces";
 import Part from "./Part";
+import Utility from "./Utility";
 
 export default class MatPicker {
     private chair: Chair;
@@ -19,20 +19,21 @@ export default class MatPicker {
 
     public constructor(chair: Chair) {
         this.chair = chair;
-        this.mapMaterials();
+        this.loadMaterials().then(() => {
+            console.log("All mats loaded");
+            this.setMaterial(MaterialType.Soft, 0);
+            this.setMaterial(MaterialType.Hard, 0);
+            this.setMaterial(MaterialType.Other, 0);
+        });
 
         this.mapParts(chair.getLegs(), chairConfig.components.legs);
         this.mapParts(chair.getSeats(), chairConfig.components.seats);
         this.mapParts(chair.getBacks(), chairConfig.components.backs);
         this.mapParts(chair.getArms(), chairConfig.components.arms);
         this.mapParts(chair.getFixed(), chairConfig.fixed);
-
-        console.log("SoftMeshes", this.softMeshes);
-        console.log("HardMeshes", this.hardMeshes);
-        console.log("OtherMeshes", this.otherMeshes);
     }
 
-    private async mapMaterials(): Promise<void> {
+    private async loadMaterials(): Promise<void> {
         for (const matFile of files.softMaterials) {
             const cube: Mesh = (await Utility.loadModel("materials/" + matFile)).children[0] as Mesh;
             this.softMats.push(cube.material as MeshPhysicalMaterial);
@@ -82,9 +83,11 @@ export default class MatPicker {
         }
     }
 
-    private changeMat(meshesToChange: Mesh[], mats: MeshPhysicalMaterial[], index: number) {
-        meshesToChange.forEach(mesh => {
+    private async changeMat(meshesToChange: Mesh[], mats: MeshPhysicalMaterial[], index: number) {
+        for (const mesh of meshesToChange) {
+            const mat: MeshPhysicalMaterial = mats[index].clone();
+            mat.aoMap = await Utility.loadTexture(`occlusions/SelfOcclusion_${mesh.name}.png`);
             mesh.material = mats[index];
-        });
+        }
     }
 }

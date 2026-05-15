@@ -1,4 +1,4 @@
-import { Component, MaterialType } from "./Enums";
+import { MaterialType } from "./Enums";
 import RenderManager from "./managers/RenderManager";
 import SceneManager from "./managers/SceneManager";
 
@@ -16,7 +16,5 @@ export class Viewer3D {
   //debug
   public test(i: number): void {
     this.sceneManager.getMatPicker()?.setMaterial(MaterialType.Soft, i);
-    this.sceneManager.getMatPicker()?.setMaterial(MaterialType.Hard, i);
-    this.sceneManager.getMatPicker()?.setMaterial(MaterialType.Other, i);
   }
 }

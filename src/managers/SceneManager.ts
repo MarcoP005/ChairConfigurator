@@ -1,4 +1,4 @@
-import { Camera, Color, DirectionalLight, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { AmbientLight, Camera, Color, DirectionalLight, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import Chair from "../Chair";
 import { chairConfig, files } from "../ChairConfig";
@@ -32,27 +32,37 @@ export default class SceneManager {
 
     //temporary
     private addLights(): void {
-        const dl: DirectionalLight = new DirectionalLight();
-        dl.position.setScalar(2);
-        const dl2: DirectionalLight = new DirectionalLight();
-        dl2.position.setScalar(-2);
-        this.scene.add(dl, dl2);
+        const d1: DirectionalLight = new DirectionalLight();
+        d1.position.set(0,2,0);
+        const d2: DirectionalLight = new DirectionalLight();
+        d2.position.set(0,-2,0);
+        const d3: DirectionalLight = new DirectionalLight();
+        d3.position.set(2,0,0);
+        const d4: DirectionalLight = new DirectionalLight();
+        d4.position.set(-2,0,0);
+        const d5: DirectionalLight = new DirectionalLight();
+        d5.position.set(0,0,2);
+        const d6: DirectionalLight = new DirectionalLight();
+        d6.position.set(0,0,-2);
+        this.scene.add(d1,d2,d3,d4,d5,d6);
     }
 
     private initOrbitControl(domElement: HTMLElement): OrbitControls {
         const controls: OrbitControls = new OrbitControls(this.camera, domElement);
         controls.autoRotate = true;
         controls.enableDamping = true;
-        controls.target = new Vector3(0, 0.75, 0);
         controls.dampingFactor = 1.3;
+        controls.target = new Vector3(0, 0.75, 0);
         controls.maxDistance = 6;
-        controls.minDistance = 1;
+        controls.minDistance = 0.1;
         controls.maxPolarAngle = 1.9;
         return controls;
     }
 
     public initCamera(): PerspectiveCamera {
         const camera: PerspectiveCamera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.far = 4;
+        camera.near = 0.001;
         camera.position.set(0, 1, 2.2);
         return camera;
     }

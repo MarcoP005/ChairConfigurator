@@ -1,4 +1,4 @@
-import { Camera, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { Camera, PerspectiveCamera, Scene, SRGBColorSpace, WebGLRenderer } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import Stats from "three/examples/jsm/libs/stats.module.js";
 
@@ -36,6 +36,7 @@ export default class RenderManager {
         container.appendChild(renderer.domElement);
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputColorSpace = SRGBColorSpace;
         return renderer;
     }
 
