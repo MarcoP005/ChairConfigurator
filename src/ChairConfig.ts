@@ -9,6 +9,7 @@ export const files: IFiles = {
         "cloth.glb"
     ],
     hardMaterials: [
+        "metal.glb",
         "plaster.glb"
     ],
     otherMaterials: [
@@ -25,7 +26,7 @@ export const chairConfig: IChairConfig = {
                     {
                         name: "Rays",
                         materials: MaterialType.Hard,
-                        occlusionMap: "SelfOcclusion_Rays.png"
+                        occlusionMap: "SelfOcclusion_Rays.png" //removable
                     },
                     {
                         name: "Wheels",
