@@ -1,4 +1,4 @@
-import { Mesh, MeshPhysicalMaterial } from "three";
+import { Mesh, MeshPhysicalMaterial, Texture } from "three";
 import Chair from "./Chair";
 import { chairConfig, files } from "./ChairConfig";
 import { MaterialType } from "./Enums";
@@ -6,7 +6,7 @@ import { IMesh, IPart } from "./Interfaces";
 import Part from "./Part";
 import Utility from "./Utility";
 
-export default class MatPicker {
+export default class Mat {
     private chair: Chair;
 
     private softMeshes: Mesh[] = [];
@@ -24,28 +24,6 @@ export default class MatPicker {
         this.setMaterial(MaterialType.Hard, 0);
         this.setMaterial(MaterialType.Other, 0);
         this.chair = chair;
-    }
-
-    private mapParts(parts: Part[], iParts: IPart[]) {
-        iParts.forEach(ipart => {
-            const p: Part | undefined = parts.find((part) => part.getName() === ipart.name);
-            if (!p) return;
-            this.mapMeshes(p.getMeshes(), ipart.meshes);
-        });
-    }
-
-    private mapMeshes(meshes: Mesh[], iMeshes: IMesh[]): void {
-        iMeshes.forEach(imesh => {
-            const m: Mesh | undefined = meshes.find((mesh) => mesh.name === imesh.name);
-            if (!m) return;
-
-            if (imesh.materials === MaterialType.Soft)
-                this.softMeshes.push(m);
-            else if (imesh.materials === MaterialType.Hard)
-                this.hardMeshes.push(m);
-            else if (imesh.materials === MaterialType.Other)
-                this.otherMeshes.push(m);
-        });
     }
 
     public async setMaterial(matType: MaterialType, matIndex: number): Promise<void> {
@@ -66,11 +44,35 @@ export default class MatPicker {
         }
     }
 
+    private mapParts(parts: Part[], iParts: IPart[]) {
+        iParts.forEach(ipart => {
+            const p: Part | undefined = parts.find((part) => part.getName() === ipart.name);
+            if (!p) return;
+            this.mapMeshes(p.getMeshes(), ipart.meshes);
+        });
+    }
+
+    private mapMeshes(meshes: Mesh[], iMeshes: IMesh[]) {
+        iMeshes.forEach(imesh => {
+            const m: Mesh | undefined = meshes.find((mesh) => mesh.name === imesh.name);
+            if (!m) return;
+
+            if (imesh.materials === MaterialType.Soft)
+                this.softMeshes.push(m);
+            else if (imesh.materials === MaterialType.Hard)
+                this.hardMeshes.push(m);
+            else if (imesh.materials === MaterialType.Other)
+                this.otherMeshes.push(m);
+        });
+    }
+
     private async changeMat(meshesToChange: Mesh[], material: MeshPhysicalMaterial) {
         for (const mesh of meshesToChange) {
             const mat: MeshPhysicalMaterial = material.clone();
-            mat.aoMap = await Utility.loadTexture(`occlusions/SelfOcclusion_${mesh.name}.png`);
-            mesh.material = mat;
+            material.aoMap = await Utility.loadTexture(`occlusions/SelfOcclusion_${mesh.name}.png`);
+            (mesh.material as MeshPhysicalMaterial).dispose();
+            mesh.material = material;
         }
     }
+
 }

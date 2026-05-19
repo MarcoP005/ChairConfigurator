@@ -2,7 +2,7 @@ import { Camera, Color, DirectionalLight, Object3D, PerspectiveCamera, Scene, Ve
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import Chair from "../Chair";
 import { chairConfig, files } from "../ChairConfig";
-import MatPicker from "../MatPicker";
+import Mat from "../Mat";
 import Part from "../Part";
 import Utility from "../Utility";
 
@@ -13,7 +13,7 @@ export default class SceneManager {
     private controls: OrbitControls;
 
     private chair: Chair | undefined; //undefined while model is loading
-    private matPicker: MatPicker | undefined;
+    private matPicker: Mat | undefined;
 
     public constructor(container: HTMLElement) {
         this.scene = new Scene();
@@ -26,7 +26,7 @@ export default class SceneManager {
             .then((model) => {
                 this.scene.add(model);
                 this.chair = this.mapModelToChair(model);
-                this.matPicker = new MatPicker(this.chair);
+                this.matPicker = new Mat(this.chair);
             });
     }
 
@@ -56,7 +56,7 @@ export default class SceneManager {
     private initCamera(): PerspectiveCamera {
         const camera: PerspectiveCamera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
         camera.far = 4;
-        camera.near = 0.001;
+        camera.near = 0.01;
         camera.position.set(0, 1, 2.2);
         return camera;
     }
@@ -95,5 +95,5 @@ export default class SceneManager {
 
     public getChair(): Chair | undefined { return this.chair; }
 
-    public getMatPicker(): MatPicker | undefined { return this.matPicker; }
+    public getMatPicker(): Mat | undefined { return this.matPicker; }
 }
