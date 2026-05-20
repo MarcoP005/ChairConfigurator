@@ -1,12 +1,12 @@
 import { Mesh, MeshPhysicalMaterial, Texture } from "three";
 import Chair from "./Chair";
-import { chairConfig, files } from "./ChairConfig";
-import { MaterialType } from "./Enums";
-import { IMesh, IPart } from "./Interfaces";
+import { chairConfig, files } from "../config/ChairConfig";
+import { MaterialType } from "../generals/Enums";
+import { IMesh, IPart } from "../generals/Interfaces";
 import Part from "./Part";
-import Utility from "./Utility";
+import Utility from "../generals/Utility";
 
-export default class Mat {
+export default class MatPicker {
     private chair: Chair;
 
     private softMeshes: Mesh[] = [];
@@ -20,25 +20,25 @@ export default class Mat {
         this.mapParts(chair.getArms(), chairConfig.components.arms);
         this.mapParts(chair.getFixed(), chairConfig.fixed);
 
-        this.setMaterial(MaterialType.Soft, 0);
-        this.setMaterial(MaterialType.Hard, 0);
-        this.setMaterial(MaterialType.Other, 0);
+        this.setMaterial(MaterialType.Soft, files.softMaterials[0]);
+        this.setMaterial(MaterialType.Hard, files.hardMaterials[0]);
+        this.setMaterial(MaterialType.Other, files.otherMaterials[0]);
         this.chair = chair;
     }
 
-    public async setMaterial(matType: MaterialType, matIndex: number): Promise<void> {
+    public async setMaterial(matType: MaterialType, matFile: string): Promise<void> {
         let newMat: MeshPhysicalMaterial | undefined;
         switch (matType) {
             case MaterialType.Soft:
-                newMat = ((await Utility.loadModel(`materials/${files.softMaterials[matIndex]}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
+                newMat = ((await Utility.loadModel(`materials/${matFile}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
                 this.changeMat(this.softMeshes, newMat);
                 break;
             case MaterialType.Hard:
-                newMat = ((await Utility.loadModel(`materials/${files.hardMaterials[matIndex]}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
+                newMat = ((await Utility.loadModel(`materials/${matFile}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
                 this.changeMat(this.hardMeshes, newMat);
                 break;
             case MaterialType.Other:
-                newMat = ((await Utility.loadModel(`materials/${files.otherMaterials[matIndex]}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
+                newMat = ((await Utility.loadModel(`materials/${matFile}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
                 this.changeMat(this.otherMeshes, newMat);
                 break;
         }
@@ -69,9 +69,9 @@ export default class Mat {
     private async changeMat(meshesToChange: Mesh[], material: MeshPhysicalMaterial) {
         for (const mesh of meshesToChange) {
             const mat: MeshPhysicalMaterial = material.clone();
-            material.aoMap = await Utility.loadTexture(`occlusions/SelfOcclusion_${mesh.name}.png`);
+            mat.aoMap = await Utility.loadTexture(`occlusions/SelfOcclusion_${mesh.name}.png`);
             (mesh.material as MeshPhysicalMaterial).dispose();
-            mesh.material = material;
+            mesh.material = mat;
         }
     }
 

@@ -1,4 +1,4 @@
-import { Component } from "./Enums";
+import { Component } from "../generals/Enums";
 import Part from "./Part";
 
 export default class Chair {

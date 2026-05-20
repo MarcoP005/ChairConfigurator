@@ -1,10 +1,10 @@
 import { Camera, Color, DirectionalLight, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
-import Chair from "../Chair";
-import { chairConfig, files } from "../ChairConfig";
-import Mat from "../Mat";
-import Part from "../Part";
-import Utility from "../Utility";
+import Chair from "../specifics/Chair";
+import { chairConfig, files } from "../config/ChairConfig";
+import MatPicker from "../specifics/MatPicker";
+import Part from "../specifics/Part";
+import Utility from "../generals/Utility";
 
 export default class SceneManager {
 
@@ -13,7 +13,7 @@ export default class SceneManager {
     private controls: OrbitControls;
 
     private chair: Chair | undefined; //undefined while model is loading
-    private matPicker: Mat | undefined;
+    private matPicker: MatPicker | undefined;
 
     public constructor(container: HTMLElement) {
         this.scene = new Scene();
@@ -26,7 +26,7 @@ export default class SceneManager {
             .then((model) => {
                 this.scene.add(model);
                 this.chair = this.mapModelToChair(model);
-                this.matPicker = new Mat(this.chair);
+                this.matPicker = new MatPicker(this.chair);
             });
     }
 
@@ -95,5 +95,5 @@ export default class SceneManager {
 
     public getChair(): Chair | undefined { return this.chair; }
 
-    public getMatPicker(): Mat | undefined { return this.matPicker; }
+    public getMatPicker(): MatPicker | undefined { return this.matPicker; }
 }

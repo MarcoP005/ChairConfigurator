@@ -1,5 +1,5 @@
 import { Mesh, Object3D } from "three";
-import { IPart } from "./Interfaces";
+import { IPart } from "../generals/Interfaces";
 
 export default class Part {
     private name: string;

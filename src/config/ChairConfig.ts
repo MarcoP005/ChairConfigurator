@@ -1,5 +1,5 @@
-import { MaterialType } from "./Enums";
-import { IChairConfig, IFiles } from "./Interfaces";
+import { MaterialType } from "../generals/Enums";
+import { IChairConfig, IFiles } from "../generals/Interfaces";
 
 export const files: IFiles = {
     chairModel: "chair.glb",
