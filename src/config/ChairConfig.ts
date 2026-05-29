@@ -3,16 +3,19 @@ import { IChairConfig, IFiles } from "../generals/Interfaces";
 
 export const files: IFiles = {
     chairModel: "chair.glb",
+    environmentModel: "office.glb",
     softMaterials: [
         "poplin.glb",
         "leather.glb",
         "cloth.glb"
     ],
     hardMaterials: [
-        "metal.glb"
+        "metal.glb",
+        "poplin.glb"
     ],
     otherMaterials: [
-        "metal.glb"
+        "metal.glb",
+        "poplin.glb"
     ]
 };
 

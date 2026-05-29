@@ -24,6 +24,7 @@ export interface IMesh {
 
 export interface IFiles {
     chairModel: string;
+    environmentModel: string;
     softMaterials: string[];
     hardMaterials: string[];
     otherMaterials: string[];

@@ -1,4 +1,4 @@
-import { Camera, Color, DirectionalLight, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { AmbientLight, Camera, Color, DirectionalLight, DirectionalLightHelper, Mesh, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import Chair from "../specifics/Chair";
 import { chairConfig, files } from "../config/ChairConfig";
@@ -17,7 +17,7 @@ export default class SceneManager {
 
     public constructor(container: HTMLElement) {
         this.scene = new Scene();
-        this.scene.background = new Color(0x242424);
+        this.scene.background = new Color(0xffffff);
         this.camera = this.initCamera();
         this.controls = this.initOrbitControl(container);
         this.addLights();
@@ -27,18 +27,23 @@ export default class SceneManager {
                 this.scene.add(model);
                 this.chair = this.mapModelToChair(model);
                 this.matPicker = new MatPicker(this.chair);
+                console.log(model);
+            });
+        Utility.loadModel(files.environmentModel)
+            .then((model) => {
+                this.scene.add(model);
             });
     }
 
     //temporary
     private addLights(): void {
-        const d1: DirectionalLight = new DirectionalLight();
-        d1.position.set(0, 2, 0);
-        const d3: DirectionalLight = new DirectionalLight();
-        d3.position.set(2, 0, 0);
-        const d5: DirectionalLight = new DirectionalLight();
-        d5.position.set(0, 0, 2);
-        this.scene.add(d1, d3, d5);
+        const dirLight1: DirectionalLight = new DirectionalLight(0xffffff, 0.4);
+        dirLight1.position.set(-3, 1.5, 1.5);
+        const dirLight2: DirectionalLight = new DirectionalLight(0xffffff, 0.4);
+        dirLight2.position.set(-3, 1.5, -1.5);
+        const ambLight: AmbientLight = new AmbientLight(0xffeecd, 0.5);
+
+        this.scene.add(dirLight1, dirLight2, ambLight);
     }
 
     private initOrbitControl(domElement: HTMLElement): OrbitControls {
@@ -47,15 +52,15 @@ export default class SceneManager {
         controls.enableDamping = true;
         controls.dampingFactor = 1.3;
         controls.target = new Vector3(0, 0.75, 0);
-        controls.maxDistance = 6;
-        controls.minDistance = 0.1;
-        controls.maxPolarAngle = 1.9;
+        controls.maxDistance = 3.5;
+        controls.minDistance = 1;
+        controls.maxPolarAngle = 1.77;
         return controls;
     }
 
     private initCamera(): PerspectiveCamera {
         const camera: PerspectiveCamera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
-        camera.far = 4;
+        camera.far = 10;
         camera.near = 0.01;
         camera.position.set(0, 1, 2.2);
         return camera;

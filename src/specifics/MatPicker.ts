@@ -69,7 +69,8 @@ export default class MatPicker {
     private async changeMat(meshesToChange: Mesh[], material: MeshPhysicalMaterial) {
         for (const mesh of meshesToChange) {
             const mat: MeshPhysicalMaterial = material.clone();
-            mat.aoMap = await Utility.loadTexture(`occlusions/SelfOcclusion_${mesh.name}.png`);
+            mat.aoMap = await Utility.loadTexture(`occlusions/Occlusion_${mesh.name}.png`);
+            mat.aoMap.flipY = false;
             (mesh.material as MeshPhysicalMaterial).dispose();
             mesh.material = mat;
         }
