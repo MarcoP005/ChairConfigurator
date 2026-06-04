@@ -27,7 +27,6 @@ export default class SceneManager {
                 this.scene.add(model);
                 this.chair = this.mapModelToChair(model);
                 this.matPicker = new MatPicker(this.chair);
-                console.log(model);
             });
         Utility.loadModel(files.environmentModel)
             .then((model) => {
@@ -48,7 +47,7 @@ export default class SceneManager {
 
     private initOrbitControl(domElement: HTMLElement): OrbitControls {
         const controls: OrbitControls = new OrbitControls(this.camera, domElement);
-        controls.autoRotate = true;
+        // controls.autoRotate = true;
         controls.enableDamping = true;
         controls.dampingFactor = 1.3;
         controls.target = new Vector3(0, 0.75, 0);

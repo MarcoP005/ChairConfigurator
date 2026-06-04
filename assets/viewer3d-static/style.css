@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.text {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.UI {
+    position: absolute;
+    z-index: 10;
+    border-radius: 2px;
+}
+
+.drawer {
+    position: fixed;
+    background-color: #EEEEEE;
+    right: 0;
+    overflow-y: auto;
+    max-height: 100%;
+    width: fit-content;
+    padding: 0 12px;
+}
+
+.title {
+    margin: 20px 20px 16px 20px;
+    text-align: center;
+    font-size: 24px;
+    letter-spacing: 2px;
+    color: #555;
+}
+
+.subtitle-section {
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #555;
+    margin: 8px 0 6px 0;
+}
+
+.row {
+    display: flex;
+}
+
+hr {
+    margin: 0 20px 8px 20px;
+}
+
+.separator {
+    margin: 8px 20px 8px 20px;
+}
+
+.icon-cell {
+    width: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 4px;
+    flex-shrink: 0;
+}
+
+.icon-cell img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.content-cell {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 8px;
+    gap: 0;
+}
+
+/* Radio buttons styled as buttons */
+.radio-btn input[type="radio"] {
+    display: none;
+}
+
+.radio-btn {
+    display: inline-block;
+    padding: 5px 6px;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    user-select: none;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.radio-btn:has(input[type="radio"]:checked) {
+    background-color: #6c757d;
+    color: white;
+    border-color: #6c757d;
+}
+
+/* Swatch buttons */
+.row-inline {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.swatch-btn input[type="radio"] {
+    display: none;
+}
+
+.swatch-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.swatch-square {
+    width: 50px;
+    height: 50px;
+    border: 3px solid transparent;
+    transition: border 0.2s;
+    box-sizing: border-box;
+}
+
+.swatch-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    margin-top: 6px;
+    color: #444;
+}
+
+.swatch-btn:has(input:checked) .swatch-square {
+    outline: 2px solid #333;
+    outline-offset: 3px; /* distanza dal quadrato */
+    border-color: transparent;
+}

@@ -15,7 +15,7 @@ export class Viewer3D {
     this.sceneManager = new SceneManager(container);
     this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), container, this.sceneManager.getControls());
 
-    new LilGUI(this);
+    // new LilGUI(this);
   }
 
   public SetSoftMat(matFile: string): void {
