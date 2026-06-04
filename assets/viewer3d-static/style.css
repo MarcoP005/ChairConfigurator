@@ -7,14 +7,9 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.UI {
-    position: absolute;
-    z-index: 10;
-    border-radius: 2px;
-}
-
 .drawer {
-    position: fixed;
+    position: absolute;
+    z-index: 2;
     background-color: #EEEEEE;
     right: 0;
     overflow-y: auto;
