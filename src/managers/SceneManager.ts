@@ -18,7 +18,7 @@ export default class SceneManager {
     public constructor(container: HTMLElement) {
         this.scene = new Scene();
         this.scene.background = new Color(0xffffff);
-        this.camera = this.initCamera();
+        this.camera = this.initCamera(container);
         this.controls = this.initOrbitControl(container);
         this.addLights();
 
@@ -57,8 +57,8 @@ export default class SceneManager {
         return controls;
     }
 
-    private initCamera(): PerspectiveCamera {
-        const camera: PerspectiveCamera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+    private initCamera(domElement: HTMLElement): PerspectiveCamera {
+        const camera: PerspectiveCamera = new PerspectiveCamera(50, domElement.clientWidth / domElement.clientHeight, 0.1, 10);
         camera.far = 10;
         camera.near = 0.01;
         camera.position.set(0, 1, 2.2);

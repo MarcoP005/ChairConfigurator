@@ -14,22 +14,22 @@ export default class RenderManager {
         this.scene = scene;
         this.orbitControls = controls;
 
-        window.addEventListener('resize', () => this.onWindowResize());
+        window.addEventListener('resize', () => this.onWindowResize(container));
         this.loopRender();
     }
 
-    private onWindowResize() {
+    private onWindowResize(container: HTMLElement) {
         if (this.camera instanceof PerspectiveCamera) {
-            this.camera.aspect = window.innerWidth / window.innerHeight;
+            this.camera.aspect = container.clientWidth / container.clientHeight;
             this.camera.updateProjectionMatrix();
         }
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setSize(container.clientWidth, container.clientHeight);
     }
 
     public initRenderer(container: HTMLElement): WebGLRenderer {
         const renderer: WebGLRenderer = new WebGLRenderer({ antialias: true });
         container.appendChild(renderer.domElement);
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.outputColorSpace = SRGBColorSpace;
         return renderer;

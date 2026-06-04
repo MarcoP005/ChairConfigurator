@@ -8,14 +8,13 @@
 }
 
 .drawer {
-    position: absolute;
-    z-index: 2;
     background-color: #EEEEEE;
     right: 0;
     overflow-y: auto;
     max-height: 100%;
     width: fit-content;
     padding: 0 12px;
+    flex-shrink: 0;
 }
 
 .title {
