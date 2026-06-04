@@ -11,6 +11,7 @@ export default class SceneManager {
     private scene: Scene;
     private camera: Camera;
     private controls: OrbitControls;
+    private ambLight!: AmbientLight;
 
     private chair: Chair | undefined; //undefined while model is loading
     private matPicker: MatPicker | undefined;
@@ -40,9 +41,9 @@ export default class SceneManager {
         dirLight1.position.set(-3, 1.5, 1.5);
         const dirLight2: DirectionalLight = new DirectionalLight(0xffffff, 0.4);
         dirLight2.position.set(-3, 1.5, -1.5);
-        const ambLight: AmbientLight = new AmbientLight(0xffeecd, 0.5);
+        this.ambLight = new AmbientLight(0xffeecd, 0.5);
 
-        this.scene.add(dirLight1, dirLight2, ambLight);
+        this.scene.add(dirLight1, dirLight2, this.ambLight);
     }
 
     private initOrbitControl(domElement: HTMLElement): OrbitControls {
@@ -100,4 +101,6 @@ export default class SceneManager {
     public getChair(): Chair | undefined { return this.chair; }
 
     public getMatPicker(): MatPicker | undefined { return this.matPicker; }
+
+    public getAmbLight(): AmbientLight { return this.ambLight; }
 }

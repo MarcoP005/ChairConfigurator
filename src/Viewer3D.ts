@@ -1,12 +1,13 @@
-import { LilGUI } from "./debug/LilGUI";
+import { Cache } from "three";
 import { Component, MaterialType } from "./generals/Enums";
 import RenderManager from "./managers/RenderManager";
 import SceneManager from "./managers/SceneManager";
-import { Cache } from "three";
+import { Script } from "./Script";
 
 export class Viewer3D {
   private sceneManager: SceneManager;
   private renderManager: RenderManager;
+  private script: Script;
 
   public constructor(options: { containerID: string }) {
     Cache.enabled = true;
@@ -15,6 +16,8 @@ export class Viewer3D {
     this.sceneManager = new SceneManager(container);
     this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), container, this.sceneManager.getControls());
 
+    this.script = new Script(this);
+    this.script.initScripts();
     // new LilGUI(this);
   }
 
@@ -44,5 +47,13 @@ export class Viewer3D {
 
   public SetArm(partName: string): void {
     this.sceneManager.getChair()?.setPart(Component.arm, partName);
+  }
+
+  public ToggleAutoRotate(toggle: boolean): void {
+    this.sceneManager.getControls().autoRotate = toggle;
+  }
+
+  public ToggleLights(toggle: boolean): void {
+    this.sceneManager.getAmbLight().intensity = toggle ? 0.5 : 0;
   }
 }

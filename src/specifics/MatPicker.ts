@@ -75,5 +75,4 @@ export default class MatPicker {
             mesh.material = mat;
         }
     }
-
 }
