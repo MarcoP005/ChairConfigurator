@@ -1,0 +1,21 @@
+h1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: azure;
+    color: blue
+}
+
+button {
+    padding: 8px;
+}
+
+.dogState {
+    font-weight: bold;
+}
+
+.bad {
+    background-color: red;
+}
+
+.good {
+    background-color: greenyellow;
+}

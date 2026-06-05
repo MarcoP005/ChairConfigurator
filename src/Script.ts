@@ -1,3 +1,4 @@
+import jsPDF from "jspdf";
 import { Viewer3D } from "./Viewer3D";
 import { files } from "./config/ChairConfig";
 
@@ -44,5 +45,15 @@ export class Script {
             const checked: boolean = (e.target as HTMLInputElement).checked;
             this.viewer3D.ToggleLights(checked);
         });
+
+        document.getElementById("download-config-btn")?.addEventListener("click", (e) => {
+            this.createConfigPDF();
+        });
+    }
+
+    private createConfigPDF(): void {
+        const doc: jsPDF = new jsPDF();
+        doc.text("hello world", 10, 10);
+        doc.save(`chair_config.pdf`);
     }
 }

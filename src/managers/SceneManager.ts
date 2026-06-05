@@ -10,6 +10,7 @@ export default class SceneManager {
 
     private scene: Scene;
     private camera: Camera;
+    private renderCamera: Camera;
     private controls: OrbitControls;
 
     private chair: Chair | undefined; //undefined while model is loading
@@ -19,7 +20,12 @@ export default class SceneManager {
     public constructor(container: HTMLElement) {
         this.scene = new Scene();
         this.scene.background = new Color(0xffffff);
+
         this.camera = this.initCamera(container);
+        this.camera.position.set(0, 1, 2.2);
+        this.renderCamera = this.initCamera(container);
+        this.renderCamera.position.set(-1.7, 1.5, 2);
+
         this.controls = this.initOrbitControl(container);
         this.addLights();
 
@@ -69,7 +75,6 @@ export default class SceneManager {
         const camera: PerspectiveCamera = new PerspectiveCamera(50, domElement.clientWidth / domElement.clientHeight, 0.1, 10);
         camera.far = 10;
         camera.near = 0.01;
-        camera.position.set(0, 1, 2.2);
         return camera;
     }
 
