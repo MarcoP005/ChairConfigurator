@@ -11,11 +11,11 @@ export const files: IFiles = {
     ],
     hardMaterials: [
         "metal.glb",
-        "poplin.glb"
+        "reflective.glb"
     ],
     otherMaterials: [
-        "metal.glb",
-        "poplin.glb"
+        "reflective.glb",
+        "metal.glb"
     ]
 };
 

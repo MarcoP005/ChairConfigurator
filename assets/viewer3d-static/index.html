@@ -9,169 +9,212 @@
   <title>Chair Configuration</title>
 </head>
 
-<body style="width: 100vw; height: 100vh; overflow: hidden; display: flex;">
-  <div id="Viewer3D" style="flex: 1; min-width: 0;">
+<body>
+
+  <div id="Viewer3D" class="viewer">
   </div>
 
-
-
-  <div class="drawer" style="height: 100vh;">
-    <p class="text title">CONFIGURATION</p>
+  <div class="drawer">
+    <p class="title">
+      CONFIGURATION
+    </p>
 
     <hr>
 
-    <p class="text subtitle-section">MODEL</p>
+    <p class="subtitle">
+      MODEL
+    </p>
 
+    <!-- BACK select -->
     <div class="row">
-      <div class="icon-cell"><img src="assets/viewer3d-static/ico_back.png"></div>
+      <div class="icon-cell">
+        <img src="assets/viewer3d-static/ico_back.png">
+      </div>
       <div class="content-cell">
-        <label class="radio-btn text" style="border-radius: 5px 5px 0 0;">
-          <input type="radio" name="back" checked id="squareBack"> square
+        <label class="radio-btn">
+          <input type="radio" name="back-select" id="square-back-rad" checked> square
         </label>
-        <label class="radio-btn text" style="border-radius: 0 0 5px 5px;">
-          <input type="radio" name="back" id="roundBack"> round
+        <label class="radio-btn">
+          <input type="radio" name="back-select" id="round-back-rad"> round
         </label>
       </div>
     </div>
 
+    <!-- SEAT select -->
     <div class="row">
-      <div class="icon-cell"><img src="assets/viewer3d-static/ico_seat.png"></div>
+      <div class="icon-cell">
+        <img src="assets/viewer3d-static/ico_seat.png">
+      </div>
       <div class="content-cell">
-        <label class="radio-btn text" style="border-radius: 5px 5px 0 0;">
-          <input type="radio" name="seat" checked id="squareSeat"> square
+        <label class="radio-btn">
+          <input type="radio" name="seat-select" id="square-seat-rad" checked> square
         </label>
-        <label class="radio-btn text" style="border-radius: 0 0 5px 5px;">
-          <input type="radio" name="seat" id="roundSeat"> round
+        <label class="radio-btn">
+          <input type="radio" name="seat-select" id="round-seat-rad"> round
         </label>
       </div>
     </div>
 
+    <!-- LEG select -->
     <div class="row">
-      <div class="icon-cell"><img src="assets/viewer3d-static/ico_leg.png"></div>
+      <div class="icon-cell">
+        <img src="assets/viewer3d-static/ico_leg.png">
+      </div>
       <div class="content-cell">
-        <label class="radio-btn text" style="border-radius: 5px 5px 0 0;">
-          <input type="radio" name="leg" checked id="wheels"> wheels
+        <label class="radio-btn">
+          <input type="radio" name="leg-select" id="wheels-leg-rad" checked> wheels
         </label>
-        <label class="radio-btn text">
-          <input type="radio" name="leg" id="tulip"> tulip
+        <label class="radio-btn">
+          <input type="radio" name="leg-select" id="tulip-leg-rad"> tulip
         </label>
-        <label class="radio-btn text" style="border-radius: 0 0 5px 5px;">
-          <input type="radio" name="leg" id="cantilever"> cantilever
+        <label class="radio-btn">
+          <input type="radio" name="leg-select" id="cantilever-leg-rad"> cantilever
         </label>
       </div>
     </div>
 
+    <!-- ARM select -->
     <div class="row">
-      <div class="icon-cell"><img src="assets/viewer3d-static/ico_arm.png"></div>
+      <div class="icon-cell">
+        <img src="assets/viewer3d-static/ico_arm.png">
+      </div>
       <div class="content-cell">
-        <label class="radio-btn text" style="border-radius: 5px 5px 0 0;">
-          <input type="radio" name="arm" checked id="curve"> curve
+        <label class="radio-btn">
+          <input type="radio" name="arm-select" id="curve-arm-rad" checked> curve
         </label>
-        <label class="radio-btn text">
-          <input type="radio" name="arm" id="straight"> straight
+        <label class="radio-btn">
+          <input type="radio" name="arm-select" id="straight-arm-rad"> straight
         </label>
-        <label class="radio-btn text" style="border-radius: 0 0 5px 5px;">
-          <input type="radio" name="arm" id="lateral"> lateral
+        <label class="radio-btn">
+          <input type="radio" name="arm-select" id="lateral-arm-rad"> lateral
         </label>
       </div>
     </div>
 
     <hr class="separator">
 
-    <p class="text subtitle-section">MATERIALS</p>
+    <p class="subtitle">
+      MATERIALS
+    </p>
 
+    <!-- SOFT material select -->
     <div class="row">
-      <div class="icon-cell"><img src="assets/viewer3d-static/ico_soft.png" alt="logo"></div>
+      <div class="icon-cell">
+        <img src="assets/viewer3d-static/ico_soft.png">
+      </div>
       <div class="content-cell row-inline">
         <label class="swatch-btn">
-          <input type="radio" name="soft" checked id="soft-mat-1">
+          <input type="radio" name="soft-mat-select" id="soft-mat-1-rad" checked>
           <span class="swatch-square" style="background-color: #222222;"></span>
-          <span class="swatch-label">poplin</span>
+          <span class="swatch-label">
+            poplin
+          </span>
         </label>
         <label class="swatch-btn">
-          <input type="radio" name="soft" id="soft-mat-2">
+          <input type="radio" name="soft-mat-select" id="soft-mat-2-rad">
           <span class="swatch-square" style="background-color: #aaaaaa;"></span>
-          <span class="swatch-label">leather</span>
+          <span class="swatch-label">
+            leather
+          </span>
         </label>
         <label class="swatch-btn">
-          <input type="radio" name="soft" id="soft-mat-3">
+          <input type="radio" name="soft-mat-select" id="soft-mat-3-rad">
           <span class="swatch-square" style="background-color: #f0f0f0;"></span>
-          <span class="swatch-label">fabric</span>
+          <span class="swatch-label">
+            fabric
+          </span>
         </label>
       </div>
     </div>
 
+    <!-- HARD material select-->
     <div class="row">
-      <div class="icon-cell"><img src="assets/viewer3d-static/ico_hard.png" alt="logo"></div>
+      <div class="icon-cell"><img src="assets/viewer3d-static/ico_hard.png"></div>
       <div class="content-cell row-inline">
         <label class="swatch-btn">
-          <input type="radio" name="hard" checked>
+          <input type="radio" name="hard-mat-select" id="hard-mat-1-rad" checked>
           <span class="swatch-square" style="background-color: #222222;"></span>
-          <span class="swatch-label">metal</span>
+          <span class="swatch-label">
+            metal
+          </span>
         </label>
         <label class="swatch-btn">
-          <input type="radio" name="hard">
+          <input type="radio" name="hard-mat-select" id="hard-mat-2-rad">
           <span class="swatch-square" style="background-color: #aaaaaa;"></span>
-          <span class="swatch-label">gray</span>
+          <span class="swatch-label">
+            gray
+          </span>
         </label>
         <label class="swatch-btn">
-          <input type="radio" name="hard">
+          <input type="radio" name="hard-mat-select" id="hard-mat-3-rad">
           <span class="swatch-square" style="background-color: #f0f0f0;"></span>
-          <span class="swatch-label">plastic</span>
+          <span class="swatch-label">
+            plastic
+          </span>
         </label>
       </div>
     </div>
 
+    <!-- OTHER material select -->
     <div class="row">
-      <div class="icon-cell"><img src="assets/viewer3d-static/ico_other.png" alt="logo"></div>
+      <div class="icon-cell"><img src="assets/viewer3d-static/ico_other.png"></div>
       <div class="content-cell row-inline">
         <label class="swatch-btn">
-          <input type="radio" name="other" checked>
+          <input type="radio" name="other-mat-select" id="other-mat-1-rad" checked>
           <span class="swatch-square" style="background-color: #222222;"></span>
-          <span class="swatch-label">metal</span>
+          <span class="swatch-label">
+            metal
+          </span>
         </label>
         <label class="swatch-btn">
-          <input type="radio" name="other">
+          <input type="radio" name="other-mat-select" id="other-mat-2-rad">
           <span class="swatch-square" style="background-color: #aaaaaa;"></span>
-          <span class="swatch-label">gray</span>
+          <span class="swatch-label">
+            gray
+          </span>
         </label>
         <label class="swatch-btn">
-          <input type="radio" name="other">
+          <input type="radio" name="other-mat-select" id="other-mat-3-rad">
           <span class="swatch-square" style="background-color: #f0f0f0;"></span>
-          <span class="swatch-label">plastic</span>
+          <span class="swatch-label">
+            plastic
+          </span>
         </label>
       </div>
     </div>
 
     <hr class="separator">
-    <p class="text subtitle-section">SETTINGS</p>
+
+    <p class="subtitle">
+      SETTINGS
+    </p>
 
     <div class="row setting-row">
-      <span class="text setting-label">Auto rotate</span>
+      <span class="setting-label">
+        Auto rotate
+      </span>
       <label class="toggle">
-        <input type="checkbox" id="autorotate">
+        <input type="checkbox" id="autorotate-chkbx">
         <span class="toggle-slider"></span>
       </label>
     </div>
 
     <div class="row setting-row" style="margin-bottom: 20px;">
-      <span class="text setting-label">Lights</span>
+      <span class="setting-label">
+        Lights
+      </span>
       <label class="toggle">
-        <input type="checkbox" id="lights" checked>
+        <input type="checkbox" id="lights-chkbx" checked>
         <span class="toggle-slider"></span>
       </label>
     </div>
 
   </div>
-
-
-
 </body>
 
 <script>
   let viewer3D = new Viewer3D(
     {
-      // the id of the container where the component will live
       containerID: "Viewer3D"
     }
   );

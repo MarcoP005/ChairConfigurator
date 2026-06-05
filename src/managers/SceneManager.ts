@@ -48,7 +48,7 @@ export default class SceneManager {
 
     private initOrbitControl(domElement: HTMLElement): OrbitControls {
         const controls: OrbitControls = new OrbitControls(this.camera, domElement);
-        // controls.autoRotate = true;
+        controls.enablePan = false;
         controls.enableDamping = true;
         controls.dampingFactor = 1.3;
         controls.target = new Vector3(0, 0.75, 0);
