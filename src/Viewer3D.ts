@@ -54,6 +54,6 @@ export class Viewer3D {
   }
 
   public ToggleLights(toggle: boolean): void {
-    this.sceneManager.getAmbLight().intensity = toggle ? 0.5 : 0;
+    this.sceneManager.getScene().environmentIntensity = toggle ? 0.2 : 0;
   }
 }

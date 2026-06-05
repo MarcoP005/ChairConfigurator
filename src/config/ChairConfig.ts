@@ -4,6 +4,7 @@ import { IChairConfig, IFiles } from "../generals/Interfaces";
 export const files: IFiles = {
     chairModel: "chair.glb",
     environmentModel: "office.glb",
+    hdri: "skybox.hdr",
     softMaterials: [
         "poplin.glb",
         "leather.glb",

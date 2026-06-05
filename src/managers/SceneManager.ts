@@ -1,19 +1,19 @@
-import { AmbientLight, Camera, Color, DirectionalLight, DirectionalLightHelper, Mesh, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { Camera, Color, DataTexture, DirectionalLight, EquirectangularReflectionMapping, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
-import Chair from "../specifics/Chair";
 import { chairConfig, files } from "../config/ChairConfig";
+import Utility from "../generals/Utility";
+import Chair from "../specifics/Chair";
 import MatPicker from "../specifics/MatPicker";
 import Part from "../specifics/Part";
-import Utility from "../generals/Utility";
 
 export default class SceneManager {
 
     private scene: Scene;
     private camera: Camera;
     private controls: OrbitControls;
-    private ambLight!: AmbientLight;
 
     private chair: Chair | undefined; //undefined while model is loading
+    private hdri: DataTexture | undefined;
     private matPicker: MatPicker | undefined;
 
     public constructor(container: HTMLElement) {
@@ -33,17 +33,24 @@ export default class SceneManager {
             .then((model) => {
                 this.scene.add(model);
             });
+        Utility.loadHDR(files.hdri)
+            .then((hdri) => {
+                this.hdri = hdri;
+                hdri.mapping = EquirectangularReflectionMapping;
+                this.scene.environment = hdri;
+                this.scene.background = hdri;
+                this.scene.environmentIntensity = 0.2;
+            });
     }
 
     //temporary
     private addLights(): void {
-        const dirLight1: DirectionalLight = new DirectionalLight(0xffffff, 0.4);
+        const dirLight1: DirectionalLight = new DirectionalLight(0xffffff, 0.2);
         dirLight1.position.set(-3, 1.5, 1.5);
-        const dirLight2: DirectionalLight = new DirectionalLight(0xffffff, 0.4);
+        const dirLight2: DirectionalLight = new DirectionalLight(0xffffff, 0.2);
         dirLight2.position.set(-3, 1.5, -1.5);
-        this.ambLight = new AmbientLight(0xffeecd, 0.5);
 
-        this.scene.add(dirLight1, dirLight2, this.ambLight);
+        this.scene.add(dirLight1, dirLight2);
     }
 
     private initOrbitControl(domElement: HTMLElement): OrbitControls {
@@ -101,6 +108,4 @@ export default class SceneManager {
     public getChair(): Chair | undefined { return this.chair; }
 
     public getMatPicker(): MatPicker | undefined { return this.matPicker; }
-
-    public getAmbLight(): AmbientLight { return this.ambLight; }
 }
