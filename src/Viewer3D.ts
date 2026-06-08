@@ -14,46 +14,50 @@ export class Viewer3D {
     const container: HTMLElement = document.getElementById(options.containerID)!;
 
     this.sceneManager = new SceneManager(container);
-    this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), container, this.sceneManager.getControls());
+    this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), container, this.sceneManager.getControls(), this.sceneManager.getRenderCamera());
 
     this.script = new Script(this);
     this.script.initScripts();
     // new LilGUI(this);
   }
 
-  public SetSoftMat(matFile: string): void {
+  public setSoftMat(matFile: string): void {
     this.sceneManager.getMatPicker()?.setMaterial(MaterialType.Soft, matFile);
   }
 
-  public SetHardMat(matFile: string): void {
+  public setHardMat(matFile: string): void {
     this.sceneManager.getMatPicker()?.setMaterial(MaterialType.Hard, matFile);
   }
 
-  public SetOtherMat(matFile: string): void {
+  public setOtherMat(matFile: string): void {
     this.sceneManager.getMatPicker()?.setMaterial(MaterialType.Other, matFile);
   }
 
-  public SetLeg(partName: string): void {
+  public setLeg(partName: string): void {
     this.sceneManager.getChair()?.setPart(Component.leg, partName);
   }
 
-  public SetSeat(partName: string): void {
+  public setSeat(partName: string): void {
     this.sceneManager.getChair()?.setPart(Component.seat, partName);
   }
 
-  public SetBack(partName: string): void {
+  public setBack(partName: string): void {
     this.sceneManager.getChair()?.setPart(Component.back, partName);
   }
 
-  public SetArm(partName: string): void {
+  public setArm(partName: string): void {
     this.sceneManager.getChair()?.setPart(Component.arm, partName);
   }
 
-  public ToggleAutoRotate(toggle: boolean): void {
+  public toggleAutoRotate(toggle: boolean): void {
     this.sceneManager.getControls().autoRotate = toggle;
   }
 
-  public ToggleLights(toggle: boolean): void {
+  public toggleLights(toggle: boolean): void {
     this.sceneManager.getScene().environmentIntensity = toggle ? 0.2 : 0;
+  }
+
+  public downloadRender(): void {
+    this.renderManager.saveRenderToPdf();
   }
 }

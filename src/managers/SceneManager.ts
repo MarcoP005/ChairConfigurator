@@ -24,7 +24,8 @@ export default class SceneManager {
         this.camera = this.initCamera(container);
         this.camera.position.set(0, 1, 2.2);
         this.renderCamera = this.initCamera(container);
-        this.renderCamera.position.set(-1.7, 1.5, 2);
+        this.renderCamera.position.set(-1.3, 1.5, 1.6);
+        const offset: Vector3 = new Vector3(0, 0.7, 0);
 
         this.controls = this.initOrbitControl(container);
         this.addLights();
@@ -38,6 +39,7 @@ export default class SceneManager {
         Utility.loadModel(files.environmentModel)
             .then((model) => {
                 this.scene.add(model);
+                this.renderCamera.lookAt(model.position.clone().add(offset));
             });
         Utility.loadHDR(files.hdri)
             .then((hdri) => {
@@ -113,4 +115,6 @@ export default class SceneManager {
     public getChair(): Chair | undefined { return this.chair; }
 
     public getMatPicker(): MatPicker | undefined { return this.matPicker; }
+
+    public getRenderCamera(): Camera { return this.renderCamera; }
 }
