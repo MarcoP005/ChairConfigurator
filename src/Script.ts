@@ -1,5 +1,6 @@
 import { Viewer3D } from "./Viewer3D";
-import { files } from "./config/ChairConfig";
+import { chairConfig, files } from "./config/ChairConfig";
+import { Component, MaterialType } from "./generals/Enums";
 
 export class Script {
     private viewer3D: Viewer3D;
@@ -9,31 +10,32 @@ export class Script {
     }
 
     public initScripts(): void {
-        document.getElementById("square-back-rad")?.addEventListener("click", () => this.viewer3D.setBack("back_01"));
-        document.getElementById("round-back-rad")?.addEventListener("click", () => this.viewer3D.setBack("back_02"));
 
-        document.getElementById("square-seat-rad")?.addEventListener("click", () => this.viewer3D.setSeat("seat_01"));
-        document.getElementById("round-seat-rad")?.addEventListener("click", () => this.viewer3D.setSeat("seat_02"));
+        this.addSetPartEvent("back-0-rad", chairConfig.components.backs[0].name, Component.back);
+        this.addSetPartEvent("back-1-rad", chairConfig.components.backs[1].name, Component.back);
 
-        document.getElementById("wheels-leg-rad")?.addEventListener("click", () => this.viewer3D.setLeg("leg_01"));
-        document.getElementById("tulip-leg-rad")?.addEventListener("click", () => this.viewer3D.setLeg("leg_02"));
-        document.getElementById("cantilever-leg-rad")?.addEventListener("click", () => this.viewer3D.setLeg("leg_03"));
+        this.addSetPartEvent("seat-0-rad", chairConfig.components.seats[0].name, Component.seat);
+        this.addSetPartEvent("seat-1-rad", chairConfig.components.seats[1].name, Component.seat);
 
-        document.getElementById("curve-arm-rad")?.addEventListener("click", () => this.viewer3D.setArm("arm_01"));
-        document.getElementById("straight-arm-rad")?.addEventListener("click", () => this.viewer3D.setArm("arm_02"));
-        document.getElementById("lateral-arm-rad")?.addEventListener("click", () => this.viewer3D.setArm("arm_03"));
+        this.addSetPartEvent("leg-0-rad", chairConfig.components.legs[0].name, Component.leg);
+        this.addSetPartEvent("leg-1-rad", chairConfig.components.legs[1].name, Component.leg);
+        this.addSetPartEvent("leg-2-rad", chairConfig.components.legs[2].name, Component.leg);
 
-        document.getElementById("soft-mat-1-rad")?.addEventListener("click", () => this.viewer3D.setSoftMat(files.softMaterials[0].toString()));
-        document.getElementById("soft-mat-2-rad")?.addEventListener("click", () => this.viewer3D.setSoftMat(files.softMaterials[1].toString()));
-        document.getElementById("soft-mat-3-rad")?.addEventListener("click", () => this.viewer3D.setSoftMat(files.softMaterials[2].toString()));
+        this.addSetPartEvent("arm-0-rad", chairConfig.components.arms[0].name, Component.arm);
+        this.addSetPartEvent("arm-1-rad", chairConfig.components.arms[1].name, Component.arm);
+        this.addSetPartEvent("arm-2-rad", chairConfig.components.arms[2].name, Component.arm);
 
-        document.getElementById("hard-mat-1-rad")?.addEventListener("click", () => this.viewer3D.setHardMat(files.hardMaterials[0].toString()));
-        document.getElementById("hard-mat-2-rad")?.addEventListener("click", () => this.viewer3D.setHardMat(files.hardMaterials[1].toString()));
-        document.getElementById("hard-mat-3-rad")?.addEventListener("click", () => this.viewer3D.setHardMat(files.hardMaterials[2].toString()));
+        this.addSetMaterialEvent("soft-mat-0-rad", "soft-mat-0-label", files.softMaterials[0], MaterialType.Soft);
+        this.addSetMaterialEvent("soft-mat-1-rad", "soft-mat-1-label", files.softMaterials[1], MaterialType.Soft);
+        this.addSetMaterialEvent("soft-mat-2-rad", "soft-mat-2-label", files.softMaterials[2], MaterialType.Soft);
 
-        document.getElementById("other-mat-1-rad")?.addEventListener("click", () => this.viewer3D.setOtherMat(files.otherMaterials[0].toString()));
-        document.getElementById("other-mat-2-rad")?.addEventListener("click", () => this.viewer3D.setOtherMat(files.otherMaterials[1].toString()));
-        document.getElementById("other-mat-3-rad")?.addEventListener("click", () => this.viewer3D.setOtherMat(files.otherMaterials[2].toString()));
+        this.addSetMaterialEvent("hard-mat-0-rad", "hard-mat-0-label", files.hardMaterials[0], MaterialType.Hard);
+        this.addSetMaterialEvent("hard-mat-1-rad", "hard-mat-1-label", files.hardMaterials[1], MaterialType.Hard);
+        // this.addSetMaterialEvent("hard-mat-2-rad", "hard-mat-2-label", files.hardMaterials[2], MaterialType.Hard);
+
+        this.addSetMaterialEvent("other-mat-0-rad", "other-mat-0-label", files.otherMaterials[0], MaterialType.Hard);
+        this.addSetMaterialEvent("other-mat-1-rad", "other-mat-1-label", files.otherMaterials[1], MaterialType.Hard);
+        // this.addSetMaterialEvent("other-mat-2-rad", "other-mat-2-label", files.otherMaterials[2], MaterialType.Hard);
 
         document.getElementById("autorotate-chkbx")?.addEventListener("change", (e) => {
             const checked: boolean = (e.target as HTMLInputElement).checked;
@@ -48,5 +50,46 @@ export class Script {
         document.getElementById("download-config-btn")?.addEventListener("click", (e) => {
             this.viewer3D.downloadRender();
         });
+    }
+
+    private addSetPartEvent(buttonName: string, partName: string, componentType: Component) {
+        const button: HTMLElement | null = document.getElementById(buttonName);
+        if (!button) return console.log(buttonName, "not found.");
+
+        switch (componentType) {
+            case Component.back:
+                button.addEventListener("click", () => this.viewer3D.setBack(partName));
+                break;
+            case Component.seat:
+                button.addEventListener("click", () => this.viewer3D.setSeat(partName));
+                break;
+            case Component.leg:
+                button.addEventListener("click", () => this.viewer3D.setLeg(partName));
+                break;
+            case Component.arm:
+                button.addEventListener("click", () => this.viewer3D.setArm(partName));
+                break;
+        }
+        button.nextSibling!.textContent = partName;
+    }
+
+    private addSetMaterialEvent(buttonName: string, labelName: string, materialName: string, materialType: MaterialType) {
+        const button: HTMLElement | null = document.getElementById(buttonName);
+        if (!button) return;
+        const label: HTMLElement | null = document.getElementById(labelName);
+
+        switch (materialType) {
+            case MaterialType.Soft:
+                button.addEventListener("click", () => this.viewer3D.setSoftMat(materialName));
+                break;
+            case MaterialType.Hard:
+                button.addEventListener("click", () => this.viewer3D.setHardMat(materialName));
+                break;
+            case MaterialType.Other:
+                button.addEventListener("click", () => this.viewer3D.setOtherMat(materialName));
+                break;
+        }
+
+        (label as HTMLSpanElement).textContent = materialName.replace(".glb", "");
     }
 }

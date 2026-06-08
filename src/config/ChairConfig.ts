@@ -22,9 +22,49 @@ export const files: IFiles = {
 
 export const chairConfig: IChairConfig = {
     components: {
+        backs: [
+            {
+                name: "square",
+                meshes: [
+                    {
+                        name: "SquareBack",
+                        materials: MaterialType.Soft
+                    }
+                ]
+            },
+            {
+                name: "round",
+                meshes: [
+                    {
+                        name: "RoundBack",
+                        materials: MaterialType.Soft
+                    }
+                ]
+            }
+        ],
+        seats: [
+            {
+                name: "square",
+                meshes: [
+                    {
+                        name: "SquareSeat",
+                        materials: MaterialType.Soft
+                    }
+                ]
+            },
+            {
+                name: "round",
+                meshes: [
+                    {
+                        name: "RoundSeat",
+                        materials: MaterialType.Soft
+                    }
+                ]
+            }
+        ],
         legs: [
             {
-                name: "leg_01",
+                name: "wheels",
                 meshes: [
                     {
                         name: "Rays",
@@ -37,7 +77,7 @@ export const chairConfig: IChairConfig = {
                 ]
             },
             {
-                name: "leg_02",
+                name: "tulip",
                 meshes: [
                     {
                         name: "Tulip",
@@ -46,7 +86,7 @@ export const chairConfig: IChairConfig = {
                 ]
             },
             {
-                name: "leg_03",
+                name: "cantilever",
                 meshes: [
                     {
                         name: "Cantilever",
@@ -55,49 +95,9 @@ export const chairConfig: IChairConfig = {
                 ]
             }
         ],
-        seats: [
-            {
-                name: "seat_01",
-                meshes: [
-                    {
-                        name: "SquareSeat",
-                        materials: MaterialType.Soft
-                    }
-                ]
-            },
-            {
-                name: "seat_02",
-                meshes: [
-                    {
-                        name: "RoundSeat",
-                        materials: MaterialType.Soft
-                    }
-                ]
-            }
-        ],
-        backs: [
-            {
-                name: "back_01",
-                meshes: [
-                    {
-                        name: "SquareBack",
-                        materials: MaterialType.Soft
-                    }
-                ]
-            },
-            {
-                name: "back_02",
-                meshes: [
-                    {
-                        name: "RoundBack",
-                        materials: MaterialType.Soft
-                    }
-                ]
-            }
-        ],
         arms: [
             {
-                name: "arm_01",
+                name: "curve",
                 meshes: [
                     {
                         name: "Curve",
@@ -110,7 +110,7 @@ export const chairConfig: IChairConfig = {
                 ]
             },
             {
-                name: "arm_02",
+                name: "straight",
                 meshes: [
                     {
                         name: "Straight",
@@ -123,7 +123,7 @@ export const chairConfig: IChairConfig = {
                 ]
             },
             {
-                name: "arm_03",
+                name: "lateral",
                 meshes: [
                     {
                         name: "Lateral",
