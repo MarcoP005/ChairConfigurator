@@ -1,10 +1,12 @@
-import { Mesh, MeshPhysicalMaterial, Texture } from "three";
-import Chair from "./Chair";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { Mesh, MeshPhysicalMaterial } from "three";
 import { chairConfig, files } from "../config/ChairConfig";
 import { MaterialType } from "../generals/Enums";
 import { IMesh, IPart } from "../generals/Interfaces";
-import Part from "./Part";
 import Utility from "../generals/Utility";
+import Chair from "./Chair";
+import Part from "./Part";
 
 export default class MatPicker {
     private chair: Chair;
@@ -12,6 +14,10 @@ export default class MatPicker {
     private softMeshes: Mesh[] = [];
     private hardMeshes: Mesh[] = [];
     private otherMeshes: Mesh[] = [];
+
+    private curSoftMat!: string;
+    private curHardMat!: string;
+    private curOtherMat!: string;
 
     public constructor(chair: Chair) {
         this.mapParts(chair.getLegs(), chairConfig.components.legs);
@@ -32,14 +38,17 @@ export default class MatPicker {
             case MaterialType.Soft:
                 newMat = ((await Utility.loadModel(`materials/${matFile}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
                 this.changeMat(this.softMeshes, newMat);
+                this.curSoftMat = matFile;
                 break;
             case MaterialType.Hard:
                 newMat = ((await Utility.loadModel(`materials/${matFile}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
                 this.changeMat(this.hardMeshes, newMat);
+                this.curHardMat = matFile;
                 break;
             case MaterialType.Other:
                 newMat = ((await Utility.loadModel(`materials/${matFile}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
                 this.changeMat(this.otherMeshes, newMat);
+                this.curOtherMat = matFile;
                 break;
         }
     }
@@ -74,5 +83,30 @@ export default class MatPicker {
             (mesh.material as MeshPhysicalMaterial).dispose();
             mesh.material = mat;
         }
+    }
+
+    public addMaterialDataToPDF(pdf: jsPDF): void {
+        const leftMargin: number = 20;
+        const YOffsetFromTable: number = 200;
+
+        autoTable(pdf, {
+            startY: YOffsetFromTable,
+            margin: { left: leftMargin, right: leftMargin },
+            tableLineColor: [41, 128, 168],
+            tableLineWidth: 0.5,
+            tableWidth: 170,
+            columnStyles: {
+                0: { cellWidth: 85 },
+                1: { cellWidth: 85 }
+            },
+            head: [
+                [{ content: "SELECTED MATERIALS", colSpan: 2, styles: { halign: "center" } }]
+            ],
+            body: [
+                ["SOFT", this.curSoftMat.replace(".glb", "").toUpperCase()],
+                ["HARD", this.curHardMat.replace(".glb", "").toUpperCase()],
+                ["OTHER", this.curOtherMat.replace(".glb", "").toUpperCase()]
+            ]
+        });
     }
 }

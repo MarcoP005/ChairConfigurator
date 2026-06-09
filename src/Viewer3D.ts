@@ -60,7 +60,8 @@ export class Viewer3D {
 
   public createConfigPDF(): void {
     const pdf: jsPDF = new jsPDF();
-    this.sceneManager.getChair()?.addDataToPDF(pdf);
+    this.sceneManager.getChair()?.addChairDataToPDF(pdf);
+    this.sceneManager.getMatPicker()?.addMaterialDataToPDF(pdf);
     this.renderManager.saveRenderToPdf(pdf);
     pdf.save("config.pdf");
   }

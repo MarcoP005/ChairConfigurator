@@ -78,9 +78,9 @@ export default class Chair {
         }
     }
 
-    public addDataToPDF(pdf: jsPDF): void {
+    public addChairDataToPDF(pdf: jsPDF): void {
         pdf.setTextColor(41, 128, 168);
-        pdf.setFont("Helvetica");
+        pdf.setFont("Helvetica", "Bold");
         pdf.setFontSize(20);
         pdf.setCharSpace(2);
         pdf.text("CHAIR CONFIGURATION", 42, 20);
@@ -89,17 +89,25 @@ export default class Chair {
         const YOffsetFromImg: number = 150;
         const XOffset: number = 20;
 
+        pdf.setCharSpace(0);
         autoTable(pdf, {
             startY: YOffsetFromImg,
+            tableWidth: 170,
             margin: { left: leftMargin, right: leftMargin },
+            tableLineColor: [41, 128, 168],
+            tableLineWidth: 0.5,
+            columnStyles: {
+                0: { cellWidth: 85 },
+                1: { cellWidth: 85 }
+            },
             head: [
                 [{ content: "SELECTED COMPONENTS", colSpan: 2, styles: { halign: "center" } }]
             ],
             body: [
-                ["Back", this.getCurBack().getName()],
-                ["Seat", this.getCurSeat().getName()],
-                ["Leg", this.getCurLeg().getName()],
-                ["Arm", this.getCurArm().getName()]
+                ["BACK", this.getCurBack().getName().toUpperCase()],
+                ["SEAT", this.getCurSeat().getName().toUpperCase()],
+                ["LEG", this.getCurLeg().getName().toUpperCase()],
+                ["ARM", this.getCurArm().getName().toUpperCase()]
             ]
         });
     }
