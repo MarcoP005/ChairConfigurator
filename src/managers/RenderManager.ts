@@ -51,10 +51,10 @@ export default class RenderManager {
 
         this.renderer.render(this.scene, frontCamera);
         const imgDataFront: string = this.renderer.domElement.toDataURL("image/jpeg", 0.95);
-        pdf.addImage(imgDataFront, "JPEG", 40, 30, width / 8.5, height / 8.5);
+        pdf.addImage(imgDataFront, "JPEG", 37, 30, width / 8, height / 8);
 
         this.renderer.render(this.scene, backCamera);
         const imgDataBack: string = this.renderer.domElement.toDataURL("image/jpeg", 0.95);
-        pdf.addImage(imgDataBack, "JPEG", 40, 112, width / 8.5, height / 8.5);
+        pdf.addImage(imgDataBack, "JPEG", 37, 116, width / 8, height / 8);
     }
 }

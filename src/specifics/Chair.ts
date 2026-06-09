@@ -80,7 +80,7 @@ export default class Chair {
 
     public addChairDataToPDF(pdf: jsPDF): void {
         const leftMargin: number = 20;
-        const YOffsetFromImg: number = 200;
+        const YOffsetFromImg: number = 207;
 
         pdf.setTextColor(41, 128, 168);
         pdf.setFont("Helvetica", "Bold");

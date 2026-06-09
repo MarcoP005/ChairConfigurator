@@ -87,7 +87,7 @@ export default class MatPicker {
 
     public addMaterialDataToPDF(pdf: jsPDF): void {
         const leftMargin: number = 20;
-        const YOffsetFromTable: number = 245;
+        const YOffsetFromTable: number = 250;
 
         autoTable(pdf, {
             startY: YOffsetFromTable,
