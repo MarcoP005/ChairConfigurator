@@ -3,6 +3,7 @@ import { Component, MaterialType } from "./generals/Enums";
 import RenderManager from "./managers/RenderManager";
 import SceneManager from "./managers/SceneManager";
 import { Script } from "./Script";
+import jsPDF from "jspdf";
 
 export class Viewer3D {
   private sceneManager: SceneManager;
@@ -12,11 +13,11 @@ export class Viewer3D {
   public constructor(options: { containerID: string }) {
     Cache.enabled = true;
     const container: HTMLElement = document.getElementById(options.containerID)!;
+    this.script = new Script(this);
 
-    this.sceneManager = new SceneManager(container);
+    this.sceneManager = new SceneManager(container, () => this.script.addDownloadConfigEvent());
     this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), container, this.sceneManager.getControls(), this.sceneManager.getRenderCamera());
 
-    this.script = new Script(this);
     this.script.initScripts();
     // new LilGUI(this);
   }
@@ -57,7 +58,10 @@ export class Viewer3D {
     this.sceneManager.getScene().environmentIntensity = toggle ? 0.2 : 0;
   }
 
-  public downloadRender(): void {
-    this.renderManager.saveRenderToPdf();
+  public createConfigPDF(): void {
+    const pdf: jsPDF = new jsPDF();
+    this.sceneManager.getChair()?.addDataToPDF(pdf);
+    this.renderManager.saveRenderToPdf(pdf);
+    pdf.save("config.pdf");
   }
 }

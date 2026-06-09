@@ -33,8 +33,8 @@ export class Script {
         this.addSetMaterialEvent("hard-mat-1-rad", "hard-mat-1-label", files.hardMaterials[1], MaterialType.Hard);
         // this.addSetMaterialEvent("hard-mat-2-rad", "hard-mat-2-label", files.hardMaterials[2], MaterialType.Hard);
 
-        this.addSetMaterialEvent("other-mat-0-rad", "other-mat-0-label", files.otherMaterials[0], MaterialType.Hard);
-        this.addSetMaterialEvent("other-mat-1-rad", "other-mat-1-label", files.otherMaterials[1], MaterialType.Hard);
+        this.addSetMaterialEvent("other-mat-0-rad", "other-mat-0-label", files.otherMaterials[0], MaterialType.Other);
+        this.addSetMaterialEvent("other-mat-1-rad", "other-mat-1-label", files.otherMaterials[1], MaterialType.Other);
         // this.addSetMaterialEvent("other-mat-2-rad", "other-mat-2-label", files.otherMaterials[2], MaterialType.Hard);
 
         document.getElementById("autorotate-chkbx")?.addEventListener("change", (e) => {
@@ -45,10 +45,6 @@ export class Script {
         document.getElementById("lights-chkbx")?.addEventListener("change", (e) => {
             const checked: boolean = (e.target as HTMLInputElement).checked;
             this.viewer3D.toggleLights(checked);
-        });
-
-        document.getElementById("download-config-btn")?.addEventListener("click", (e) => {
-            this.viewer3D.downloadRender();
         });
     }
 
@@ -91,5 +87,11 @@ export class Script {
         }
 
         (label as HTMLSpanElement).textContent = materialName.replace(".glb", "");
+    }
+
+    public addDownloadConfigEvent(): void {
+        document.getElementById("download-config-btn")?.addEventListener("click", (e) => {
+            this.viewer3D.createConfigPDF();
+        });
     }
 }

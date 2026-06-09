@@ -1,3 +1,4 @@
+import jsPDF from "jspdf";
 import { Component } from "../generals/Enums";
 import Part from "./Part";
 
@@ -74,6 +75,19 @@ export default class Chair {
                 this.curArm = newCur;
                 break;
         }
+    }
+
+    public addDataToPDF(pdf: jsPDF): void {
+        pdf.setTextColor(140, 0, 0);
+        pdf.setFont("Helvetica");
+        pdf.setFontSize(20);
+        pdf.setCharSpace(2);
+        pdf.text("CHAIR CONFIGURATION", 42, 20);
+
+        pdf
+        pdf.setTextColor(255,255,255);
+        pdf.setFontSize(11);
+        pdf.text
     }
 
     public getCurLeg(): Part { return this.curLeg; }

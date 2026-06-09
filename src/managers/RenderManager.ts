@@ -46,13 +46,11 @@ export default class RenderManager {
         window.requestAnimationFrame(() => this.loopRender());
     }
 
-    public saveRenderToPdf(): void {
+    public saveRenderToPdf(pdf: jsPDF): void {
         const width: number = this.container.clientWidth;
         const height: number = this.container.clientHeight;
         this.renderer.render(this.scene, this.renderCamera);
         const imgData: string = this.renderer.domElement.toDataURL("image/jpeg", 0.95);
-        const pdf: jsPDF = new jsPDF();
-        pdf.addImage(imgData, "JPEG", 20, 20, width / 10, height / 10);
-        pdf.save("render.pdf");
+        pdf.addImage(imgData, "JPEG", 420, 20, width / 6.5, height / 6.5);
     }
 }
