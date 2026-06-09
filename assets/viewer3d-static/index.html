@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="assets/viewer3d-static/favicon.ico">
+  <link rel="icon" href="assets/viewer3d-static/icons/favicon.png">
   <link rel="stylesheet" href="assets/viewer3d-static/style.css">
   <title>Chair Configuration</title>
 </head>
@@ -12,6 +12,15 @@
 <body>
 
   <div id="Viewer3D" class="viewer">
+  </div>
+
+  <div class="progress-bar-container" id="progress-bar-container">
+    <img src="assets/viewer3d-static/icons/favicon.png" class="load-icon">
+    <label for="progress-bar" class="progress-label">
+      LOADING CONFIGURATION...
+    </label>
+    <progress id="progress-bar" class="progress-bar" value="0" max="100">
+    </progress>
   </div>
 
   <div class="drawer">

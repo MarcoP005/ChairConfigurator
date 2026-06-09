@@ -1,3 +1,4 @@
+import { DefaultLoadingManager } from "three";
 import { Viewer3D } from "./Viewer3D";
 import { chairConfig, files } from "./config/ChairConfig";
 import { Component, MaterialType } from "./generals/Enums";
@@ -7,6 +8,15 @@ export class Script {
 
     public constructor(viewer3D: Viewer3D) {
         this.viewer3D = viewer3D;
+        const progressBar: HTMLProgressElement = document.getElementById("progress-bar") as HTMLProgressElement;
+        DefaultLoadingManager.onProgress = (url: string, loaded: number, total: number) => {
+            progressBar.value = (loaded / total) * 100;
+        };
+
+        const progressBarContainer: HTMLElement = document.getElementById("progress-bar-container")!;
+        DefaultLoadingManager.onLoad = () => {
+            progressBarContainer.style.display = "none";
+        };
     }
 
     public initScripts(): void {

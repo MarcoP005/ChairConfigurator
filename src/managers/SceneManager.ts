@@ -1,4 +1,4 @@
-import { Camera, Color, DataTexture, DirectionalLight, EquirectangularReflectionMapping, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { Camera, Color, DataTexture, DefaultLoadingManager, DirectionalLight, EquirectangularReflectionMapping, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { chairConfig, files } from "../config/ChairConfig";
 import Utility from "../generals/Utility";
@@ -30,19 +30,19 @@ export default class SceneManager {
         this.controls = this.initOrbitControl(container);
         this.addLights();
 
-        Utility.loadModel(files.chairModel)
+        Utility.loadModel(`models/${files.chairModel}`)
             .then((model) => {
                 this.scene.add(model);
                 this.chair = this.mapModelToChair(model);
                 this.matPicker = new MatPicker(this.chair);
                 addDownloadEventToButton(); //requires chair object
             });
-        Utility.loadModel(files.environmentModel)
+        Utility.loadModel(`models/${files.environmentModel}`)
             .then((model) => {
                 this.scene.add(model);
                 this.renderCamera.lookAt(model.position.clone().add(offset));
             });
-        Utility.loadHDR(files.hdri)
+        Utility.loadHDR(`models/${files.hdri}`)
             .then((hdri) => {
                 this.hdri = hdri;
                 hdri.mapping = EquirectangularReflectionMapping;
@@ -52,7 +52,6 @@ export default class SceneManager {
             });
     }
 
-    //temporary
     private addLights(): void {
         const dirLight1: DirectionalLight = new DirectionalLight(0xffffff, 0.2);
         dirLight1.position.set(-3, 1.5, 1.5);
