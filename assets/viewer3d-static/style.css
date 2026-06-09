@@ -218,6 +218,10 @@ hr {
     box-sizing: border-box;
 }
 
+.download-btn:hover {
+    background-color: #dbdbdb;
+}
+
 .download-btn img {
     width: 13px;
     height: 13px;
