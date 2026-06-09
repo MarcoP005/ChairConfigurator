@@ -17,7 +17,7 @@ export default class SceneManager {
     private hdri: DataTexture | undefined;
     private matPicker: MatPicker | undefined;
 
-    public constructor(container: HTMLElement, downloadEv: () => void) {
+    public constructor(container: HTMLElement, addDownloadEventToButton: () => void) {
         this.scene = new Scene();
         this.scene.background = new Color(0xffffff);
 
@@ -35,7 +35,7 @@ export default class SceneManager {
                 this.scene.add(model);
                 this.chair = this.mapModelToChair(model);
                 this.matPicker = new MatPicker(this.chair);
-                downloadEv();
+                addDownloadEventToButton(); //requires chair object
             });
         Utility.loadModel(files.environmentModel)
             .then((model) => {

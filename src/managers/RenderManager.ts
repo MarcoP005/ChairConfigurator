@@ -51,6 +51,6 @@ export default class RenderManager {
         const height: number = this.container.clientHeight;
         this.renderer.render(this.scene, this.renderCamera);
         const imgData: string = this.renderer.domElement.toDataURL("image/jpeg", 0.95);
-        pdf.addImage(imgData, "JPEG", 420, 20, width / 6.5, height / 6.5);
+        pdf.addImage(imgData, "JPEG", 20, 35, width / 6.45, height / 6.45);
     }
 }

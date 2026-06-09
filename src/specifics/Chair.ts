@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
 import { Component } from "../generals/Enums";
 import Part from "./Part";
+import autoTable from "jspdf-autotable";
 
 export default class Chair {
     private legs: Part[];
@@ -78,16 +79,29 @@ export default class Chair {
     }
 
     public addDataToPDF(pdf: jsPDF): void {
-        pdf.setTextColor(140, 0, 0);
+        pdf.setTextColor(41, 128, 168);
         pdf.setFont("Helvetica");
         pdf.setFontSize(20);
         pdf.setCharSpace(2);
         pdf.text("CHAIR CONFIGURATION", 42, 20);
 
-        pdf
-        pdf.setTextColor(255,255,255);
-        pdf.setFontSize(11);
-        pdf.text
+        const leftMargin: number = 20;
+        const YOffsetFromImg: number = 150;
+        const XOffset: number = 20;
+
+        autoTable(pdf, {
+            startY: YOffsetFromImg,
+            margin: { left: leftMargin, right: leftMargin },
+            head: [
+                [{ content: "SELECTED COMPONENTS", colSpan: 2, styles: { halign: "center" } }]
+            ],
+            body: [
+                ["Back", this.getCurBack().getName()],
+                ["Seat", this.getCurSeat().getName()],
+                ["Leg", this.getCurLeg().getName()],
+                ["Arm", this.getCurArm().getName()]
+            ]
+        });
     }
 
     public getCurLeg(): Part { return this.curLeg; }
