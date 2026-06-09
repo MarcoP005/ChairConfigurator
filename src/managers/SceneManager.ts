@@ -25,9 +25,9 @@ export default class SceneManager {
         this.camera = this.initCamera(container);
         this.camera.position.set(0, 1, 2.2);
         this.frontRenderCamera = this.initCamera(container);
-        this.frontRenderCamera.position.set(-1, 1.5, 1.3);
+        this.frontRenderCamera.position.set(-1.2, 1.5, 1.5);
         this.backRenderCamera = this.initCamera(container);
-        this.backRenderCamera.position.set(1, 0.1, -1.3);
+        this.backRenderCamera.position.set(1.2, 0.1, -1.5);
         const offset: Vector3 = new Vector3(0, 0.7, 0);
 
         this.controls = this.initOrbitControl(container);

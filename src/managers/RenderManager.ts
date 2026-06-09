@@ -45,8 +45,9 @@ export default class RenderManager {
     }
 
     public saveRenderToPdf(pdf: jsPDF, frontCamera: Camera, backCamera: Camera): void {
-        const width: number = this.container.clientWidth;
-        const height: number = this.container.clientHeight;
+        const width: number = 1093;
+        const height: number = 671;
+        console.log(width, height);
 
         this.renderer.render(this.scene, frontCamera);
         const imgDataFront: string = this.renderer.domElement.toDataURL("image/jpeg", 0.95);
