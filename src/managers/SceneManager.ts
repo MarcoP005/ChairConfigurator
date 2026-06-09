@@ -10,7 +10,8 @@ export default class SceneManager {
 
     private scene: Scene;
     private camera: Camera;
-    private renderCamera: Camera;
+    private frontRenderCamera: Camera;
+    private backRenderCamera: Camera;
     private controls: OrbitControls;
 
     private chair: Chair | undefined; //undefined while model is loading
@@ -23,8 +24,10 @@ export default class SceneManager {
 
         this.camera = this.initCamera(container);
         this.camera.position.set(0, 1, 2.2);
-        this.renderCamera = this.initCamera(container);
-        this.renderCamera.position.set(-1.3, 1.5, 1.6);
+        this.frontRenderCamera = this.initCamera(container);
+        this.frontRenderCamera.position.set(-1, 1.5, 1.3);
+        this.backRenderCamera = this.initCamera(container);
+        this.backRenderCamera.position.set(1, 0.1, -1.3);
         const offset: Vector3 = new Vector3(0, 0.7, 0);
 
         this.controls = this.initOrbitControl(container);
@@ -36,11 +39,12 @@ export default class SceneManager {
                 this.chair = this.mapModelToChair(model);
                 this.matPicker = new MatPicker(this.chair);
                 addDownloadEventToButton(); //requires chair object
+                this.frontRenderCamera.lookAt(model.position.clone().add(offset));
+                this.backRenderCamera.lookAt(model.position.clone().add(offset));
             });
         Utility.loadModel(`models/${files.environmentModel}`)
             .then((model) => {
                 this.scene.add(model);
-                this.renderCamera.lookAt(model.position.clone().add(offset));
             });
         Utility.loadHDR(`models/${files.hdri}`)
             .then((hdri) => {
@@ -116,5 +120,7 @@ export default class SceneManager {
 
     public getMatPicker(): MatPicker | undefined { return this.matPicker; }
 
-    public getRenderCamera(): Camera { return this.renderCamera; }
+    public getFrontRenderCamera(): Camera { return this.frontRenderCamera; }
+
+    public getBackRenderCamera(): Camera { return this.backRenderCamera; }
 }

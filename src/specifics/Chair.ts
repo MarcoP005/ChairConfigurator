@@ -80,21 +80,24 @@ export default class Chair {
 
     public addChairDataToPDF(pdf: jsPDF): void {
         const leftMargin: number = 20;
-        const YOffsetFromImg: number = 150;
-        const XOffset: number = 20;
+        const YOffsetFromImg: number = 200;
 
         pdf.setTextColor(41, 128, 168);
         pdf.setFont("Helvetica", "Bold");
         pdf.setFontSize(20);
         pdf.setCharSpace(2);
-        pdf.text("CHAIR CONFIGURATION", 42, 20);
+        pdf.text("CHAIR CONFIGURATION", 45, 15);
 
         pdf.setFontSize(11);
         pdf.setTextColor(0, 0, 0);
         pdf.setCharSpace(1);
         pdf.setFont("Helvetica", "normal");
         const now: Date = new Date();
-        pdf.text(now.toISOString().split("T")[0], 85, 29);
+        pdf.text(now.toISOString().split("T")[0], 90, 23);
+
+        pdf.addImage("assets/viewer3d-static/icons/favicon.png", "PNG", 14, 10, 15, 15);
+        pdf.addImage("assets/viewer3d-static/icons/favicon.png", "PNG", 180, 10, 15, 15);
+
 
         pdf.setCharSpace(0);
         autoTable(pdf, {

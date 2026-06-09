@@ -16,7 +16,7 @@ export class Viewer3D {
     this.script = new Script(this);
 
     this.sceneManager = new SceneManager(container, () => this.script.addDownloadConfigEvent());
-    this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), container, this.sceneManager.getControls(), this.sceneManager.getRenderCamera());
+    this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), container, this.sceneManager.getControls());
 
     this.script.initScripts();
     // new LilGUI(this);
@@ -62,7 +62,7 @@ export class Viewer3D {
     const pdf: jsPDF = new jsPDF();
     this.sceneManager.getChair()?.addChairDataToPDF(pdf);
     this.sceneManager.getMatPicker()?.addMaterialDataToPDF(pdf);
-    this.renderManager.saveRenderToPdf(pdf);
+    this.renderManager.saveRenderToPdf(pdf, this.sceneManager.getFrontRenderCamera(), this.sceneManager.getBackRenderCamera());
     pdf.save("config.pdf");
   }
 }
