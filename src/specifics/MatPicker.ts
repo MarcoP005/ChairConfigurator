@@ -1,5 +1,3 @@
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 import { Mesh, MeshPhysicalMaterial } from "three";
 import { chairConfig, files } from "../config/ChairConfig";
 import { MaterialType } from "../generals/Enums";
@@ -9,15 +7,13 @@ import Chair from "./Chair";
 import Part from "./Part";
 
 export default class MatPicker {
-    private chair: Chair;
-
     private softMeshes: Mesh[] = [];
     private hardMeshes: Mesh[] = [];
     private otherMeshes: Mesh[] = [];
 
-    private curSoftMat!: string;
-    private curHardMat!: string;
-    private curOtherMat!: string;
+    private curSoftMat: string = files.softMaterials[0];
+    private curHardMat: string = files.hardMaterials[0];
+    private curOtherMat: string = files.otherMaterials[0];
 
     public constructor(chair: Chair) {
         this.mapParts(chair.getLegs(), chairConfig.components.legs);
@@ -29,7 +25,6 @@ export default class MatPicker {
         this.setMaterial(MaterialType.Soft, files.softMaterials[0]);
         this.setMaterial(MaterialType.Hard, files.hardMaterials[0]);
         this.setMaterial(MaterialType.Other, files.otherMaterials[0]);
-        this.chair = chair;
     }
 
     public async setMaterial(matType: MaterialType, matFile: string): Promise<void> {
@@ -85,28 +80,15 @@ export default class MatPicker {
         }
     }
 
-    public addMaterialDataToPDF(pdf: jsPDF): void {
-        const leftMargin: number = 20;
-        const YOffsetFromTable: number = 250;
+    public getCurSoftMat(): string {
+        return this.curSoftMat;
+    }
 
-        autoTable(pdf, {
-            startY: YOffsetFromTable,
-            margin: { left: leftMargin, right: leftMargin },
-            tableLineColor: [41, 128, 168],
-            tableLineWidth: 0.5,
-            tableWidth: 170,
-            columnStyles: {
-                0: { cellWidth: 85 },
-                1: { cellWidth: 85 }
-            },
-            head: [
-                [{ content: "SELECTED MATERIALS", colSpan: 2, styles: { halign: "center" } }]
-            ],
-            body: [
-                ["SOFT", this.curSoftMat.replace(".glb", "").toUpperCase()],
-                ["HARD", this.curHardMat.replace(".glb", "").toUpperCase()],
-                ["OTHER", this.curOtherMat.replace(".glb", "").toUpperCase()]
-            ]
-        });
+    public getCurHardMat(): string {
+        return this.curHardMat;
+    }
+
+    public getCurOtherMat(): string {
+        return this.curOtherMat;
     }
 }

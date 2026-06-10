@@ -1,9 +1,9 @@
 import { DefaultLoadingManager } from "three";
-import { Viewer3D } from "./Viewer3D";
-import { chairConfig, files } from "./config/ChairConfig";
-import { Component, MaterialType } from "./generals/Enums";
+import { Viewer3D } from "../Viewer3D";
+import { chairConfig, files } from "../config/ChairConfig";
+import { Component, MaterialType } from "../generals/Enums";
 
-export class Script {
+export class UIEventHandler {
     private viewer3D: Viewer3D;
 
     public constructor(viewer3D: Viewer3D) {
@@ -19,7 +19,7 @@ export class Script {
         };
     }
 
-    public initScripts(): void {
+    public addEventsToButtons(): void {
 
         this.addSetPartEvent("back-0-rad", chairConfig.components.backs[0].name, Component.back);
         this.addSetPartEvent("back-1-rad", chairConfig.components.backs[1].name, Component.back);
@@ -58,7 +58,7 @@ export class Script {
         });
     }
 
-    private addSetPartEvent(buttonName: string, partName: string, componentType: Component) {
+    private addSetPartEvent(buttonName: string, partName: string, componentType: Component): void {
         const button: HTMLElement | null = document.getElementById(buttonName);
         if (!button) return console.log(buttonName, "not found.");
 
@@ -79,7 +79,7 @@ export class Script {
         button.nextSibling!.textContent = partName;
     }
 
-    private addSetMaterialEvent(buttonName: string, labelName: string, materialName: string, materialType: MaterialType) {
+    private addSetMaterialEvent(buttonName: string, labelName: string, materialName: string, materialType: MaterialType): void {
         const button: HTMLElement | null = document.getElementById(buttonName);
         if (!button) return;
         const label: HTMLElement | null = document.getElementById(labelName);
@@ -100,8 +100,7 @@ export class Script {
     }
 
     public addDownloadConfigEvent(): void {
-        document.getElementById("download-config-btn")?.addEventListener("click", (e) => {
-            this.viewer3D.createConfigPDF();
-        });
+        const downloadBtn: HTMLElement = document.getElementById("download-config-btn")!;
+        downloadBtn.addEventListener("click", (e) => { this.viewer3D.getPDFCreator().downloadPDF(); });
     }
 }

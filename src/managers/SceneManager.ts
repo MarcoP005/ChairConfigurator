@@ -1,4 +1,4 @@
-import { Camera, Color, DataTexture, DefaultLoadingManager, DirectionalLight, EquirectangularReflectionMapping, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { Camera, Color, DataTexture, DirectionalLight, EquirectangularReflectionMapping, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { chairConfig, files } from "../config/ChairConfig";
 import Utility from "../generals/Utility";
@@ -7,28 +7,22 @@ import MatPicker from "../specifics/MatPicker";
 import Part from "../specifics/Part";
 
 export default class SceneManager {
-
     private scene: Scene;
     private camera: Camera;
-    private frontRenderCamera: Camera;
-    private backRenderCamera: Camera;
+    private frontRenderCamera!: Camera;
+    private backRenderCamera!: Camera;
     private controls: OrbitControls;
+    private cameraTarget: Vector3 = new Vector3(0, 0.7, 0);
 
-    private chair: Chair | undefined; //undefined while model is loading
-    private hdri: DataTexture | undefined;
+    //undefined while dependencies are loading
+    private chair: Chair | undefined;
     private matPicker: MatPicker | undefined;
 
     public constructor(container: HTMLElement, addDownloadEventToButton: () => void) {
         this.scene = new Scene();
-        this.scene.background = new Color(0xffffff);
-
-        this.camera = this.initCamera(container);
-        this.camera.position.set(0, 1, 2.2);
-        this.frontRenderCamera = this.initCamera(container);
-        this.frontRenderCamera.position.set(-1.2, 1.5, 1.5);
-        this.backRenderCamera = this.initCamera(container);
-        this.backRenderCamera.position.set(1.2, 0.1, -1.5);
-        const offset: Vector3 = new Vector3(0, 0.7, 0);
+        this.camera = this.setupCamera(container, new Vector3(0, 1, 2.2), this.cameraTarget);
+        this.frontRenderCamera = this.setupCamera(container, new Vector3(-1.2, 1.5, 1.5), this.cameraTarget);
+        this.backRenderCamera = this.setupCamera(container, new Vector3(1.2, 0.1, -1.5), this.cameraTarget);
 
         this.controls = this.initOrbitControl(container);
         this.addLights();
@@ -39,21 +33,20 @@ export default class SceneManager {
                 this.chair = this.mapModelToChair(model);
                 this.matPicker = new MatPicker(this.chair);
                 addDownloadEventToButton(); //requires chair object
-                this.frontRenderCamera.lookAt(model.position.clone().add(offset));
-                this.backRenderCamera.lookAt(model.position.clone().add(offset));
             });
+
         Utility.loadModel(`models/${files.environmentModel}`)
-            .then((model) => {
-                this.scene.add(model);
-            });
+            .then((model) => { this.scene.add(model); });
+
         Utility.loadHDR(`models/${files.hdri}`)
-            .then((hdri) => {
-                this.hdri = hdri;
-                hdri.mapping = EquirectangularReflectionMapping;
-                this.scene.environment = hdri;
-                this.scene.background = hdri;
-                this.scene.environmentIntensity = 0.2;
-            });
+            .then((hdri) => { this.setupHDRI(hdri); });
+    }
+
+    private setupHDRI(hdri: DataTexture) {
+        hdri.mapping = EquirectangularReflectionMapping;
+        this.scene.environment = hdri;
+        this.scene.background = hdri;
+        this.scene.environmentIntensity = 0.2;
     }
 
     private addLights(): void {
@@ -78,10 +71,16 @@ export default class SceneManager {
     }
 
     private initCamera(domElement: HTMLElement): PerspectiveCamera {
-        const camera: PerspectiveCamera = new PerspectiveCamera(50, domElement.clientWidth / domElement.clientHeight, 0.1, 10);
-        camera.far = 10;
-        camera.near = 0.01;
+        const aspectRatio: number = domElement.clientWidth / domElement.clientHeight;
+        const camera: PerspectiveCamera = new PerspectiveCamera(50, aspectRatio, 0.1, 10);
         return camera;
+    }
+
+    private setupCamera(domElement: HTMLElement, camPosition: Vector3, camTarget: Vector3): Camera {
+        const cam: Camera = this.initCamera(domElement);
+        cam.position.copy(camPosition);
+        cam.lookAt(camTarget);
+        return cam;
     }
 
     private mapModelToChair(chairModel: Object3D): Chair {

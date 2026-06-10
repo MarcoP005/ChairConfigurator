@@ -2,24 +2,26 @@ import { Cache } from "three";
 import { Component, MaterialType } from "./generals/Enums";
 import RenderManager from "./managers/RenderManager";
 import SceneManager from "./managers/SceneManager";
-import { Script } from "./Script";
-import jsPDF from "jspdf";
+import { UIEventHandler as UIManager } from "./managers/UIManager";
+import { PDFCreator } from "./PDFCreator";
 
 export class Viewer3D {
+  private container: HTMLElement;
   private sceneManager: SceneManager;
   private renderManager: RenderManager;
-  private script: Script;
+  private uiManager: UIManager;
+  private pdfCreator: PDFCreator;
 
   public constructor(options: { containerID: string }) {
     Cache.enabled = true;
-    const container: HTMLElement = document.getElementById(options.containerID)!;
-    this.script = new Script(this);
+    this.container = document.getElementById(options.containerID)!;
 
-    this.sceneManager = new SceneManager(container, () => this.script.addDownloadConfigEvent());
-    this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), container, this.sceneManager.getControls());
+    this.sceneManager = new SceneManager(this.container, () => this.uiManager.addDownloadConfigEvent());
+    this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), this.container, this.sceneManager.getControls());
+    this.uiManager = new UIManager(this);
+    this.pdfCreator = new PDFCreator(this.container, this.renderManager, this.sceneManager);
 
-    this.script.initScripts();
-    // new LilGUI(this);
+    this.uiManager.addEventsToButtons();
   }
 
   public setSoftMat(matFile: string): void {
@@ -58,11 +60,7 @@ export class Viewer3D {
     this.sceneManager.getScene().environmentIntensity = toggle ? 0.2 : 0;
   }
 
-  public createConfigPDF(): void {
-    const pdf: jsPDF = new jsPDF();
-    this.sceneManager.getChair()?.addChairDataToPDF(pdf);
-    this.sceneManager.getMatPicker()?.addMaterialDataToPDF(pdf);
-    this.renderManager.saveRenderToPdf(pdf, this.sceneManager.getFrontRenderCamera(), this.sceneManager.getBackRenderCamera());
-    pdf.save("config.pdf");
+  public getPDFCreator(): PDFCreator {
+    return this.pdfCreator;
   }
 }

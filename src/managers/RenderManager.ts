@@ -57,4 +57,8 @@ export default class RenderManager {
         const imgDataBack: string = this.renderer.domElement.toDataURL("image/jpeg", 0.95);
         pdf.addImage(imgDataBack, "JPEG", 37, 116, width / 8, height / 8);
     }
+
+    public getRenderer(): WebGLRenderer {
+        return this.renderer;
+    }
 }
