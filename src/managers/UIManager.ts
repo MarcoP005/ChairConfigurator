@@ -3,20 +3,28 @@ import { Viewer3D } from "../Viewer3D";
 import { chairConfig, files } from "../config/ChairConfig";
 import { Component, MaterialType } from "../generals/Enums";
 
-export class UIEventHandler {
+export class UIManager {
     private viewer3D: Viewer3D;
 
     public constructor(viewer3D: Viewer3D) {
         this.viewer3D = viewer3D;
-        const progressBar: HTMLProgressElement = document.getElementById("progress-bar") as HTMLProgressElement;
-        DefaultLoadingManager.onProgress = (url: string, loaded: number, total: number) => {
-            progressBar.value = (loaded / total) * 100;
-        };
+        this.loadingScreen();
+        this.addEventsToButtons();
+    }
 
+    private loadingScreen(): void {
         const progressBarContainer: HTMLElement = document.getElementById("progress-bar-container")!;
-        DefaultLoadingManager.onLoad = () => {
-            progressBarContainer.style.display = "none";
-        };
+        const progressBar: HTMLProgressElement = document.getElementById("progress-bar") as HTMLProgressElement;
+
+        DefaultLoadingManager
+            .onProgress = (url: string, loaded: number, total: number) => {
+                progressBar.value = (loaded / total) * 100;
+            };
+
+        DefaultLoadingManager
+            .onLoad = () => {
+                progressBarContainer.style.display = "none";
+            };
     }
 
     public addEventsToButtons(): void {
@@ -99,7 +107,7 @@ export class UIEventHandler {
         (label as HTMLSpanElement).textContent = materialName.replace(".glb", "");
     }
 
-    public addDownloadConfigEvent(): void {
+    public addDownloadEvent(): void {
         const downloadBtn: HTMLElement = document.getElementById("download-config-btn")!;
         downloadBtn.addEventListener("click", (e) => { this.viewer3D.getPDFCreator().downloadPDF(); });
     }

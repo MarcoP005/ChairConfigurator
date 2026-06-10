@@ -2,7 +2,7 @@ import { Cache } from "three";
 import { Component, MaterialType } from "./generals/Enums";
 import RenderManager from "./managers/RenderManager";
 import SceneManager from "./managers/SceneManager";
-import { UIEventHandler as UIManager } from "./managers/UIManager";
+import { UIManager as UIManager } from "./managers/UIManager";
 import { PDFCreator } from "./PDFCreator";
 
 export class Viewer3D {
@@ -16,12 +16,10 @@ export class Viewer3D {
     Cache.enabled = true;
     this.container = document.getElementById(options.containerID)!;
 
-    this.sceneManager = new SceneManager(this.container, () => this.uiManager.addDownloadConfigEvent());
-    this.renderManager = new RenderManager(this.sceneManager.getScene(), this.sceneManager.getCamera(), this.container, this.sceneManager.getControls());
     this.uiManager = new UIManager(this);
+    this.sceneManager = new SceneManager(this.container, this.uiManager);
+    this.renderManager = new RenderManager(this.container, this.sceneManager.getScene(), this.sceneManager.getCamera(), this.sceneManager.getControls());
     this.pdfCreator = new PDFCreator(this.container, this.renderManager, this.sceneManager);
-
-    this.uiManager.addEventsToButtons();
   }
 
   public setSoftMat(matFile: string): void {

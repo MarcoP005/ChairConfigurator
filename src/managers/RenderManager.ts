@@ -1,4 +1,3 @@
-import jsPDF from "jspdf";
 import { Camera, PerspectiveCamera, Scene, SRGBColorSpace, WebGLRenderer } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 
@@ -10,12 +9,12 @@ export default class RenderManager {
     private orbitControls: OrbitControls;
     private container: HTMLElement;
 
-    public constructor(scene: Scene, camera: Camera, container: HTMLElement, controls: OrbitControls) {
-        this.renderer = this.initRenderer(container);
-        this.camera = camera;
-        this.scene = scene;
-        this.orbitControls = controls;
+    public constructor(container: HTMLElement, scene: Scene, camera: Camera, controls: OrbitControls) {
         this.container = container;
+        this.scene = scene;
+        this.camera = camera;
+        this.orbitControls = controls;
+        this.renderer = this.initRenderer();
 
         window.addEventListener('resize', () => this.onWindowResize());
         this.loopRender();
@@ -29,33 +28,19 @@ export default class RenderManager {
         this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
     }
 
-    public initRenderer(container: HTMLElement): WebGLRenderer {
+    private initRenderer(): WebGLRenderer {
         const renderer: WebGLRenderer = new WebGLRenderer({ antialias: true });
-        container.appendChild(renderer.domElement);
-        renderer.setSize(container.clientWidth, container.clientHeight);
+        this.container.appendChild(renderer.domElement);
+        renderer.setSize(this.container.clientWidth, this.container.clientHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.outputColorSpace = SRGBColorSpace;
         return renderer;
     }
 
-    public loopRender(): void {
+    private loopRender(): void {
         this.orbitControls.update();
         this.renderer.render(this.scene, this.camera);
         window.requestAnimationFrame(() => this.loopRender());
-    }
-
-    public saveRenderToPdf(pdf: jsPDF, frontCamera: Camera, backCamera: Camera): void {
-        const width: number = 1093;
-        const height: number = 671;
-        console.log(width, height);
-
-        this.renderer.render(this.scene, frontCamera);
-        const imgDataFront: string = this.renderer.domElement.toDataURL("image/jpeg", 0.95);
-        pdf.addImage(imgDataFront, "JPEG", 37, 30, width / 8, height / 8);
-
-        this.renderer.render(this.scene, backCamera);
-        const imgDataBack: string = this.renderer.domElement.toDataURL("image/jpeg", 0.95);
-        pdf.addImage(imgDataBack, "JPEG", 37, 116, width / 8, height / 8);
     }
 
     public getRenderer(): WebGLRenderer {
