@@ -1,7 +1,6 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { Camera, WebGLRenderer } from "three";
-import { Scene } from "three";
+import { Camera, Scene, WebGLRenderer } from "three";
 import RenderManager from "./managers/RenderManager";
 import SceneManager from "./managers/SceneManager";
 import Chair from "./specifics/Chair";
@@ -15,12 +14,10 @@ export class PDFCreator {
 
     private renderManager: RenderManager;
     private sceneManager: SceneManager;
-    private container: HTMLElement;
 
-    public constructor(container: HTMLElement, renderer: RenderManager, scene: SceneManager) {
+    public constructor(renderer: RenderManager, scene: SceneManager) {
         this.renderManager = renderer;
         this.sceneManager = scene;
-        this.container = container;
     }
 
     public downloadPDF(): void {

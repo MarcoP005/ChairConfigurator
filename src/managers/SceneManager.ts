@@ -1,11 +1,11 @@
 import { Camera, ColorRepresentation, DataTexture, DirectionalLight, EquirectangularReflectionMapping, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { files } from "../config/ChairConfig";
+import { UIManager } from "./UIManager";
 import Utility from "../generals/Utility";
 import Mapper from "../Mapper";
 import Chair from "../specifics/Chair";
 import MatPicker from "../specifics/MatPicker";
-import { UIManager } from "./UIManager";
 
 export default class SceneManager {
     private scene: Scene;

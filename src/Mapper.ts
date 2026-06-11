@@ -1,7 +1,10 @@
-import { Object3D } from "three";
-import Part from "./specifics/Part";
+import { Mesh, Object3D } from "three";
 import { chairConfig } from "./config/ChairConfig";
+import { MaterialType } from "./generals/Enums";
+import { IMesh, IPart } from "./generals/Interfaces";
 import Chair from "./specifics/Chair";
+import MatPicker from "./specifics/MatPicker";
+import Part from "./specifics/Part";
 
 export default class Mapper {
     public static mapModelToChair(chairModel: Object3D): Chair {
@@ -28,5 +31,27 @@ export default class Mapper {
         const fixed: Part[] = [base];
 
         return new Chair(legs, seats, backs, arms, fixed);
+    }
+
+    public static mapParts(parts: Part[], iParts: IPart[], matPicker: MatPicker): void {
+        iParts.forEach(ipart => {
+            const p: Part | undefined = parts.find((part) => part.getName() === ipart.name);
+            if (!p) return;
+            this.mapMeshes(p.getMeshes(), ipart.meshes, matPicker);
+        });
+    }
+
+    public static mapMeshes(meshes: Mesh[], iMeshes: IMesh[], matPicker: MatPicker): void {
+        iMeshes.forEach(imesh => {
+            const m: Mesh | undefined = meshes.find((mesh) => mesh.name === imesh.name);
+            if (!m) return;
+
+            if (imesh.materials === MaterialType.Soft)
+                matPicker.getSoftMeshes().push(m);
+            else if (imesh.materials === MaterialType.Hard)
+                matPicker.getHardMeshes().push(m);
+            else if (imesh.materials === MaterialType.Other)
+                matPicker.getOtherMeshes().push(m);
+        });
     }
 }

@@ -1,9 +1,9 @@
-import { Cache } from "three";
 import { Component, MaterialType } from "./generals/Enums";
+import { PDFCreator } from "./PDFCreator";
+import { UIManager } from "./managers/UIManager";
+import { Cache } from "three";
 import RenderManager from "./managers/RenderManager";
 import SceneManager from "./managers/SceneManager";
-import { UIManager as UIManager } from "./managers/UIManager";
-import { PDFCreator } from "./PDFCreator";
 
 export class Viewer3D {
   private container: HTMLElement;
@@ -14,12 +14,13 @@ export class Viewer3D {
 
   public constructor(options: { containerID: string }) {
     Cache.enabled = true;
+
     this.container = document.getElementById(options.containerID)!;
 
     this.uiManager = new UIManager(this);
     this.sceneManager = new SceneManager(this.container, this.uiManager);
     this.renderManager = new RenderManager(this.container, this.sceneManager.getScene(), this.sceneManager.getCamera(), this.sceneManager.getControls());
-    this.pdfCreator = new PDFCreator(this.container, this.renderManager, this.sceneManager);
+    this.pdfCreator = new PDFCreator(this.renderManager, this.sceneManager);
   }
 
   public setSoftMat(matFile: string): void {
