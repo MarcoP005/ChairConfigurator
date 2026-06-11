@@ -1,11 +1,11 @@
 import { Camera, ColorRepresentation, DataTexture, DirectionalLight, EquirectangularReflectionMapping, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
-import { files } from "../config/ChairConfig";
-import { UIManager } from "./UIManager";
+import Mapper from "../generals/Mapper";
 import Utility from "../generals/Utility";
-import Mapper from "../Mapper";
-import Chair from "../specifics/Chair";
-import MatPicker from "../specifics/MatPicker";
+import Chair from "../others/Chair";
+import { files } from "../others/ChairConfig";
+import MatPicker from "../others/MatPicker";
+import UIManager from "./UIManager";
 
 export default class SceneManager {
     private scene: Scene;
@@ -36,7 +36,7 @@ export default class SceneManager {
             .then((model) => {
                 this.scene.add(model);
                 this.chair = Mapper.mapModelToChair(model);
-                this.matPicker = new MatPicker(this.chair);
+                this.matPicker = new MatPicker(this.chair!);
                 this.uiManager.addDownloadEvent(); //requires chair object
             });
 
@@ -51,7 +51,7 @@ export default class SceneManager {
             });
     }
 
-    private setupHDRI(hdri: DataTexture) {
+    private setupHDRI(hdri: DataTexture): void {
         hdri.mapping = EquirectangularReflectionMapping;
         this.scene.environment = hdri;
         this.scene.background = hdri;

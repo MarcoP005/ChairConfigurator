@@ -1,8 +1,8 @@
 import { Mesh, MeshPhysicalMaterial } from "three";
-import { chairConfig, files } from "../config/ChairConfig";
+import { chairConfig, files } from "./ChairConfig";
 import { MaterialType } from "../generals/Enums";
 import Utility from "../generals/Utility";
-import Mapper from "../Mapper";
+import Mapper from "../generals/Mapper";
 import Chair from "./Chair";
 
 export default class MatPicker {

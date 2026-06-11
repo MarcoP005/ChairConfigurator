@@ -1,12 +1,12 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Camera, Scene, WebGLRenderer } from "three";
-import RenderManager from "./managers/RenderManager";
-import SceneManager from "./managers/SceneManager";
-import Chair from "./specifics/Chair";
-import MatPicker from "./specifics/MatPicker";
+import RenderManager from "../managers/RenderManager";
+import SceneManager from "../managers/SceneManager";
+import Chair from "./Chair";
+import MatPicker from "./MatPicker";
 
-export class PDFCreator {
+export default class PDFCreator {
     private font: string = "Helvetica";
     private color: string = "#2980ba";
     private logoPath: string = "assets/viewer3d-static/icons/favicon.png";

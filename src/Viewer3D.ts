@@ -1,11 +1,11 @@
-import { Component, MaterialType } from "./generals/Enums";
-import { PDFCreator } from "./PDFCreator";
-import { UIManager } from "./managers/UIManager";
 import { Cache } from "three";
+import { Component, MaterialType } from "./generals/Enums";
 import RenderManager from "./managers/RenderManager";
 import SceneManager from "./managers/SceneManager";
+import UIManager from "./managers/UIManager";
+import PDFCreator from "./others/PDFCreator";
 
-export class Viewer3D {
+export default class Viewer3D {
   private container: HTMLElement;
   private sceneManager: SceneManager;
   private renderManager: RenderManager;

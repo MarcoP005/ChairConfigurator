@@ -1,10 +1,10 @@
 import { Mesh, Object3D } from "three";
-import { chairConfig } from "./config/ChairConfig";
-import { MaterialType } from "./generals/Enums";
-import { IMesh, IPart } from "./generals/Interfaces";
-import Chair from "./specifics/Chair";
-import MatPicker from "./specifics/MatPicker";
-import Part from "./specifics/Part";
+import { chairConfig } from "../others/ChairConfig";
+import { MaterialType } from "./Enums";
+import { IMesh, IPart } from "./Interfaces";
+import Chair from "../others/Chair";
+import MatPicker from "../others/MatPicker";
+import Part from "../others/Part";
 
 export default class Mapper {
     public static mapModelToChair(chairModel: Object3D): Chair {

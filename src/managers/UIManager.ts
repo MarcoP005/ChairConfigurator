@@ -1,9 +1,9 @@
-import { Component, MaterialType } from "../generals/Enums";
 import { DefaultLoadingManager } from "three";
-import { chairConfig, files } from "../config/ChairConfig";
-import { Viewer3D } from "../Viewer3D";
+import { Component, MaterialType } from "../generals/Enums";
+import { chairConfig, files } from "../others/ChairConfig";
+import Viewer3D from "../Viewer3D";
 
-export class UIManager {
+export default class UIManager {
     private viewer3D: Viewer3D;
 
     public constructor(viewer3D: Viewer3D) {
