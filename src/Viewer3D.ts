@@ -12,7 +12,6 @@ export default class Viewer3D {
   private renderManager: RenderManager;
   private uiManager: UIManager;
   private pdfCreator: PDFCreator;
-  private arSupport: ARSupport;
 
   public constructor(options: { containerID: string }) {
     Cache.enabled = true;
@@ -23,7 +22,7 @@ export default class Viewer3D {
     this.sceneManager = new SceneManager(this.container, this.uiManager);
     this.renderManager = new RenderManager(this.container, this.sceneManager);
     this.pdfCreator = new PDFCreator(this.renderManager, this.sceneManager);
-    this.arSupport = new ARSupport(this.container, this.renderManager, this.sceneManager);
+    // new ARSupport(this.container, this.renderManager, this.sceneManager);
   }
 
   public setSoftMat(matFile: string): void {

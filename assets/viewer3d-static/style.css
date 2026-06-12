@@ -271,3 +271,9 @@ hr {
     width: 60px;
     height: 60px;
 }
+
+.mat-icon {
+    border-radius: 50%;
+    display: block;
+    object-fit: cover;
+}
