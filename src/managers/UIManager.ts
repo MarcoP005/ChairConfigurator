@@ -43,17 +43,17 @@ export default class UIManager {
         this.addSetPartEvent("arm-1-rad", chairConfig.components.arms[1].name, Component.arm);
         this.addSetPartEvent("arm-2-rad", chairConfig.components.arms[2].name, Component.arm);
 
-        this.addSetMaterialEvent("soft-mat-0-rad", "soft-mat-0-label", files.softMaterials[0], MaterialType.Soft);
-        this.addSetMaterialEvent("soft-mat-1-rad", "soft-mat-1-label", files.softMaterials[1], MaterialType.Soft);
-        this.addSetMaterialEvent("soft-mat-2-rad", "soft-mat-2-label", files.softMaterials[2], MaterialType.Soft);
+        this.addSetMaterialEvent("soft-mat-0-rad", "soft-mat-0-label", files.fabrics[0], MaterialType.fabric);
+        this.addSetMaterialEvent("soft-mat-1-rad", "soft-mat-1-label", files.fabrics[1], MaterialType.fabric);
+        this.addSetMaterialEvent("soft-mat-2-rad", "soft-mat-2-label", files.fabrics[2], MaterialType.fabric);
 
-        this.addSetMaterialEvent("hard-mat-0-rad", "hard-mat-0-label", files.hardMaterials[0], MaterialType.Hard);
-        this.addSetMaterialEvent("hard-mat-1-rad", "hard-mat-1-label", files.hardMaterials[1], MaterialType.Hard);
-        // this.addSetMaterialEvent("hard-mat-2-rad", "hard-mat-2-label", files.hardMaterials[2], MaterialType.Hard);
+        this.addSetMaterialEvent("hard-mat-0-rad", "hard-mat-0-label", files.metals[0], MaterialType.metal);
+        this.addSetMaterialEvent("hard-mat-1-rad", "hard-mat-1-label", files.metals[1], MaterialType.metal);
+        this.addSetMaterialEvent("hard-mat-2-rad", "hard-mat-2-label", files.metals[2], MaterialType.metal);
 
-        this.addSetMaterialEvent("other-mat-0-rad", "other-mat-0-label", files.otherMaterials[0], MaterialType.Other);
-        this.addSetMaterialEvent("other-mat-1-rad", "other-mat-1-label", files.otherMaterials[1], MaterialType.Other);
-        // this.addSetMaterialEvent("other-mat-2-rad", "other-mat-2-label", files.otherMaterials[2], MaterialType.Hard);
+        this.addSetMaterialEvent("other-mat-0-rad", "other-mat-0-label", files.plastics[0], MaterialType.plastic);
+        this.addSetMaterialEvent("other-mat-1-rad", "other-mat-1-label", files.plastics[1], MaterialType.plastic);
+        this.addSetMaterialEvent("other-mat-2-rad", "other-mat-2-label", files.plastics[2], MaterialType.plastic);
 
         document.getElementById("autorotate-chkbx")?.addEventListener("change", (e) => {
             const checked: boolean = (e.target as HTMLInputElement).checked;
@@ -93,13 +93,13 @@ export default class UIManager {
         const label: HTMLElement | null = document.getElementById(labelName);
 
         switch (materialType) {
-            case MaterialType.Soft:
+            case MaterialType.fabric:
                 button.addEventListener("click", () => this.viewer3D.setSoftMat(materialName));
                 break;
-            case MaterialType.Hard:
+            case MaterialType.metal:
                 button.addEventListener("click", () => this.viewer3D.setHardMat(materialName));
                 break;
-            case MaterialType.Other:
+            case MaterialType.plastic:
                 button.addEventListener("click", () => this.viewer3D.setOtherMat(materialName));
                 break;
         }

@@ -46,12 +46,12 @@ export default class Mapper {
             const m: Mesh | undefined = meshes.find((mesh) => mesh.name === imesh.name);
             if (!m) return;
 
-            if (imesh.materials === MaterialType.Soft)
-                matPicker.getSoftMeshes().push(m);
-            else if (imesh.materials === MaterialType.Hard)
-                matPicker.getHardMeshes().push(m);
-            else if (imesh.materials === MaterialType.Other)
-                matPicker.getOtherMeshes().push(m);
+            if (imesh.materials === MaterialType.fabric)
+                matPicker.getFabricMeshes().push(m);
+            else if (imesh.materials === MaterialType.metal)
+                matPicker.getMetalMeshes().push(m);
+            else if (imesh.materials === MaterialType.plastic)
+                matPicker.getPlasticMeshes().push(m);
         });
     }
 }

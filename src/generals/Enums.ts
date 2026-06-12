@@ -1,7 +1,7 @@
 export enum MaterialType {
-    Soft,
-    Hard,
-    Other
+    fabric,
+    metal,
+    plastic
 }
 
 export enum Component {

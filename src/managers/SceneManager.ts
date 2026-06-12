@@ -10,8 +10,8 @@ import UIManager from "./UIManager";
 export default class SceneManager {
     private scene: Scene;
     private camera: Camera;
-    private frontRenderCamera!: Camera;
-    private backRenderCamera!: Camera;
+    private frontRenderCamera: Camera;
+    private backRenderCamera: Camera;
     private controls: OrbitControls;
     private cameraTarget: Vector3 = new Vector3(0, 0.75, 0);
 

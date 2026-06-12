@@ -6,13 +6,13 @@ import Mapper from "../generals/Mapper";
 import Chair from "./Chair";
 
 export default class MatPicker {
-    private softMeshes: Mesh[] = [];
-    private hardMeshes: Mesh[] = [];
-    private otherMeshes: Mesh[] = [];
+    private fabricMeshes: Mesh[] = [];
+    private metalMeshes: Mesh[] = [];
+    private plasticMeshes: Mesh[] = [];
 
-    private curSoftMat!: string;
-    private curHardMat!: string;
-    private curOtherMat!: string;
+    private curFabricMat!: string;
+    private curMetalMat!: string;
+    private curPlasticMat!: string;
 
     public constructor(chair: Chair) {
         Mapper.mapParts(chair.getLegs(), chairConfig.components.legs, this);
@@ -21,28 +21,28 @@ export default class MatPicker {
         Mapper.mapParts(chair.getArms(), chairConfig.components.arms, this);
         Mapper.mapParts(chair.getFixed(), chairConfig.fixed, this);
 
-        this.setMaterial(MaterialType.Soft, files.softMaterials[0]);
-        this.setMaterial(MaterialType.Hard, files.hardMaterials[0]);
-        this.setMaterial(MaterialType.Other, files.otherMaterials[0]);
+        this.setMaterial(MaterialType.fabric, files.fabrics[0]);
+        this.setMaterial(MaterialType.metal, files.metals[0]);
+        this.setMaterial(MaterialType.plastic, files.plastics[0]);
     }
 
     public async setMaterial(matType: MaterialType, matFile: string): Promise<void> {
         let newMat: MeshPhysicalMaterial | undefined;
         switch (matType) {
-            case MaterialType.Soft:
+            case MaterialType.fabric:
                 newMat = ((await Utility.loadModel(`materials/${matFile}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
-                this.setupNewMat(this.softMeshes, newMat);
-                this.curSoftMat = matFile;
+                this.setupNewMat(this.fabricMeshes, newMat);
+                this.curFabricMat = matFile;
                 break;
-            case MaterialType.Hard:
+            case MaterialType.metal:
                 newMat = ((await Utility.loadModel(`materials/${matFile}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
-                this.setupNewMat(this.hardMeshes, newMat);
-                this.curHardMat = matFile;
+                this.setupNewMat(this.metalMeshes, newMat);
+                this.curMetalMat = matFile;
                 break;
-            case MaterialType.Other:
+            case MaterialType.plastic:
                 newMat = ((await Utility.loadModel(`materials/${matFile}`)).children[0] as Mesh).material as MeshPhysicalMaterial;
-                this.setupNewMat(this.otherMeshes, newMat);
-                this.curOtherMat = matFile;
+                this.setupNewMat(this.plasticMeshes, newMat);
+                this.curPlasticMat = matFile;
                 break;
         }
     }
@@ -57,16 +57,16 @@ export default class MatPicker {
         }
     }
 
-    public getCurSoftMat(): string { return this.curSoftMat; }
+    public getCurFabricMat(): string { return this.curFabricMat; }
 
-    public getCurHardMat(): string { return this.curHardMat; }
+    public getCurMetalMat(): string { return this.curMetalMat; }
 
-    public getCurOtherMat(): string { return this.curOtherMat; }
+    public getCurPlasticMat(): string { return this.curPlasticMat; }
 
-    public getSoftMeshes(): Mesh[] { return this.softMeshes; }
+    public getFabricMeshes(): Mesh[] { return this.fabricMeshes; }
 
-    public getHardMeshes(): Mesh[] { return this.hardMeshes; }
+    public getMetalMeshes(): Mesh[] { return this.metalMeshes; }
 
-    public getOtherMeshes(): Mesh[] { return this.otherMeshes; }
+    public getPlasticMeshes(): Mesh[] { return this.plasticMeshes; }
 
 }

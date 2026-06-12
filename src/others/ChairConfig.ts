@@ -5,18 +5,20 @@ export const files: IFiles = {
     chairModel: "chair.glb",
     environmentModel: "office.glb",
     hdri: "skybox.hdr",
-    softMaterials: [
-        "poplin.glb",
-        "leather.glb",
-        "cloth.glb"
+    fabrics: [
+        "raven.glb",
+        "sand.glb",
+        "beige.glb"
     ],
-    hardMaterials: [
-        "metal.glb",
-        "reflective.glb"
+    metals: [
+        "bright.glb",
+        "dawn.glb",
+        "dark.glb"
     ],
-    otherMaterials: [
-        "reflective.glb",
-        "metal.glb"
+    plastics: [
+        "black.glb",
+        "grey.glb",
+        "white.glb"
     ]
 };
 
@@ -28,7 +30,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "SquareBack",
-                        materials: MaterialType.Soft
+                        materials: MaterialType.fabric
                     }
                 ]
             },
@@ -37,7 +39,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "RoundBack",
-                        materials: MaterialType.Soft
+                        materials: MaterialType.fabric
                     }
                 ]
             }
@@ -48,7 +50,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "SquareSeat",
-                        materials: MaterialType.Soft
+                        materials: MaterialType.fabric
                     }
                 ]
             },
@@ -57,7 +59,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "RoundSeat",
-                        materials: MaterialType.Soft
+                        materials: MaterialType.fabric
                     }
                 ]
             }
@@ -68,11 +70,11 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Rays",
-                        materials: MaterialType.Hard
+                        materials: MaterialType.metal
                     },
                     {
                         name: "Wheels",
-                        materials: MaterialType.Other
+                        materials: MaterialType.plastic
                     }
                 ]
             },
@@ -81,7 +83,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Tulip",
-                        materials: MaterialType.Hard
+                        materials: MaterialType.metal
                     }
                 ]
             },
@@ -90,7 +92,7 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Cantilever",
-                        materials: MaterialType.Hard
+                        materials: MaterialType.metal
                     }
                 ]
             }
@@ -101,11 +103,11 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Curve",
-                        materials: MaterialType.Hard
+                        materials: MaterialType.metal
                     },
                     {
                         name: "CurveArmRests",
-                        materials: MaterialType.Soft
+                        materials: MaterialType.fabric
                     }
                 ]
             },
@@ -114,11 +116,11 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Straight",
-                        materials: MaterialType.Hard
+                        materials: MaterialType.metal
                     },
                     {
                         name: "StraightArmRests",
-                        materials: MaterialType.Soft
+                        materials: MaterialType.fabric
                     }
                 ]
             },
@@ -127,11 +129,11 @@ export const chairConfig: IChairConfig = {
                 meshes: [
                     {
                         name: "Lateral",
-                        materials: MaterialType.Hard
+                        materials: MaterialType.metal
                     },
                     {
                         name: "LateralArmRests",
-                        materials: MaterialType.Soft
+                        materials: MaterialType.fabric
                     }
                 ]
             }
@@ -143,11 +145,11 @@ export const chairConfig: IChairConfig = {
             meshes: [
                 {
                     name: "BaseSeat",
-                    materials: MaterialType.Other
+                    materials: MaterialType.plastic
                 },
                 {
                     name: "BaseBack",
-                    materials: MaterialType.Other
+                    materials: MaterialType.plastic
                 }
             ]
         }

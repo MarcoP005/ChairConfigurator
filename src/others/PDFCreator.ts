@@ -109,9 +109,9 @@ export default class PDFCreator {
 
     private addMaterialsTable(pdfFile: jsPDF): void {
         const matPicker: MatPicker = this.sceneManager.getMatPicker()!;
-        const curSoftMat: string = matPicker.getCurSoftMat();
-        const curHardMat: string = matPicker.getCurHardMat();
-        const curOtherMat: string = matPicker.getCurOtherMat();
+        const curFabricMat: string = matPicker.getCurFabricMat();
+        const curMetalMat: string = matPicker.getCurMetalMat();
+        const curPlasticMat: string = matPicker.getCurPlasticMat();
 
         autoTable(pdfFile, {
             startY: 250,
@@ -127,9 +127,9 @@ export default class PDFCreator {
                 [{ content: "SELECTED MATERIALS", colSpan: 2, styles: { halign: "center" } }]
             ],
             body: [
-                ["SOFT", curSoftMat.replace(".glb", "").toUpperCase()],
-                ["HARD", curHardMat.replace(".glb", "").toUpperCase()],
-                ["OTHER", curOtherMat.replace(".glb", "").toUpperCase()]
+                ["FABRIC", curFabricMat.replace(".glb", "").toUpperCase()],
+                ["METAL", curMetalMat.replace(".glb", "").toUpperCase()],
+                ["PLASTIC", curPlasticMat.replace(".glb", "").toUpperCase()]
             ]
         });
     }

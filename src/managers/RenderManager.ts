@@ -1,5 +1,6 @@
 import { Camera, PerspectiveCamera, Scene, SRGBColorSpace, WebGLRenderer } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
+import SceneManager from "./SceneManager";
 
 export default class RenderManager {
 
@@ -9,11 +10,11 @@ export default class RenderManager {
     private orbitControls: OrbitControls;
     private container: HTMLElement;
 
-    public constructor(container: HTMLElement, scene: Scene, camera: Camera, controls: OrbitControls) {
+    public constructor(container: HTMLElement, sceneManager: SceneManager) {
         this.container = container;
-        this.scene = scene;
-        this.camera = camera;
-        this.orbitControls = controls;
+        this.scene = sceneManager.getScene();
+        this.camera = sceneManager.getCamera();
+        this.orbitControls = sceneManager.getControls();
         this.renderer = this.initRenderer();
 
         window.addEventListener('resize', () => this.onWindowResize());

@@ -26,7 +26,7 @@ export interface IFiles {
     chairModel: string;
     environmentModel: string;
     hdri: string;
-    softMaterials: string[];
-    hardMaterials: string[];
-    otherMaterials: string[];
+    fabrics: string[];
+    metals: string[];
+    plastics: string[];
 }
