@@ -23,7 +23,7 @@ export default class Viewer3D {
     this.sceneManager = new SceneManager(this.container, this.uiManager);
     this.renderManager = new RenderManager(this.container, this.sceneManager);
     this.pdfCreator = new PDFCreator(this.renderManager, this.sceneManager);
-    this.arSupport = new ARSupport(this.container, this.renderManager.getRenderer());
+    this.arSupport = new ARSupport(this.container, this.renderManager, this.sceneManager);
   }
 
   public setSoftMat(matFile: string): void {

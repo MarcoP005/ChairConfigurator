@@ -1,4 +1,4 @@
-import { Camera, ColorRepresentation, DataTexture, DirectionalLight, EquirectangularReflectionMapping, PerspectiveCamera, Scene, Vector3 } from "three";
+import { Camera, ColorRepresentation, DataTexture, DirectionalLight, EquirectangularReflectionMapping, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import Mapper from "../generals/Mapper";
 import Utility from "../generals/Utility";
@@ -17,6 +17,7 @@ export default class SceneManager {
 
     //undefined while dependencies are loading
     private chair: Chair | undefined;
+    private environment!: Object3D;
     private matPicker: MatPicker | undefined;
 
     private uiManager: UIManager; //holds the "download" function that needs to be assigned only once chair has been initialized
@@ -43,6 +44,7 @@ export default class SceneManager {
         Utility.loadModel(`models/${files.environmentModel}`)
             .then((model) => {
                 this.scene.add(model);
+                this.environment = model;
             });
 
         Utility.loadHDR(`models/${files.hdri}`)
@@ -108,4 +110,6 @@ export default class SceneManager {
     public getFrontRenderCamera(): Camera { return this.frontRenderCamera; }
 
     public getBackRenderCamera(): Camera { return this.backRenderCamera; }
+
+    public getEnvironment(): Object3D { return this.environment; }
 }
