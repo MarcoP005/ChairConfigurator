@@ -23,6 +23,10 @@ export default class Viewer3D {
     this.renderManager = new RenderManager(this.container, this.sceneManager);
     this.pdfCreator = new PDFCreator(this.renderManager, this.sceneManager);
     // new ARSupport(this.container, this.renderManager, this.sceneManager);
+
+    //panning
+    //anisotropia
+    //luci pdf
   }
 
   public setSoftMat(matFile: string): void {
