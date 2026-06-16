@@ -1,6 +1,7 @@
 import { Camera, PerspectiveCamera, Scene, SRGBColorSpace, WebGLRenderer } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import SceneManager from "./SceneManager";
+import Utility from "../generals/Utility";
 
 export default class RenderManager {
 
@@ -16,6 +17,7 @@ export default class RenderManager {
         this.camera = sceneManager.getCamera();
         this.orbitControls = sceneManager.getControls();
         this.renderer = this.initRenderer();
+        Utility.maxAnisotropy = this.renderer.capabilities.getMaxAnisotropy();
 
         window.addEventListener('resize', () => this.onWindowResize());
         this.loopRender();

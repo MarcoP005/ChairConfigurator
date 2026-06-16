@@ -73,7 +73,6 @@ export default class UIManager {
             this.viewer3D.toggleLights(checked);
         });
 
-
         const downloadBtn: HTMLElement = document.getElementById("download-config-btn")!;
         downloadBtn.addEventListener("click", () => { this.viewer3D.getPDFCreator().downloadPDF(); });
     }

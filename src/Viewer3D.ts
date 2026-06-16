@@ -21,7 +21,6 @@ export default class Viewer3D {
     this.pdfCreator = new PDFCreator(this.renderManager, this.sceneManager);
     // new ARSupport(this.container, this.renderManager, this.sceneManager);
 
-    //panning
     //anisotropia
     //luci pdf
   }

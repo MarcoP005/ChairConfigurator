@@ -5,6 +5,7 @@ export default class Utility {
     private static gltfLoader: GLTFLoader = new GLTFLoader();
     private static textureLoader: TextureLoader = new TextureLoader();
     private static hdrloader = new HDRLoader();
+    public static maxAnisotropy: number;
 
     public static async loadModel(file: string): Promise<Object3D> {
         const gltf: GLTF = await this.gltfLoader.loadAsync(`assets/viewer3d-static/${file}`);

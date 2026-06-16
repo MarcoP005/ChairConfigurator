@@ -1,9 +1,9 @@
 import { Mesh, MeshPhysicalMaterial } from "three";
-import { chairConfig, files } from "./ChairConfig";
 import { MaterialType } from "../generals/Enums";
-import Utility from "../generals/Utility";
 import Mapper from "../generals/Mapper";
+import Utility from "../generals/Utility";
 import Chair from "./Chair";
+import { chairConfig, files } from "./ChairConfig";
 
 export default class MatPicker {
     private fabricMeshes: Mesh[] = [];
@@ -52,9 +52,24 @@ export default class MatPicker {
             const mat: MeshPhysicalMaterial = material.clone();
             mat.aoMap = await Utility.loadTexture(`occlusions/Occlusion_${mesh.name}.png`);
             mat.aoMap.flipY = false;
+            this.setAnisotropy(mat);
+            mat.aoMap.needsUpdate = true;
+            mat.needsUpdate = true;
             (mesh.material as MeshPhysicalMaterial).dispose();
             mesh.material = mat;
         }
+    }
+
+    private setAnisotropy(mat: MeshPhysicalMaterial): void {
+        const max: number = this.getMaxAnisotropy(16);
+        mat.anisotropy = max;
+        if (mat.aoMap) mat.aoMap.anisotropy = max;
+    }
+
+    private getMaxAnisotropy(clamp: number): number {
+        const max: number = Utility.maxAnisotropy > clamp ? clamp : Utility.maxAnisotropy;
+        if (Utility.maxAnisotropy === 0) console.warn("Anisotropy set to ", Utility.maxAnisotropy);
+        return max;
     }
 
     public getCurFabricMat(): string { return this.curFabricMat; }
