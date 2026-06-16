@@ -7,12 +7,13 @@ export default class UIManager {
     private viewer3D: Viewer3D;
 
     private startingCamPos: Vector3;
+    private startingCamTarget: Vector3;
 
     public constructor(viewer3D: Viewer3D) {
         this.viewer3D = viewer3D;
         this.loadingScreen();
-        this.addEventsToButtons();
-        this.startingCamPos = viewer3D.getSceneManager().getCamera().position;
+        this.startingCamPos = viewer3D.getSceneManager().getCamera().position.clone();
+        this.startingCamTarget = viewer3D.getSceneManager().getControls().target.clone();
     }
 
     private loadingScreen(): void {
@@ -58,6 +59,10 @@ export default class UIManager {
         this.addSetMaterialEvent("plastic-mat-1-rad", "plastic-mat-1-label", files.plastics[1], MaterialType.plastic);
         this.addSetMaterialEvent("plastic-mat-2-rad", "plastic-mat-2-label", files.plastics[2], MaterialType.plastic);
 
+        document.getElementById("reset-cam-btn")?.addEventListener("click", () => {
+            this.resetCamPos();
+        });
+
         document.getElementById("autorotate-chkbx")?.addEventListener("change", (e) => {
             const checked: boolean = (e.target as HTMLInputElement).checked;
             this.viewer3D.toggleAutoRotate(checked);
@@ -68,9 +73,9 @@ export default class UIManager {
             this.viewer3D.toggleLights(checked);
         });
 
-        document.getElementById("reset-cam-btn")?.addEventListener("click", () => {
-            this.resetCamPos();
-        });
+
+        const downloadBtn: HTMLElement = document.getElementById("download-config-btn")!;
+        downloadBtn.addEventListener("click", () => { this.viewer3D.getPDFCreator().downloadPDF(); });
     }
 
     private addSetPartEvent(buttonName: string, partName: string, componentType: Component): void {
@@ -114,12 +119,8 @@ export default class UIManager {
         (label as HTMLSpanElement).textContent = materialName.replace(".glb", "");
     }
 
-    public addDownloadEvent(): void {
-        const downloadBtn: HTMLElement = document.getElementById("download-config-btn")!;
-        downloadBtn.addEventListener("click", () => { this.viewer3D.getPDFCreator().downloadPDF(); });
-    }
-
     private resetCamPos(): void {
         this.viewer3D.getSceneManager().getCamera().position.copy(this.startingCamPos);
+        this.viewer3D.getSceneManager().getControls().target.copy(this.startingCamTarget);
     }
 }

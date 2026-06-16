@@ -5,8 +5,8 @@ import Utility from "../generals/Utility";
 import Chair from "../others/Chair";
 import { files } from "../others/ChairConfig";
 import MatPicker from "../others/MatPicker";
+import Viewer3D from "../Viewer3D";
 import UIManager from "./UIManager";
-import PDFCreator from "../others/PDFCreator";
 
 export default class SceneManager {
     private scene: Scene;
@@ -21,9 +21,10 @@ export default class SceneManager {
     private environment!: Object3D;
     private matPicker: MatPicker | undefined;
 
-    public constructor(container: HTMLElement) {
-        this.scene = new Scene();
+    private uiManager!: UIManager;
 
+    public constructor(container: HTMLElement, viewer3D: Viewer3D) {
+        this.scene = new Scene();
         this.camera = this.setupCamera(container, new Vector3(0, 1, 2.2), this.cameraTarget);
         this.frontRenderCamera = this.setupCamera(container, new Vector3(-1.2, 1.5, 1.5), this.cameraTarget);
         this.backRenderCamera = this.setupCamera(container, new Vector3(1.2, 0.1, -1.5), this.cameraTarget);
@@ -36,7 +37,9 @@ export default class SceneManager {
                 this.scene.add(model);
                 this.chair = Mapper.mapModelToChair(model);
                 this.matPicker = new MatPicker(this.chair!);
-                // ???.addDownloadEvent(); //requires chair object
+
+                this.uiManager = new UIManager(viewer3D);
+                this.uiManager.addEventsToButtons();
             });
 
         Utility.loadModel(`models/${files.environmentModel}`)
