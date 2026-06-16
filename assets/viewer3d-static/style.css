@@ -219,6 +219,23 @@ hr {
     box-sizing: border-box;
 }
 
+.btn {
+    border-radius: 5px;
+    border: 2px solid #aaa;
+    cursor: pointer;
+    user-select: none;
+    padding: 5px 5px;
+    text-align: center;
+    font-size: 13px;
+    box-sizing: border-box;
+    display: block;
+    margin: 0 auto;
+}
+
+.btn:hover {
+    background-color: #dbdbdb;
+}
+
 .download-btn:hover {
     background-color: #dbdbdb;
 }

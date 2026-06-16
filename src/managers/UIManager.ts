@@ -1,4 +1,4 @@
-import { DefaultLoadingManager } from "three";
+import { DefaultLoadingManager, Vector3 } from "three";
 import { Component, MaterialType } from "../generals/Enums";
 import { chairConfig, files } from "../others/ChairConfig";
 import Viewer3D from "../Viewer3D";
@@ -6,10 +6,13 @@ import Viewer3D from "../Viewer3D";
 export default class UIManager {
     private viewer3D: Viewer3D;
 
+    private startingCamPos: Vector3;
+
     public constructor(viewer3D: Viewer3D) {
         this.viewer3D = viewer3D;
         this.loadingScreen();
         this.addEventsToButtons();
+        this.startingCamPos = viewer3D.getSceneManager().getCamera().position;
     }
 
     private loadingScreen(): void {
@@ -64,6 +67,10 @@ export default class UIManager {
             const checked: boolean = (e.target as HTMLInputElement).checked;
             this.viewer3D.toggleLights(checked);
         });
+
+        document.getElementById("reset-cam-btn")?.addEventListener("click", () => {
+            this.resetCamPos();
+        });
     }
 
     private addSetPartEvent(buttonName: string, partName: string, componentType: Component): void {
@@ -90,25 +97,29 @@ export default class UIManager {
     private addSetMaterialEvent(buttonName: string, labelName: string, materialName: string, materialType: MaterialType): void {
         const button: HTMLElement | null = document.getElementById(buttonName);
         if (!button) return;
-        const label: HTMLElement | null = document.getElementById(labelName);
 
         switch (materialType) {
             case MaterialType.fabric:
-                button.addEventListener("click", () => this.viewer3D.setSoftMat(materialName));
+                button.addEventListener("click", () => this.viewer3D.setFabricMat(materialName));
                 break;
             case MaterialType.metal:
-                button.addEventListener("click", () => this.viewer3D.setHardMat(materialName));
+                button.addEventListener("click", () => this.viewer3D.setMetalMat(materialName));
                 break;
             case MaterialType.plastic:
-                button.addEventListener("click", () => this.viewer3D.setOtherMat(materialName));
+                button.addEventListener("click", () => this.viewer3D.setPlasticMat(materialName));
                 break;
         }
 
+        const label: HTMLElement | null = document.getElementById(labelName);
         (label as HTMLSpanElement).textContent = materialName.replace(".glb", "");
     }
 
     public addDownloadEvent(): void {
         const downloadBtn: HTMLElement = document.getElementById("download-config-btn")!;
-        downloadBtn.addEventListener("click", (e) => { this.viewer3D.getPDFCreator().downloadPDF(); });
+        downloadBtn.addEventListener("click", () => { this.viewer3D.getPDFCreator().downloadPDF(); });
+    }
+
+    private resetCamPos(): void {
+        this.viewer3D.getSceneManager().getCamera().position.copy(this.startingCamPos);
     }
 }

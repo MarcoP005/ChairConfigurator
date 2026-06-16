@@ -6,6 +6,7 @@ import Chair from "../others/Chair";
 import { files } from "../others/ChairConfig";
 import MatPicker from "../others/MatPicker";
 import UIManager from "./UIManager";
+import PDFCreator from "../others/PDFCreator";
 
 export default class SceneManager {
     private scene: Scene;
@@ -20,11 +21,8 @@ export default class SceneManager {
     private environment!: Object3D;
     private matPicker: MatPicker | undefined;
 
-    private uiManager: UIManager; //holds the "download" function that needs to be assigned only once chair has been initialized
-
-    public constructor(container: HTMLElement, uiManager: UIManager) {
+    public constructor(container: HTMLElement) {
         this.scene = new Scene();
-        this.uiManager = uiManager;
 
         this.camera = this.setupCamera(container, new Vector3(0, 1, 2.2), this.cameraTarget);
         this.frontRenderCamera = this.setupCamera(container, new Vector3(-1.2, 1.5, 1.5), this.cameraTarget);
@@ -38,7 +36,7 @@ export default class SceneManager {
                 this.scene.add(model);
                 this.chair = Mapper.mapModelToChair(model);
                 this.matPicker = new MatPicker(this.chair!);
-                this.uiManager.addDownloadEvent(); //requires chair object
+                // ???.addDownloadEvent(); //requires chair object
             });
 
         Utility.loadModel(`models/${files.environmentModel}`)
@@ -74,13 +72,10 @@ export default class SceneManager {
 
     private initOrbitControl(domElement: HTMLElement): OrbitControls {
         const controls: OrbitControls = new OrbitControls(this.camera, domElement);
-        controls.enablePan = false;
         controls.enableDamping = true;
         controls.dampingFactor = 1.3;
         controls.target = this.cameraTarget;
         controls.maxDistance = 3.5;
-        controls.minDistance = 1;
-        controls.maxPolarAngle = 1.77;
         return controls;
     }
 
@@ -93,7 +88,7 @@ export default class SceneManager {
 
     private initCamera(domElement: HTMLElement): PerspectiveCamera {
         const aspectRatio: number = domElement.clientWidth / domElement.clientHeight;
-        const camera: PerspectiveCamera = new PerspectiveCamera(50, aspectRatio, 0.1, 10);
+        const camera: PerspectiveCamera = new PerspectiveCamera(50, aspectRatio, 0.001, 20);
         return camera;
     }
 

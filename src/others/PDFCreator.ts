@@ -5,6 +5,7 @@ import RenderManager from "../managers/RenderManager";
 import SceneManager from "../managers/SceneManager";
 import Chair from "./Chair";
 import MatPicker from "./MatPicker";
+import Viewer3D from "../Viewer3D";
 
 export default class PDFCreator {
     private font: string = "Helvetica";

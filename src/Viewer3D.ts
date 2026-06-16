@@ -18,10 +18,10 @@ export default class Viewer3D {
 
     this.container = document.getElementById(options.containerID)!;
 
-    this.uiManager = new UIManager(this);
-    this.sceneManager = new SceneManager(this.container, this.uiManager);
+    this.sceneManager = new SceneManager(this.container);
     this.renderManager = new RenderManager(this.container, this.sceneManager);
     this.pdfCreator = new PDFCreator(this.renderManager, this.sceneManager);
+    this.uiManager = new UIManager(this);
     // new ARSupport(this.container, this.renderManager, this.sceneManager);
 
     //panning
@@ -29,15 +29,15 @@ export default class Viewer3D {
     //luci pdf
   }
 
-  public setSoftMat(matFile: string): void {
+  public setFabricMat(matFile: string): void {
     this.sceneManager.getMatPicker()?.setMaterial(MaterialType.fabric, matFile);
   }
 
-  public setHardMat(matFile: string): void {
+  public setMetalMat(matFile: string): void {
     this.sceneManager.getMatPicker()?.setMaterial(MaterialType.metal, matFile);
   }
 
-  public setOtherMat(matFile: string): void {
+  public setPlasticMat(matFile: string): void {
     this.sceneManager.getMatPicker()?.setMaterial(MaterialType.plastic, matFile);
   }
 
@@ -64,6 +64,8 @@ export default class Viewer3D {
   public toggleLights(toggle: boolean): void {
     this.sceneManager.getScene().environmentIntensity = toggle ? 0.2 : 0;
   }
+
+  public getSceneManager(): SceneManager { return this.sceneManager; }
 
   public getPDFCreator(): PDFCreator { return this.pdfCreator; }
 }
