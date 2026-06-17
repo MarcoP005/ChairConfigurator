@@ -25,8 +25,7 @@ export default class ARSupport {
             requiredFeatures: ['hit-test'] // required for placing objects on surfaces
         }));
         button.addEventListener("click", () => {
-            const office: Object3D = this.sceneManager.getOffice();
-            office.visible = false;
+            this.sceneManager.toggleEnvironment(false);
         });
     }
 }

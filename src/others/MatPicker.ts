@@ -63,7 +63,10 @@ export default class MatPicker {
     private setAnisotropy(mat: MeshPhysicalMaterial): void {
         const max: number = this.getMaxAnisotropy(16);
         mat.anisotropy = max;
+        if (mat.map) mat.map.anisotropy = max;
         if (mat.aoMap) mat.aoMap.anisotropy = max;
+        if (mat.normalMap) mat.normalMap.anisotropy = max;
+        if (mat.roughnessMap) mat.roughnessMap.anisotropy = max;
     }
 
     private getMaxAnisotropy(clamp: number): number {
