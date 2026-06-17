@@ -1,4 +1,4 @@
-import { Camera, ColorRepresentation, DataTexture, DirectionalLight, EquirectangularReflectionMapping, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
+import { Camera, Color, ColorRepresentation, DataTexture, DirectionalLight, EquirectangularReflectionMapping, Object3D, PerspectiveCamera, Scene, Vector3 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import Mapper from "../generals/Mapper";
 import Utility from "../generals/Utility";
@@ -10,21 +10,25 @@ import UIManager from "./UIManager";
 
 export default class SceneManager {
     private scene: Scene;
+    private sceneBg: Color = new Color("#eaeaea");
+    private controls: OrbitControls;
+    private lightIntensity: number = 0.4;
+
     private camera: Camera;
     private frontRenderCamera: Camera;
     private backRenderCamera: Camera;
-    private controls: OrbitControls;
     private cameraTarget: Vector3 = new Vector3(0, 0.75, 0);
 
-    //undefined while dependencies are loading
-    private chair: Chair | undefined;
-    private environment!: Object3D;
-    private matPicker: MatPicker | undefined;
+    private chair!: Chair;
+    private office!: Object3D;
+    private hdri!: DataTexture;
 
+    private matPicker: MatPicker | undefined;
     private uiManager!: UIManager;
 
     public constructor(container: HTMLElement, viewer3D: Viewer3D) {
         this.scene = new Scene();
+        this.scene.background = this.sceneBg;
         this.camera = this.setupCamera(container, new Vector3(0, 1, 2.2), this.cameraTarget);
         this.frontRenderCamera = this.setupCamera(container, new Vector3(-1.2, 1.5, 1.5), this.cameraTarget);
         this.backRenderCamera = this.setupCamera(container, new Vector3(1.2, 0.1, -1.5), this.cameraTarget);
@@ -44,21 +48,22 @@ export default class SceneManager {
 
         Utility.loadModel(`models/${files.environmentModel}`)
             .then((model) => {
+                this.office = model;
                 this.scene.add(model);
-                this.environment = model;
             });
 
         Utility.loadHDR(`models/${files.hdri}`)
             .then((hdri) => {
+                this.hdri = hdri;
                 this.setupHDRI(hdri);
+                this.toggleHDRI(true);
             });
     }
 
     private setupHDRI(hdri: DataTexture): void {
         hdri.mapping = EquirectangularReflectionMapping;
         this.scene.environment = hdri;
-        this.scene.background = hdri;
-        this.scene.environmentIntensity = 0.2;
+        this.scene.environmentIntensity = this.lightIntensity;
     }
 
     private addLights(): void {
@@ -95,6 +100,19 @@ export default class SceneManager {
         return camera;
     }
 
+    public toggleEnvironment(enable: boolean): void {
+        this.toggleOffice(enable);
+        this.toggleHDRI(enable);
+    }
+
+    public toggleOffice(enable: boolean): void {
+        this.office.visible = enable;
+    }
+
+    public toggleHDRI(enable: boolean): void {
+        this.scene.background = enable ? this.hdri : this.sceneBg;
+    }
+
     public getScene(): Scene { return this.scene; }
 
     public getCamera(): Camera { return this.camera; }
@@ -109,5 +127,7 @@ export default class SceneManager {
 
     public getBackRenderCamera(): Camera { return this.backRenderCamera; }
 
-    public getEnvironment(): Object3D { return this.environment; }
+    public getOffice(): Object3D { return this.office; }
+
+    public getLightIntensity(): number { return this.lightIntensity; }
 }

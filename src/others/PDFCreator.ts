@@ -15,9 +15,9 @@ export default class PDFCreator {
     private renderManager: RenderManager;
     private sceneManager: SceneManager;
 
-    public constructor(renderer: RenderManager, scene: SceneManager) {
-        this.renderManager = renderer;
-        this.sceneManager = scene;
+    public constructor(rendererManager: RenderManager, sceneManager: SceneManager) {
+        this.renderManager = rendererManager;
+        this.sceneManager = sceneManager;
     }
 
     public downloadPDF(): void {
@@ -66,6 +66,8 @@ export default class PDFCreator {
         const frontCam: Camera = this.sceneManager.getFrontRenderCamera();
         const backCam: Camera = this.sceneManager.getBackRenderCamera();
 
+        const envInitialIntensity: number = this.sceneManager.getScene().environmentIntensity;
+
         //front
         renderer.render(scene, frontCam);
         const imgDataFront: string = renderer.domElement.toDataURL("image/jpeg", 0.95);
@@ -75,6 +77,8 @@ export default class PDFCreator {
         renderer.render(scene, backCam);
         const imgDataBack: string = renderer.domElement.toDataURL("image/jpeg", 0.95);
         pdfFile.addImage(imgDataBack, "JPEG", 37, 116, imgWidth, imgHeight);
+
+        scene.environmentIntensity = envInitialIntensity;
     }
 
     private addComponentsTable(pdfFile: jsPDF): void {

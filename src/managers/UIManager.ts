@@ -73,6 +73,11 @@ export default class UIManager {
             this.viewer3D.toggleLights(checked);
         });
 
+        document.getElementById("office-chkbx")?.addEventListener("change", (e) => {
+            const checked: boolean = (e.target as HTMLInputElement).checked;
+            this.viewer3D.getSceneManager().toggleEnvironment(checked);
+        });
+
         const downloadBtn: HTMLElement = document.getElementById("download-config-btn")!;
         downloadBtn.addEventListener("click", () => { this.viewer3D.getPDFCreator().downloadPDF(); });
     }

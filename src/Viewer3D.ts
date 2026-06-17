@@ -20,9 +20,6 @@ export default class Viewer3D {
     this.renderManager = new RenderManager(this.container, this.sceneManager);
     this.pdfCreator = new PDFCreator(this.renderManager, this.sceneManager);
     // new ARSupport(this.container, this.renderManager, this.sceneManager);
-
-    //anisotropia
-    //luci pdf
   }
 
   public setFabricMat(matFile: string): void {
@@ -58,7 +55,7 @@ export default class Viewer3D {
   }
 
   public toggleLights(toggle: boolean): void {
-    this.sceneManager.getScene().environmentIntensity = toggle ? 0.2 : 0;
+    this.sceneManager.getScene().environmentIntensity = toggle ? 0.4 : 0;
   }
 
   public getSceneManager(): SceneManager { return this.sceneManager; }
